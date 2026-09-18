@@ -1,26 +1,253 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* ───────────────────────────────────────────────────────────────────────────
+   Identidade visual Geoforte — Conceito 01 "Pilar"
+   Laranja EF6C1A · Grafite 22252A · Papel FAFAF8
+   Space Grotesk (títulos) + Manrope (texto)
+
+   Os tokens de superfície vivem em variáveis "cruas" para que uma faixa
+   escura (.on-graphite) possa redefini-las e os mesmos utilitários
+   (text-ink, border-rule, bg-card…) continuem valendo dentro dela.
+   ─────────────────────────────────────────────────────────────────────────── */
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Marca — valores fixos */
+  --color-brand: #ef6c1a;
+  --color-brand-deep: #d25a0e;
+  --color-graphite: #22252a;
+  --color-graphite-raised: #2b2f36;
+  --color-paper: #fafaf8;
+
+  /* Marca — dependente do contexto claro/escuro */
+  --color-brand-ink: var(--brand-ink);
+  --color-brand-wash: var(--brand-wash);
+
+  /* Superfícies e tinta */
+  --color-canvas: var(--canvas);
+  --color-canvas-sunk: var(--canvas-sunk);
+  --color-card: var(--card);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-rule: var(--rule);
+  --color-rule-strong: var(--rule-strong);
+
+  --font-display: var(--font-space-grotesk), "Space Grotesk", system-ui, sans-serif;
+  --font-body: var(--font-manrope), "Manrope", system-ui, sans-serif;
+
+  --ease-drive: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  --canvas: #fafaf8;
+  --canvas-sunk: #f1f0ec;
+  --card: #ffffff;
+  --ink: #22252a;
+  --ink-2: #555b66;
+  --ink-3: #696f7a;
+  --rule: rgba(34, 37, 42, 0.12);
+  --rule-strong: rgba(34, 37, 42, 0.26);
+  /* Sobre papel o laranja da marca rende só 2,9:1 — texto pequeno usa o
+     laranja queimado, mesmo matiz, 4,8:1. */
+  --brand-ink: #b94e0c;
+  --brand-wash: #fbf0e8;
+  --focus-ring: #b94e0c;
+  color-scheme: light;
+}
+
+.on-graphite {
+  --canvas: #22252a;
+  --canvas-sunk: #1b1e22;
+  --card: #2b2f36;
+  --ink: #fafaf8;
+  --ink-2: #a8adb6;
+  --ink-3: #8d939d;
+  --rule: rgba(250, 250, 248, 0.14);
+  --rule-strong: rgba(250, 250, 248, 0.3);
+  --brand-ink: #ef6c1a;
+  --brand-wash: rgba(239, 108, 26, 0.12);
+  --focus-ring: #ef6c1a;
+  color: var(--ink);
+}
+
+/* Tema escuro — opcional, ativado pelo botão na Navbar (ThemeToggle) e
+   persistido em localStorage. As faixas .on-graphite (Hero, Solução,
+   Contato, Rodapé, tela de loading) já são escuras e ficam como estão —
+   só o restante do site (claro por padrão) alterna para este bloco. */
+:root[data-theme="dark"] {
+  --canvas: #16181c;
+  --canvas-sunk: #0f1114;
+  --card: #1e2125;
+  --ink: #fafaf8;
+  --ink-2: #a8adb6;
+  --ink-3: #8d939d;
+  --rule: rgba(250, 250, 248, 0.12);
+  --rule-strong: rgba(250, 250, 248, 0.26);
+  --brand-ink: #ef6c1a;
+  --brand-wash: rgba(239, 108, 26, 0.12);
+  --focus-ring: #ef6c1a;
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--canvas);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+/* ─── Superfícies do navegador ───────────────────────────────────────────── */
+
+::selection {
+  background: #ef6c1a;
+  color: #22252a;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f0ec;
+}
+::-webkit-scrollbar-thumb {
+  background: #c4c2bc;
+  border: 3px solid #f1f0ec;
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ef6c1a;
+}
+
+* {
+  scrollbar-color: #c4c2bc #f1f0ec;
+  scrollbar-width: thin;
+}
+
+:root[data-theme="dark"] ::-webkit-scrollbar-track {
+  background: #0f1114;
+}
+:root[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: #3a3f47;
+  border-color: #0f1114;
+}
+:root[data-theme="dark"] * {
+  scrollbar-color: #3a3f47 #0f1114;
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+  border-radius: 1px;
+}
+
+button:not(:disabled) {
+  cursor: pointer;
+}
+
+input,
+textarea,
+select {
+  caret-color: #ef6c1a;
+}
+
+::placeholder {
+  color: var(--ink-3);
+  opacity: 1;
+}
+
+a {
+  text-underline-offset: 0.22em;
+  text-decoration-thickness: from-font;
+}
+
+/* ─── Utilitários da marca ───────────────────────────────────────────────── */
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Régua de seção: fio de 1px que nasce do fio grosso laranja da marca. */
+.rule-driven {
+  background-image: linear-gradient(
+    to right,
+    #ef6c1a 0,
+    #ef6c1a 56px,
+    var(--rule) 56px,
+    var(--rule) 100%
+  );
+  height: 2px;
+}
+
+/* Espinha da estaca: linha vertical que termina em ponta cravada. */
+.pile-spine::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -9px;
+  width: 0;
+  height: 0;
+  transform: translateX(-50%);
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 10px solid var(--ink);
+}
+
+/* ─── Movimento ──────────────────────────────────────────────────────────── */
+
+@keyframes geoforte-drive {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+.geoforte-drive {
+  /* Ritmo parelho (ease-in-out), não ease-out — a estaca precisa ser vista
+     descendo, não só "chegar" quase instantaneamente. */
+  animation: geoforte-drive 1.7s cubic-bezier(0.65, 0, 0.35, 1) 0.55s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .geoforte-drive {
+    animation: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ─── Linha do tempo (react-vertical-timeline-component) ─────────────────── */
+
+.geoforte-timeline .vertical-timeline::before {
+  background: var(--rule-strong);
+  width: 2px;
+}
+
+.geoforte-timeline .vertical-timeline-element-content {
+  box-shadow: none;
+}
+
+.geoforte-timeline .vertical-timeline-element-date {
+  font-variant-numeric: tabular-nums;
+  opacity: 1 !important;
+}
+
+.geoforte-timeline .vertical-timeline-element-icon {
+  box-shadow: 0 0 0 5px var(--canvas) !important;
 }
