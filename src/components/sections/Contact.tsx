@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useForm, type RegisterOptions } from "react-hook-form";
+import { useForm, useWatch, type RegisterOptions } from "react-hook-form";
 import { motion, AnimatePresence } from "framer-motion";
 import * as RadioGroup from "@radix-ui/react-radio-group";
 import { companyInfo, googleMapsUrl } from "@/lib/data";
@@ -15,6 +15,8 @@ type FormValues = {
   phone: string;
   projectType: string;
   message: string;
+  /** Honeypot: invisível para pessoas, preenchido por robôs. */
+  website?: string;
 };
 
 const segments = [
@@ -87,22 +89,42 @@ export default function Contact() {
   const {
     register,
     handleSubmit,
-    watch,
+    control,
     setValue,
     reset,
     formState: { errors },
   } = useForm<FormValues>({ defaultValues: { projectType: "" } });
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
-  const projectType = watch("projectType");
+  const [error, setError] = useState<string | null>(null);
+  const projectType = useWatch({ control, name: "projectType" });
 
-  const onSubmit = async () => {
+  const onSubmit = async (values: FormValues) => {
     setSending(true);
-    await new Promise((r) => setTimeout(r, 1200));
-    setSending(false);
-    setSent(true);
-    setTimeout(() => setSent(false), 6000);
-    reset();
+    setError(null);
+    try {
+      const res = await fetch("/api/contato", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+      if (!res.ok) {
+        const data = (await res.json().catch(() => null)) as { error?: string } | null;
+        throw new Error(data?.error ?? "Não foi possível enviar agora.");
+      }
+      setSent(true);
+      setTimeout(() => setSent(false), 8000);
+      reset();
+    } catch (err) {
+      // Os dados digitados ficam no formulário para o visitante tentar de novo.
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Não foi possível enviar agora. Fale conosco pelo WhatsApp.",
+      );
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -202,6 +224,15 @@ export default function Contact() {
             transition={{ delay: 0.08, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="relative bg-card p-7 sm:p-10 shadow-[0_30px_60px_-24px_rgba(0,0,0,0.35)]"
           >
+            <input
+              type="text"
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden
+              {...register("website")}
+              className="absolute left-[-9999px] h-0 w-0 opacity-0"
+            />
+
             <div className="grid sm:grid-cols-2 gap-x-8 gap-y-6">
               <Field
                 id="name"
@@ -303,6 +334,15 @@ export default function Contact() {
             </div>
 
             <div aria-live="polite">
+              {error && (
+                <p
+                  role="alert"
+                  className="mt-6 flex items-start gap-2.5 border border-[#dc2626] px-5 py-4 text-sm font-display font-medium text-ink"
+                >
+                  <AlertCircle size={17} aria-hidden className="text-[#dc2626] shrink-0 mt-0.5" />
+                  {error}
+                </p>
+              )}
               <AnimatePresence>
                 {sent && (
                   <motion.p
@@ -312,7 +352,7 @@ export default function Contact() {
                     className="mt-6 flex items-center gap-2.5 bg-graphite text-paper px-5 py-4 text-sm font-display font-medium"
                   >
                     <Check size={17} aria-hidden className="text-[#4ade80] shrink-0" />
-                    Solicitação registrada. Entraremos em contato pelo e-mail informado.
+                    Solicitação enviada. Entraremos em contato pelo e-mail informado.
                   </motion.p>
                 )}
               </AnimatePresence>
