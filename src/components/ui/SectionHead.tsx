@@ -31,7 +31,7 @@ export default function SectionHead({
         className={`rule-driven ${align === "center" ? "max-w-40 mx-auto" : "max-w-64"}`}
         aria-hidden
       />
-      <h2 className="mt-7 font-display font-bold text-[clamp(1.85rem,3.6vw,2.75rem)] leading-[1.06] tracking-[-0.03em] text-ink text-balance">
+      <h2 className="mt-7 font-display font-bold text-[clamp(2rem,4.2vw,3.25rem)] leading-[1.04] tracking-[-0.03em] text-ink text-balance">
         {title}
       </h2>
       {lead && (

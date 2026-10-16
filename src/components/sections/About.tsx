@@ -8,7 +8,7 @@ import Placeholder from "@/components/ui/Placeholder";
 
 export default function About() {
   return (
-    <section id="empresa" className="py-24 sm:py-28 bg-canvas-sunk">
+    <section id="empresa" className="py-24 sm:py-32 bg-canvas-sunk">
       <div className="max-w-6xl mx-auto px-5 grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -18,12 +18,12 @@ export default function About() {
           className="relative lg:sticky lg:top-28"
         >
           <Placeholder
-            label="Equipe Geoforte em campo"
+            label="Equipe em campo"
             className="w-full h-[420px] sm:h-[480px] border border-rule"
           />
           {/* Placa de obra: tinta sólida, numeral laranja — sempre no
               contraste máximo com a página, claro ou escuro. */}
-          <div className="absolute -bottom-6 left-0 sm:left-6 bg-ink px-6 py-5 flex items-baseline gap-3.5">
+          <div className="absolute -bottom-6 right-0 sm:right-6 bg-ink px-6 py-5 flex items-baseline gap-3.5">
             <span className="font-display font-bold text-4xl text-brand leading-none tabular-nums">
               30
             </span>
@@ -60,10 +60,10 @@ export default function About() {
               </figcaption>
             </figure>
 
-            <h3 className="mt-12 font-display font-bold text-[11px] uppercase tracking-[0.16em] text-ink-3">
+            <h3 className="mt-14 font-display font-bold text-xl leading-snug text-ink">
               Princípios fundamentais
             </h3>
-            <ul className="mt-5">
+            <ul className="mt-4">
               {companyInfo.principles.map((p) => (
                 <li
                   key={p}

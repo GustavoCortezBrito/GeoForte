@@ -1,17 +1,18 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useSyncExternalStore } from "react";
 import { FloatingWhatsApp } from "react-floating-whatsapp";
 import { companyInfo } from "@/lib/data";
 import { useTheme } from "@/lib/theme";
 
 export default function WhatsAppButton() {
-  const [mounted, setMounted] = useState(false);
   const theme = useTheme();
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  // Só no cliente: o widget depende de window e não deve ir no HTML do servidor.
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  );
 
   if (!mounted) return null;
 

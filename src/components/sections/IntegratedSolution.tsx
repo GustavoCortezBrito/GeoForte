@@ -18,7 +18,7 @@ export default function IntegratedSolution() {
   const lineLeft = useTransform(progress, (v) => `${v * 100}%`);
 
   return (
-    <section id="solucao" className="on-graphite bg-graphite py-24 sm:py-28 overflow-hidden">
+    <section id="solucao" className="on-graphite bg-graphite py-24 sm:py-32 overflow-hidden">
       <div className="max-w-6xl mx-auto px-5">
         <SectionHead
           title="Solução Integrada Geoforte"
@@ -29,7 +29,7 @@ export default function IntegratedSolution() {
           {/* Espinha horizontal: fio inerte + trecho laranja que cresce com a rolagem (só desktop) */}
           <div
             aria-hidden
-            className="hidden md:block absolute left-[16.667%] right-[16.667%] top-8 h-[2px] bg-rule"
+            className="hidden md:block absolute left-0 right-0 top-8 h-[2px] bg-rule"
           >
             <motion.div
               style={{ scaleX: progress }}
@@ -51,23 +51,23 @@ export default function IntegratedSolution() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-60px" }}
                   transition={{ delay: i * 0.12, duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-                  className="relative flex flex-col items-center text-center"
+                  className="relative flex flex-col items-start"
                 >
                   {/* Nó sobre a espinha */}
                   <span className="relative z-10 w-16 h-16 flex items-center justify-center bg-graphite border-2 border-brand text-brand shrink-0">
                     <Icon size={26} strokeWidth={1.6} aria-hidden />
                   </span>
 
-                  <span className="mt-6 font-display font-bold text-sm text-brand tabular-nums tracking-[0.08em]">
+                  <span className="mt-9 font-display font-bold text-[clamp(2.75rem,5vw,4rem)] leading-none text-brand tabular-nums tracking-[-0.03em]">
                     {step.number}
                   </span>
-                  <h3 className="mt-2 font-display font-bold text-xl leading-snug text-ink text-balance">
+                  <h3 className="mt-5 font-display font-bold text-xl leading-snug text-ink text-balance">
                     {step.title}
                   </h3>
                   <p className="mt-4 text-ink text-[15px] leading-relaxed">
                     {step.description}
                   </p>
-                  <p className="mt-3 text-ink-2 text-[15px] leading-relaxed">
+                  <p className="mt-5 pt-5 border-t border-rule text-ink-2 text-[15px] leading-relaxed">
                     {step.details}
                   </p>
                 </motion.li>

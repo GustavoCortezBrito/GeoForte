@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useInView, useScroll, useSpring, useTransform } from "framer-motion";
-import { Building2, Drill, Award, TrendingUp, ShieldCheck, type LucideIcon } from "lucide-react";
+import { Building2, Drill, Award, TrendingUp, ShieldCheck } from "lucide-react";
 import SectionHead from "@/components/ui/SectionHead";
 
 const milestones = [
@@ -139,7 +139,7 @@ export default function Timeline() {
   const tipTop = useTransform(progress, (v) => `${v * 100}%`);
 
   return (
-    <section id="historia" className="py-24 sm:py-28">
+    <section id="historia" className="py-24 sm:py-32">
       <div className="max-w-5xl mx-auto px-5">
         <SectionHead
           title="Nossa trajetória"

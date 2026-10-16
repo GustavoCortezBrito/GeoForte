@@ -1,0 +1,14 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "overused-font",
+        "value": "arial",
+        "createdAt": "2026-10-16T17:44:24.620Z",
+        "reason": "Assistant decision, not user-confirmed: font stack in the transactional e-mail HTML (api/contato/route.ts); mail clients cannot load web fonts, so a web-safe stack is required, not a design choice"
+      }
+    ]
+  }
+}

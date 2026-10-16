@@ -2,6 +2,7 @@ import Link from "next/link";
 import { companyInfo, googleMapsUrl, navLinks } from "@/lib/data";
 import { MapPin, Phone, Mail, ArrowUp } from "lucide-react";
 import GeoforteLogo from "@/components/ui/GeoforteLogo";
+import { mark } from "@/lib/brand";
 
 function LinkedinIcon() {
   return (
@@ -41,8 +42,20 @@ const columnTitle =
 
 export default function Footer() {
   return (
-    <footer className="on-graphite bg-graphite">
-      <div className="max-w-6xl mx-auto px-5 py-16">
+    <footer className="on-graphite relative overflow-hidden bg-canvas-sunk border-t border-rule">
+      {/* O símbolo da marca em escala de obra, cravado no canto: a estaca
+          desce para fora da página. Só textura — não carrega informação. */}
+      <svg
+        aria-hidden
+        viewBox={mark.viewBox}
+        className="pointer-events-none absolute -right-10 -top-6 h-[34rem] w-auto opacity-[0.04]"
+        fill="var(--ink)"
+      >
+        <path d={mark.ring} />
+        <rect {...mark.bar} />
+        <path d={mark.pile} />
+      </svg>
+      <div className="relative max-w-6xl mx-auto px-5 py-16">
         <div className="grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1.1fr]">
           <div>
             <GeoforteLogo variant="lockup" size={44} />
@@ -104,12 +117,12 @@ export default function Footer() {
             <ul className="mt-5 space-y-2.5">
               {footerServices.map((s) => (
                 <li key={s.id}>
-                  <a
+                  <Link
                     href="/#servicos"
                     className="text-ink-2 text-sm leading-snug hover:text-ink transition-colors"
                   >
                     {s.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -178,13 +191,13 @@ export default function Footer() {
             >
               Política de privacidade
             </Link>
-            <a
+            <Link
               href="/#inicio"
               className="text-ink-3 hover:text-brand transition-colors"
               aria-label="Voltar ao topo"
             >
               <ArrowUp size={17} aria-hidden />
-            </a>
+            </Link>
           </div>
         </div>
       </div>

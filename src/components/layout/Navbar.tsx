@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { navLinks } from "@/lib/data";
@@ -50,13 +51,13 @@ export default function Navbar() {
         }`}
       >
         <div className="max-w-6xl mx-auto px-5 flex items-center justify-between h-18">
-          <a
+          <Link
             href="/#inicio"
             className="py-2"
             aria-label="Geoforte Fundações — ir para o início"
           >
             <GeoforteLogo variant="lockup" size={42} />
-          </a>
+          </Link>
 
           <div className="hidden lg:flex items-center gap-7">
             {navLinks.slice(1).map((l) => (
@@ -69,12 +70,12 @@ export default function Navbar() {
                 <span className="absolute -bottom-0.5 left-0 w-0 h-[2px] bg-brand group-hover:w-full transition-[width] duration-300" />
               </a>
             ))}
-            <a
+            <Link
               href="/#contato"
               className="ml-1 px-5 py-2.5 text-[13.5px] font-display font-bold bg-brand hover:bg-brand-deep text-graphite transition-colors"
             >
               Diagnóstico técnico
-            </a>
+            </Link>
             <span className="w-px h-5 bg-rule-strong" aria-hidden />
             <ThemeToggle className="-mx-1.5" />
           </div>
@@ -109,13 +110,13 @@ export default function Navbar() {
                     {l.label}
                   </a>
                 ))}
-                <a
+                <Link
                   href="/#contato"
                   onClick={() => setOpen(false)}
                   className="block mt-4 mb-2 py-3.5 text-center text-sm font-display font-bold bg-brand text-graphite"
                 >
                   Diagnóstico técnico
-                </a>
+                </Link>
                 <div className="flex items-center justify-between pt-2">
                   <span className="text-ink-3 text-xs font-display font-medium">Tema do site</span>
                   <ThemeToggle />
