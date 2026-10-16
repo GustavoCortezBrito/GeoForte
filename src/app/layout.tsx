@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, Manrope } from "next/font/google";
 import "./globals.css";
 import Motion from "@/components/ui/Motion";
+import { SITE_URL } from "@/lib/site";
 
 /** Títulos e números — Space Grotesk (máx. 700). */
 const spaceGrotesk = Space_Grotesk({
@@ -18,7 +19,7 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.geoforte.com.br"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Geoforte Fundações — Qualidade do projeto à execução",
     template: "%s — Geoforte Fundações",
@@ -39,7 +40,7 @@ export const metadata: Metadata = {
       "+1500 obras executadas. Solução completa em fundações profundas há 30 anos.",
     type: "website",
     locale: "pt_BR",
-    url: "https://www.geoforte.com.br",
+    url: SITE_URL,
     siteName: "Geoforte Fundações",
   },
   twitter: {

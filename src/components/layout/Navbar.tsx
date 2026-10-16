@@ -115,7 +115,7 @@ export default function Navbar() {
                   onClick={() => setOpen(false)}
                   className="block mt-4 mb-2 py-3.5 text-center text-sm font-display font-bold bg-brand text-graphite"
                 >
-                  Diagnóstico técnico
+                  Pedir diagnóstico
                 </Link>
                 <div className="flex items-center justify-between pt-2">
                   <span className="text-ink-3 text-xs font-display font-medium">Tema do site</span>

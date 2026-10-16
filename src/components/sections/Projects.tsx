@@ -33,13 +33,13 @@ export default function Projects() {
                 }`}
               />
               <figcaption className="mt-5 pt-4 border-t-2 border-ink flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1.5">
-                <h3
+                <p
                   className={`font-display font-bold leading-snug text-ink ${
                     i === 0 ? "text-2xl" : "text-lg"
                   }`}
                 >
                   {p.title}
-                </h3>
+                </p>
                 <p className="flex items-center gap-1.5 text-ink-2 text-sm">
                   <MapPin size={14} strokeWidth={1.75} aria-hidden className="shrink-0" />
                   {p.location}

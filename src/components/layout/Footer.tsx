@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { companyInfo, googleMapsUrl, navLinks } from "@/lib/data";
+import { companyInfo, googleMapsUrl } from "@/lib/data";
 import { MapPin, Phone, Mail, ArrowUp } from "lucide-react";
 import GeoforteLogo from "@/components/ui/GeoforteLogo";
 import { mark } from "@/lib/brand";
@@ -35,6 +35,18 @@ const footerServices = [
   { id: "franki", label: "Estacas Franki" },
   { id: "metalicas", label: "Estacas Metálicas" },
   { id: "pre-moldadas", label: "Estacas Pré-Moldadas" },
+];
+
+// Textos próprios do rodapé: os mesmos rótulos do menu, repetidos, diluem o
+// peso de cada âncora para os buscadores — aqui eles descrevem o destino.
+const footerNav = [
+  { href: "/#inicio", label: "Página inicial" },
+  { href: "/#servicos", label: "Serviços e tecnologias" },
+  { href: "/#solucao", label: "Solução Integrada Geoforte" },
+  { href: "/#projetos", label: "Projetos de referência" },
+  { href: "/#empresa", label: "Sobre a empresa" },
+  { href: "/#historia", label: "Nossa trajetória" },
+  { href: "/#contato", label: "Fale conosco" },
 ];
 
 const columnTitle =
@@ -95,11 +107,11 @@ export default function Footer() {
           </div>
 
           <nav aria-labelledby="footer-nav">
-            <h2 id="footer-nav" className={columnTitle}>
+            <p id="footer-nav" className={columnTitle}>
               Navegação
-            </h2>
+            </p>
             <ul className="mt-5 space-y-2.5">
-              {navLinks.map((l) => (
+              {footerNav.map((l) => (
                 <li key={l.href}>
                   <a
                     href={l.href}
@@ -113,7 +125,7 @@ export default function Footer() {
           </nav>
 
           <div>
-            <h2 className={columnTitle}>Serviços</h2>
+            <p className={columnTitle}>Serviços</p>
             <ul className="mt-5 space-y-2.5">
               {footerServices.map((s) => (
                 <li key={s.id}>
@@ -129,7 +141,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h2 className={columnTitle}>Contato</h2>
+            <p className={columnTitle}>Contato</p>
             <address className="mt-5 not-italic space-y-4 text-sm">
               <p className="flex items-start gap-2.5">
                 <MapPin size={15} strokeWidth={1.75} aria-hidden className="text-brand mt-0.5 shrink-0" />

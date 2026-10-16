@@ -116,9 +116,9 @@ function Milestone({
             </div>
           </div>
 
-          <h3 className="mt-5 font-display font-bold text-xl leading-snug text-ink text-balance">
+          <p className="mt-5 font-display font-bold text-xl leading-snug text-ink text-balance">
             {title}
-          </h3>
+          </p>
           <p className="mt-1.5 font-display font-medium text-sm text-brand-ink">
             {subtitle}
           </p>

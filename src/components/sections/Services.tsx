@@ -35,7 +35,7 @@ export default function Services() {
                 href="#contato"
                 className="group mt-6 inline-flex items-center gap-2.5 px-6 py-3.5 bg-brand hover:bg-brand-deep text-graphite text-[15px] font-display font-bold transition-colors"
               >
-                Solicitar diagnóstico
+                Falar com a engenharia
                 <ArrowRight
                   size={17}
                   aria-hidden
@@ -79,9 +79,9 @@ export default function Services() {
                   </span>
 
                   <div className="pr-2">
-                    <h3 className="font-display font-bold text-[17px] leading-snug text-ink">
+                    <p className="font-display font-bold text-[17px] leading-snug text-ink">
                       {s.title}
-                    </h3>
+                    </p>
                     <p className="mt-2 text-ink-2 text-[15px] leading-relaxed max-w-[62ch]">
                       {s.description}
                     </p>
