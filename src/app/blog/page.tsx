@@ -6,6 +6,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import BlogExplorer from "@/components/blog/BlogExplorer";
 import { companyInfo } from "@/lib/data";
+import { mark } from "@/lib/brand";
 import { getAllPosts, type PostMeta } from "@/lib/blog";
 
 export const metadata: Metadata = {
@@ -17,13 +18,6 @@ export const metadata: Metadata = {
 
 const gridBg =
   "linear-gradient(rgba(250,250,248,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(250,250,248,0.05) 1px, transparent 1px)";
-
-// O que reunir para a engenharia analisar a obra (o mesmo do checklist do blog).
-const toSend = [
-  "Relatório de sondagem do terreno",
-  "Projeto estrutural ou cargas previstas",
-  "Localização e condições de acesso da obra",
-];
 
 export default function BlogPage() {
   // Só os metadados vão para o navegador; o texto dos posts fica no servidor.
@@ -43,12 +37,12 @@ export default function BlogPage() {
         {/* 1 · Hero */}
         <section className="on-graphite relative overflow-hidden bg-graphite pt-40 pb-24 sm:pt-44 sm:pb-32">
           <Image
-            src="/images/blog-hero.png"
+            src="/images/blog-hero.jpg"
             alt=""
             fill
             priority
             sizes="100vw"
-            className="object-cover object-[72%_50%]"
+            className="object-cover object-[60%_58%]"
           />
           {/* Escurece da esquerda (texto) para a direita (trado e pôr do sol) */}
           <div
@@ -107,7 +101,7 @@ export default function BlogPage() {
             }}
           />
 
-          <div className="relative max-w-6xl mx-auto px-5 grid gap-x-16 gap-y-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+          <div className="relative max-w-6xl mx-auto px-5 grid gap-x-16 gap-y-12 lg:grid-cols-[1.25fr_0.75fr] lg:items-center">
             <div>
               <div className="rule-driven max-w-64" aria-hidden />
               <h2 className="mt-7 font-display font-bold text-[clamp(2rem,4.5vw,3.5rem)] leading-[1.04] tracking-[-0.03em] text-ink text-balance max-w-[18ch]">
@@ -143,42 +137,34 @@ export default function BlogPage() {
                 </a>
               </div>
 
-              <p className="mt-6 flex items-center gap-2 text-ink-3 text-[13px]">
-                <Clock size={14} strokeWidth={1.75} aria-hidden />
-                Resposta da engenharia em até 1 dia útil
-              </p>
+              <div className="mt-7 flex flex-wrap items-center gap-x-8 gap-y-3 text-[14px]">
+                <p className="flex items-center gap-2 text-ink-3">
+                  <Clock size={15} strokeWidth={1.75} aria-hidden />
+                  Resposta da engenharia em até 1 dia útil
+                </p>
+                <a
+                  href={`tel:+55${companyInfo.phone.replace(/D/g, "")}`}
+                  className="flex items-center gap-2 font-display font-medium text-ink hover:text-brand transition-colors tabular-nums"
+                >
+                  <Phone size={15} strokeWidth={1.75} aria-hidden className="text-brand" />
+                  {companyInfo.phone}
+                </a>
+              </div>
             </div>
 
-            {/* O que enviar: tira a dúvida de quem ainda não sabe por onde começar */}
-            <div className="bg-card border border-rule-strong p-7 sm:p-9">
-              <p className="font-display font-bold text-xl text-ink">Para agilizar a análise</p>
-              <p className="mt-2 text-ink-2 text-[15px] leading-relaxed">
-                Tenha em mãos, se já existirem:
-              </p>
-              <ol className="mt-6 border-t border-rule">
-                {toSend.map((item, i) => (
-                  <li key={item} className="flex items-baseline gap-5 py-4 border-b border-rule">
-                    <span className="font-display font-bold text-2xl leading-none text-brand tabular-nums w-8 shrink-0">
-                      {i + 1}
-                    </span>
-                    <span className="text-ink text-[15.5px] leading-snug">{item}</span>
-                  </li>
-                ))}
-              </ol>
-              <Link
-                href="/blog/checklist-antes-de-contratar-fundacoes"
-                className="mt-6 inline-flex items-center gap-2 font-display font-bold text-sm text-ink hover:text-brand transition-colors"
+            {/* O símbolo da marca em escala de obra, cravado no canto direito */}
+            <div aria-hidden className="relative hidden lg:block self-stretch min-h-[22rem]">
+              <svg
+                viewBox={mark.viewBox}
+                className="absolute right-0 -top-24 -bottom-24 h-[calc(100%+12rem)] w-auto"
+                fill="none"
               >
-                Ver o checklist completo
-                <ArrowRight size={15} aria-hidden className="text-brand" />
-              </Link>
-              <a
-                href={`tel:+55${companyInfo.phone.replace(/\D/g, "")}`}
-                className="mt-6 pt-6 border-t border-rule flex items-center gap-2.5 text-ink text-[15px] font-display font-medium hover:text-brand transition-colors tabular-nums"
-              >
-                <Phone size={16} strokeWidth={1.75} aria-hidden className="text-brand" />
-                {companyInfo.phone}
-              </a>
+                <g fill="#ef6c1a" opacity="0.2">
+                  <path d={mark.ring} />
+                  <rect {...mark.bar} />
+                  <path d={mark.pile} />
+                </g>
+              </svg>
             </div>
           </div>
         </section>

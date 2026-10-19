@@ -2,7 +2,7 @@
 title: Melhoramento de solo: quando o terreno precisa de reforço
 description: Quando o solo natural não oferece resistência ou estabilidade suficientes, o melhoramento pode ser a alternativa. Conheça os objetivos e as famílias de técnicas.
 category: Técnicas
-date: 2026-10-19
+date: 2026-10-15
 ---
 
 Nem todo terreno recebe uma fundação do jeito que está. Solos moles, fofos ou muito compressíveis podem apresentar capacidade de carga baixa ou recalques acima do tolerável. Nesses casos, uma alternativa é melhorar o próprio solo antes ou junto da fundação.

@@ -2,7 +2,7 @@
 title: Como escolher o tipo de estaca para a sua obra
 description: Sondagem, cargas, vizinhança e acesso: os critérios que definem se a melhor solução é hélice contínua, escavada, Franki, metálica ou pré-moldada.
 category: Fundações
-date: 2026-10-19
+date: 2026-09-15
 ---
 
 Não existe a "melhor estaca" em termos absolutos. Existe a estaca mais adequada para um solo, uma carga, um terreno e um prazo específicos. Escolher bem logo no início costuma ser o que separa uma fundação econômica e sem surpresas de uma obra com aditivos e atrasos.

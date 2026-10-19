@@ -2,13 +2,19 @@
 
 import { useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, Search, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, ChevronDown, Search, SlidersHorizontal, X } from "lucide-react";
 import PostCover from "@/components/blog/PostCover";
 import { formatDate, normalize, type PostMeta } from "@/lib/blog-shared";
 
 const ALL = "Todos";
 /** Posts por página: 3 colunas × 2 linhas. */
 const PAGE_SIZE = 6;
+
+type Order = "recent" | "oldest";
+const orders: { value: Order; label: string }[] = [
+  { value: "recent", label: "Mais recentes" },
+  { value: "oldest", label: "Mais antigos" },
+];
 
 function PostCard({ post }: { post: PostMeta }) {
   return (
@@ -51,14 +57,23 @@ function PostCard({ post }: { post: PostMeta }) {
 const pagerButton =
   "w-11 h-11 flex items-center justify-center border border-rule-strong text-ink hover:bg-brand hover:border-brand hover:text-graphite disabled:opacity-35 disabled:hover:bg-transparent disabled:hover:border-rule-strong disabled:hover:text-ink disabled:cursor-not-allowed transition-colors";
 
+const optionButton = (active: boolean) =>
+  `px-4 py-2.5 border text-[13.5px] font-display font-medium transition-colors ${
+    active
+      ? "bg-graphite border-graphite text-paper"
+      : "border-rule-strong bg-card text-ink-2 hover:border-ink hover:text-ink"
+  }`;
+
 /**
- * Busca + filtros, lista de posts e paginação. Busca e filtro rodam no
- * navegador sobre título, resumo e categoria — o texto completo dos posts
- * não vai para o cliente.
+ * Busca + filtros (tema e ordem), lista de posts e paginação. Tudo roda no
+ * navegador sobre título, resumo, categoria e data — o texto completo dos
+ * posts não vai para o cliente.
  */
 export default function BlogExplorer({ posts }: { posts: PostMeta[] }) {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState(ALL);
+  const [order, setOrder] = useState<Order>("recent");
+  const [filtersOpen, setFiltersOpen] = useState(false);
   const [page, setPage] = useState(1);
   const listTop = useRef<HTMLDivElement>(null);
 
@@ -70,20 +85,27 @@ export default function BlogExplorer({ posts }: { posts: PostMeta[] }) {
 
   const filtered = useMemo(() => {
     const terms = normalize(query).split(/\s+/).filter(Boolean);
-    return posts.filter((p) => {
-      if (category !== ALL && p.category !== category) return false;
-      const haystack = normalize(`${p.title} ${p.description} ${p.category}`);
-      return terms.every((t) => haystack.includes(t));
-    });
-  }, [posts, query, category]);
+    const dir = order === "recent" ? -1 : 1;
+    return posts
+      .filter((p) => {
+        if (category !== ALL && p.category !== category) return false;
+        const haystack = normalize(`${p.title} ${p.description} ${p.category}`);
+        return terms.every((t) => haystack.includes(t));
+      })
+      .sort(
+        (a, b) =>
+          dir * a.date.localeCompare(b.date) || a.title.localeCompare(b.title, "pt-BR"),
+      );
+  }, [posts, query, category, order]);
 
+  const activeFilters = (category !== ALL ? 1 : 0) + (order !== "recent" ? 1 : 0);
   const filtering = query.trim() !== "" || category !== ALL;
   const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const current = Math.min(page, pageCount);
   const start = (current - 1) * PAGE_SIZE;
   const visible = filtered.slice(start, start + PAGE_SIZE);
 
-  // Mudou a busca ou o filtro: volta para a primeira página.
+  // Mudou a busca ou um filtro: volta para a primeira página.
   const search = (value: string) => {
     setQuery(value);
     setPage(1);
@@ -92,9 +114,14 @@ export default function BlogExplorer({ posts }: { posts: PostMeta[] }) {
     setCategory(name);
     setPage(1);
   };
+  const pickOrder = (value: Order) => {
+    setOrder(value);
+    setPage(1);
+  };
   const clear = () => {
     setQuery("");
     setCategory(ALL);
+    setOrder("recent");
     setPage(1);
   };
   const goTo = (n: number) => {
@@ -103,68 +130,166 @@ export default function BlogExplorer({ posts }: { posts: PostMeta[] }) {
     listTop.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
+  const orderLabel = order === "recent" ? "do mais recente ao mais antigo" : "do mais antigo ao mais recente";
+
   return (
     <>
-      {/* Busca + filtros */}
+      {/* Busca + botão Filtrar */}
       <section className="bg-canvas-sunk border-b border-rule py-9 sm:py-10">
         <div className="max-w-6xl mx-auto px-5">
-          <form role="search" onSubmit={(e) => e.preventDefault()} className="max-w-xl">
-            <label htmlFor="blog-busca" className="sr-only">
-              Buscar artigos
-            </label>
-            <div className="relative">
-              <Search
-                size={19}
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-stretch">
+            <form
+              role="search"
+              onSubmit={(e) => e.preventDefault()}
+              className="flex-1 sm:max-w-xl"
+            >
+              <label htmlFor="blog-busca" className="sr-only">
+                Buscar artigos
+              </label>
+              <div className="relative">
+                <Search
+                  size={19}
+                  aria-hidden
+                  className="absolute left-4 top-1/2 -translate-y-1/2 text-ink-3 pointer-events-none"
+                />
+                <input
+                  id="blog-busca"
+                  type="search"
+                  value={query}
+                  onChange={(e) => search(e.target.value)}
+                  placeholder="Buscar artigos…"
+                  autoComplete="off"
+                  className="w-full pl-12 pr-12 py-4 bg-card border border-rule-strong text-ink text-[16px] placeholder:text-ink-3 outline-none transition-colors focus:border-brand [&::-webkit-search-cancel-button]:hidden"
+                />
+                {query && (
+                  <button
+                    type="button"
+                    onClick={() => search("")}
+                    aria-label="Limpar busca"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center text-ink-3 hover:text-ink transition-colors"
+                  >
+                    <X size={17} aria-hidden />
+                  </button>
+                )}
+              </div>
+            </form>
+
+            <button
+              type="button"
+              onClick={() => setFiltersOpen((o) => !o)}
+              aria-expanded={filtersOpen}
+              aria-controls="blog-filtros"
+              className={`inline-flex items-center justify-center gap-2.5 px-6 py-4 border font-display font-bold text-[15px] transition-colors ${
+                filtersOpen || activeFilters > 0
+                  ? "bg-graphite border-graphite text-paper"
+                  : "bg-card border-rule-strong text-ink hover:border-ink"
+              }`}
+            >
+              <SlidersHorizontal size={18} aria-hidden />
+              Filtrar
+              {activeFilters > 0 && (
+                <span className="min-w-5 h-5 px-1.5 flex items-center justify-center bg-brand text-graphite text-[12px] leading-none tabular-nums">
+                  {activeFilters}
+                </span>
+              )}
+              <ChevronDown
+                size={17}
                 aria-hidden
-                className="absolute left-4 top-1/2 -translate-y-1/2 text-ink-3 pointer-events-none"
+                className={`transition-transform duration-300 ${filtersOpen ? "rotate-180" : ""}`}
               />
-              <input
-                id="blog-busca"
-                type="search"
-                value={query}
-                onChange={(e) => search(e.target.value)}
-                placeholder="Buscar artigos…"
-                autoComplete="off"
-                className="w-full pl-12 pr-12 py-4 bg-card border border-rule-strong text-ink text-[16px] placeholder:text-ink-3 outline-none transition-colors focus:border-brand [&::-webkit-search-cancel-button]:hidden"
-              />
-              {query && (
+            </button>
+          </div>
+
+          {/* Painel de filtros: ordem e tema */}
+          <div
+            id="blog-filtros"
+            inert={!filtersOpen}
+            className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out ${
+              filtersOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+            }`}
+          >
+            <div className="overflow-hidden">
+              <div className="mt-6 pt-6 border-t border-rule grid gap-x-12 gap-y-7 md:grid-cols-[auto_1fr]">
+                <div role="group" aria-label="Ordenar por data">
+                  <p className="mb-3 font-display font-bold text-[13px] text-ink">Ordenar</p>
+                  <div className="flex flex-wrap gap-2.5">
+                    {orders.map((o) => (
+                      <button
+                        key={o.value}
+                        type="button"
+                        onClick={() => pickOrder(o.value)}
+                        aria-pressed={order === o.value}
+                        className={optionButton(order === o.value)}
+                      >
+                        {o.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div role="group" aria-label="Filtrar por tema">
+                  <p className="mb-3 font-display font-bold text-[13px] text-ink">Tema</p>
+                  <div className="flex flex-wrap gap-2.5">
+                    {[[ALL, posts.length] as const, ...categories].map(([name, count]) => {
+                      const active = category === name;
+                      return (
+                        <button
+                          key={name}
+                          type="button"
+                          onClick={() => pickCategory(name)}
+                          aria-pressed={active}
+                          className={optionButton(active)}
+                        >
+                          {name}
+                          <span
+                            className={`ml-2 tabular-nums text-[12px] ${active ? "text-paper/70" : "text-ink-3"}`}
+                          >
+                            {count}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Filtros ativos, visíveis mesmo com o painel fechado */}
+          {activeFilters > 0 && (
+            <div className="mt-5 flex flex-wrap items-center gap-2.5">
+              <span className="text-ink-3 text-[13px]">Filtros ativos:</span>
+              {category !== ALL && (
                 <button
                   type="button"
-                  onClick={() => search("")}
-                  aria-label="Limpar busca"
-                  className="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center text-ink-3 hover:text-ink transition-colors"
+                  onClick={() => pickCategory(ALL)}
+                  aria-label={`Remover filtro de tema ${category}`}
+                  className="inline-flex items-center gap-2 pl-3.5 pr-2.5 py-1.5 bg-card border border-rule-strong text-ink text-[13px] font-display font-medium hover:border-ink transition-colors"
                 >
-                  <X size={17} aria-hidden />
+                  {category}
+                  <X size={14} aria-hidden className="text-ink-3" />
                 </button>
               )}
-            </div>
-          </form>
-
-          <div role="group" aria-label="Filtrar por tema" className="mt-5 flex flex-wrap gap-2.5">
-            {[[ALL, posts.length] as const, ...categories].map(([name, count]) => {
-              const active = category === name;
-              return (
+              {order !== "recent" && (
                 <button
-                  key={name}
                   type="button"
-                  onClick={() => pickCategory(name)}
-                  aria-pressed={active}
-                  className={`px-4 py-2.5 border text-[13.5px] font-display font-medium transition-colors ${
-                    active
-                      ? "bg-graphite border-graphite text-paper"
-                      : "border-rule-strong bg-card text-ink-2 hover:border-ink hover:text-ink"
-                  }`}
+                  onClick={() => pickOrder("recent")}
+                  aria-label="Remover ordenação por mais antigos"
+                  className="inline-flex items-center gap-2 pl-3.5 pr-2.5 py-1.5 bg-card border border-rule-strong text-ink text-[13px] font-display font-medium hover:border-ink transition-colors"
                 >
-                  {name}
-                  <span
-                    className={`ml-2 tabular-nums text-[12px] ${active ? "text-paper/70" : "text-ink-3"}`}
-                  >
-                    {count}
-                  </span>
+                  Mais antigos
+                  <X size={14} aria-hidden className="text-ink-3" />
                 </button>
-              );
-            })}
-          </div>
+              )}
+              <button
+                type="button"
+                onClick={clear}
+                className="px-2 py-1.5 text-[13px] font-display font-medium text-brand-ink underline underline-offset-4 hover:text-ink transition-colors"
+              >
+                Limpar tudo
+              </button>
+            </div>
+          )}
         </div>
       </section>
 
@@ -175,8 +300,8 @@ export default function BlogExplorer({ posts }: { posts: PostMeta[] }) {
             {filtered.length === 0
               ? "Nenhum artigo encontrado"
               : filtering
-                ? `${filtered.length} ${filtered.length === 1 ? "artigo encontrado" : "artigos encontrados"}`
-                : `${filtered.length} artigos, do mais recente ao mais antigo`}
+                ? `${filtered.length} ${filtered.length === 1 ? "artigo encontrado" : "artigos encontrados"}, ${orderLabel}`
+                : `${filtered.length} artigos, ${orderLabel}`}
           </p>
 
           {visible.length > 0 && (

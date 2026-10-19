@@ -2,7 +2,7 @@
 title: Estaca escavada: quando ela é a melhor solução
 description: Como a estaca escavada é executada, qual o papel da lama e da camisa metálica na estabilização do furo e em que situações ela se destaca.
 category: Técnicas
-date: 2026-10-19
+date: 2026-10-03
 ---
 
 A estaca escavada é uma das soluções mais versáteis em fundações profundas. Ela é executada por perfuração do solo, sem cravação, e permite diâmetros e profundidades que atendem desde obras comuns até estruturas de grande porte.

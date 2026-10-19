@@ -2,7 +2,7 @@
 title: Prova de carga em estacas: como se confirma o desempenho
 description: O que são os ensaios de carregamento estático e dinâmico, por que existem e como complementam o controle de execução da estaca.
 category: Qualidade
-date: 2026-10-19
+date: 2026-10-12
 ---
 
 O projeto de fundação estima a capacidade das estacas a partir de métodos de cálculo e da sondagem. A prova de carga é o passo que confere, na prática, se a estaca executada se comporta como o esperado.

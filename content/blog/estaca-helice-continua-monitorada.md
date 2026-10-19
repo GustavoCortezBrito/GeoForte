@@ -2,7 +2,7 @@
 title: Estaca hélice contínua monitorada: como funciona e quando usar
 description: Entenda as etapas de execução, o que o monitoramento eletrônico registra e em que situações a hélice contínua é uma boa escolha.
 category: Técnicas
-date: 2026-10-19
+date: 2026-09-22
 ---
 
 A estaca hélice contínua monitorada é uma das técnicas mais usadas em fundações profundas urbanas no Brasil. A combinação de produtividade, baixo nível de ruído e controle de execução explica boa parte dessa popularidade.

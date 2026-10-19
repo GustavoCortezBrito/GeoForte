@@ -2,7 +2,7 @@
 title: Sondagem SPT: por que ela vem antes do projeto de fundação
 description: Entenda o que a sondagem à percussão revela sobre o solo e como esses dados evitam surpresas e custos extras na fundação.
 category: Projeto
-date: 2026-10-19
+date: 2026-09-08
 ---
 
 Antes de decidir qualquer coisa sobre estacas, é preciso saber o que existe debaixo do terreno. A sondagem SPT é a forma mais comum de obter essa informação no Brasil, e o seu resultado orienta praticamente todas as decisões da fundação.

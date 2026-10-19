@@ -2,7 +2,7 @@
 title: Fundação rasa ou profunda: qual é a diferença?
 description: Sapatas, radier, estacas e tubulões: entenda como cada tipo transmite a carga ao solo e o que decide entre fundação rasa e profunda.
 category: Fundações
-date: 2026-10-19
+date: 2026-09-29
 ---
 
 Toda estrutura precisa transmitir seu peso ao terreno de forma segura. A fundação é o elemento que faz isso, e ela se divide em dois grandes grupos: rasas e profundas. Entender a diferença ajuda a conversar com projetistas e a avaliar propostas.

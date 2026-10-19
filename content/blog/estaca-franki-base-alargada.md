@@ -2,7 +2,7 @@
 title: Estaca Franki: base alargada e alta capacidade de carga
 description: Entenda como a estaca Franki é cravada, como se forma a base alargada e o que considerar quanto a vibração e vizinhança.
 category: Técnicas
-date: 2026-10-19
+date: 2026-10-08
 ---
 
 A estaca Franki é uma estaca cravada, moldada no local, conhecida pela base alargada, que aumenta a área de apoio na ponta. É uma solução tradicional em fundações profundas e segue sendo usada quando a obra exige alta capacidade de carga.
