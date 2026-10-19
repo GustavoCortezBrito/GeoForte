@@ -98,7 +98,7 @@ export default function BlogExplorer({ posts }: { posts: PostMeta[] }) {
       );
   }, [posts, query, category, order]);
 
-  const activeFilters = (category !== ALL ? 1 : 0) + (order !== "recent" ? 1 : 0);
+  const activeFilters = category !== ALL ? 1 : 0;
   const filtering = query.trim() !== "" || category !== ALL;
   const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const current = Math.min(page, pageCount);
@@ -121,7 +121,6 @@ export default function BlogExplorer({ posts }: { posts: PostMeta[] }) {
   const clear = () => {
     setQuery("");
     setCategory(ALL);
-    setOrder("recent");
     setPage(1);
   };
   const goTo = (n: number) => {
@@ -210,23 +209,6 @@ export default function BlogExplorer({ posts }: { posts: PostMeta[] }) {
           >
             <div className="overflow-hidden">
               <div className="mt-6 pt-6 border-t border-rule flex flex-col items-center gap-7 text-center">
-                <div role="group" aria-label="Ordenar por data">
-                  <p className="mb-3 font-display font-bold text-[13px] text-ink">Ordenar</p>
-                  <div className="flex flex-wrap justify-center gap-2.5">
-                    {orders.map((o) => (
-                      <button
-                        key={o.value}
-                        type="button"
-                        onClick={() => pickOrder(o.value)}
-                        aria-pressed={order === o.value}
-                        className={optionButton(order === o.value)}
-                      >
-                        {o.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
                 <div role="group" aria-label="Filtrar por tema">
                   <p className="mb-3 font-display font-bold text-[13px] text-ink">Tema</p>
                   <div className="flex flex-wrap justify-center gap-2.5">
@@ -270,17 +252,6 @@ export default function BlogExplorer({ posts }: { posts: PostMeta[] }) {
                   <X size={14} aria-hidden className="text-ink-3" />
                 </button>
               )}
-              {order !== "recent" && (
-                <button
-                  type="button"
-                  onClick={() => pickOrder("recent")}
-                  aria-label="Remover ordenação por mais antigos"
-                  className="inline-flex items-center gap-2 pl-3.5 pr-2.5 py-1.5 bg-card border border-rule-strong text-ink text-[13px] font-display font-medium hover:border-ink transition-colors"
-                >
-                  Mais antigos
-                  <X size={14} aria-hidden className="text-ink-3" />
-                </button>
-              )}
               <button
                 type="button"
                 onClick={clear}
@@ -296,13 +267,38 @@ export default function BlogExplorer({ posts }: { posts: PostMeta[] }) {
       {/* Posts + paginação */}
       <section className="py-14 sm:py-20">
         <div ref={listTop} className="max-w-6xl mx-auto px-5 scroll-mt-28">
-          <p role="status" aria-live="polite" className="text-ink-3 text-sm">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <p role="status" aria-live="polite" className="text-ink-3 text-sm">
             {filtered.length === 0
               ? "Nenhum artigo encontrado"
               : filtering
                 ? `${filtered.length} ${filtered.length === 1 ? "artigo encontrado" : "artigos encontrados"}, ${orderLabel}`
                 : `${filtered.length} artigos, ${orderLabel}`}
           </p>
+
+            <div role="group" aria-label="Ordenar por data" className="flex items-center gap-3">
+              <span className="text-ink-3 text-sm">Ordenar:</span>
+              <div className="flex">
+                {orders.map((o, i) => (
+                  <button
+                    key={o.value}
+                    type="button"
+                    onClick={() => pickOrder(o.value)}
+                    aria-pressed={order === o.value}
+                    className={`px-4 py-2.5 border text-[13.5px] font-display font-medium transition-colors ${
+                      i > 0 ? "-ml-px" : ""
+                    } ${
+                      order === o.value
+                        ? "relative z-10 bg-graphite border-graphite text-paper"
+                        : "border-rule-strong bg-card text-ink-2 hover:border-ink hover:text-ink"
+                    }`}
+                  >
+                    {o.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
 
           {visible.length > 0 && (
             <div className="mt-8 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
