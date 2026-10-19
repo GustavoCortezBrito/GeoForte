@@ -65,11 +65,6 @@ const THEME_INIT_SCRIPT = `
       document.documentElement.dataset.theme = "dark";
     }
   } catch (e) {}
-  try {
-    if (sessionStorage.getItem("geoforte-intro")) {
-      document.documentElement.dataset.intro = "seen";
-    }
-  } catch (e) {}
 `;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

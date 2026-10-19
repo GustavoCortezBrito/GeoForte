@@ -9,16 +9,11 @@ import GeoforteLogo from "./GeoforteLogo";
 // para o olho registrar o resultado antes da saída.
 const HOLD_MS = 1100;
 
-/** Marca na sessão que a abertura já foi vista (lida também pelo script do layout). */
-export const INTRO_STORAGE_KEY = "geoforte-intro";
-
 /**
  * Abertura: a estaca é cravada enquanto a marca se monta sobre a malha
  * técnica do hero. A saída fecha como uma íris centrada no símbolo — o
  * mesmo círculo do "G" abrindo caminho para a página.
  * É o único momento coreografado do site — o resto do movimento é contido.
- * Aparece uma vez por sessão: quem volta à home (do blog, por exemplo) não
- * espera de novo.
  */
 export default function LoadingScreen() {
   const [showing, setShowing] = useState(true);
@@ -26,18 +21,6 @@ export default function LoadingScreen() {
   const reducedRef = useRef(false);
 
   useEffect(() => {
-    // Já vista nesta sessão: o CSS já a escondeu antes da primeira pintura
-    // (data-intro="seen"); aqui só a tiramos da árvore.
-    if (document.documentElement.dataset.intro === "seen") {
-      const t = setTimeout(() => setShowing(false), 0);
-      return () => clearTimeout(t);
-    }
-    try {
-      sessionStorage.setItem(INTRO_STORAGE_KEY, "1");
-    } catch {
-      // Storage bloqueado: a abertura só volta a aparecer nas próximas visitas.
-    }
-
     reducedRef.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const hold = reducedRef.current ? 0 : HOLD_MS;
 
@@ -66,18 +49,10 @@ export default function LoadingScreen() {
   }, []);
 
   return (
-    <AnimatePresence
-      onExitComplete={() => {
-        document.body.style.overflow = "";
-        // Só depois da saída: assim a íris aparece inteira, e as navegações
-        // seguintes (sem recarregar a página) pulam a abertura.
-        document.documentElement.dataset.intro = "seen";
-      }}
-    >
+    <AnimatePresence onExitComplete={() => (document.body.style.overflow = "")}>
       {showing && (
         <motion.div
           key="geoforte-intro"
-          id="geoforte-intro"
           role="status"
           aria-live="polite"
           initial={false}

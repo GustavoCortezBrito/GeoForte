@@ -210,11 +210,6 @@ a {
   }
 }
 
-/* Abertura já vista nesta sessão: some antes da primeira pintura, sem piscar. */
-[data-intro="seen"] #geoforte-intro {
-  display: none;
-}
-
 .geoforte-drive {
   /* Ritmo parelho (ease-in-out), não ease-out — a estaca precisa ser vista
      descendo, não só "chegar" quase instantaneamente. */
