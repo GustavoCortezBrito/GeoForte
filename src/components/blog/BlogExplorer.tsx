@@ -137,11 +137,11 @@ export default function BlogExplorer({ posts }: { posts: PostMeta[] }) {
       {/* Busca + botão Filtrar */}
       <section className="bg-canvas-sunk border-b border-rule py-9 sm:py-10">
         <div className="max-w-6xl mx-auto px-5">
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-stretch">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-stretch sm:justify-center">
             <form
               role="search"
               onSubmit={(e) => e.preventDefault()}
-              className="flex-1 sm:max-w-xl"
+              className="flex-1 sm:max-w-xl sm:min-w-[24rem]"
             >
               <label htmlFor="blog-busca" className="sr-only">
                 Buscar artigos
@@ -209,10 +209,10 @@ export default function BlogExplorer({ posts }: { posts: PostMeta[] }) {
             }`}
           >
             <div className="overflow-hidden">
-              <div className="mt-6 pt-6 border-t border-rule grid gap-x-12 gap-y-7 md:grid-cols-[auto_1fr]">
+              <div className="mt-6 pt-6 border-t border-rule flex flex-col items-center gap-7 text-center">
                 <div role="group" aria-label="Ordenar por data">
                   <p className="mb-3 font-display font-bold text-[13px] text-ink">Ordenar</p>
-                  <div className="flex flex-wrap gap-2.5">
+                  <div className="flex flex-wrap justify-center gap-2.5">
                     {orders.map((o) => (
                       <button
                         key={o.value}
@@ -229,7 +229,7 @@ export default function BlogExplorer({ posts }: { posts: PostMeta[] }) {
 
                 <div role="group" aria-label="Filtrar por tema">
                   <p className="mb-3 font-display font-bold text-[13px] text-ink">Tema</p>
-                  <div className="flex flex-wrap gap-2.5">
+                  <div className="flex flex-wrap justify-center gap-2.5">
                     {[[ALL, posts.length] as const, ...categories].map(([name, count]) => {
                       const active = category === name;
                       return (
@@ -257,7 +257,7 @@ export default function BlogExplorer({ posts }: { posts: PostMeta[] }) {
 
           {/* Filtros ativos, visíveis mesmo com o painel fechado */}
           {activeFilters > 0 && (
-            <div className="mt-5 flex flex-wrap items-center gap-2.5">
+            <div className="mt-5 flex flex-wrap items-center justify-center gap-2.5">
               <span className="text-ink-3 text-[13px]">Filtros ativos:</span>
               {category !== ALL && (
                 <button
