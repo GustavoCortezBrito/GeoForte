@@ -1,22 +1,14 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { ArrowRight, Search, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, Search, X } from "lucide-react";
 import PostCover from "@/components/blog/PostCover";
 import { formatDate, normalize, type PostMeta } from "@/lib/blog-shared";
 
 const ALL = "Todos";
-
-function Meta({ post }: { post: PostMeta }) {
-  return (
-    <p className="text-ink-3 text-[13px]">
-      <time dateTime={post.date}>{formatDate(post.date)}</time>
-      <span aria-hidden> · </span>
-      {post.readingMinutes} min de leitura
-    </p>
-  );
-}
+/** Posts por página: 3 colunas × 2 linhas. */
+const PAGE_SIZE = 6;
 
 function PostCard({ post }: { post: PostMeta }) {
   return (
@@ -27,7 +19,11 @@ function PostCard({ post }: { post: PostMeta }) {
         className="aspect-16/9 border border-rule"
       />
       <div className="mt-5">
-        <Meta post={post} />
+        <p className="text-ink-3 text-[13px]">
+          <time dateTime={post.date}>{formatDate(post.date)}</time>
+          <span aria-hidden> · </span>
+          {post.readingMinutes} min de leitura
+        </p>
         <h2 className="mt-2.5 font-display font-bold text-[1.3rem] leading-snug tracking-[-0.015em] text-ink text-balance">
           <Link
             href={`/blog/${post.slug}`}
@@ -39,19 +35,32 @@ function PostCard({ post }: { post: PostMeta }) {
         <p className="mt-3 text-ink-2 text-[15px] leading-relaxed line-clamp-3">
           {post.description}
         </p>
+        <span className="mt-4 inline-flex items-center gap-2 font-display font-bold text-sm text-ink">
+          Ler artigo
+          <ArrowRight
+            size={16}
+            aria-hidden
+            className="text-brand transition-transform group-hover:translate-x-1"
+          />
+        </span>
       </div>
     </article>
   );
 }
 
+const pagerButton =
+  "w-11 h-11 flex items-center justify-center border border-rule-strong text-ink hover:bg-brand hover:border-brand hover:text-graphite disabled:opacity-35 disabled:hover:bg-transparent disabled:hover:border-rule-strong disabled:hover:text-ink disabled:cursor-not-allowed transition-colors";
+
 /**
- * Página do blog: hero com busca, filtros por categoria e a lista. Busca e
- * filtro rodam no navegador sobre título, resumo e categoria — os textos
- * completos dos posts não vão para o cliente.
+ * Busca + filtros, lista de posts e paginação. Busca e filtro rodam no
+ * navegador sobre título, resumo e categoria — o texto completo dos posts
+ * não vai para o cliente.
  */
 export default function BlogExplorer({ posts }: { posts: PostMeta[] }) {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState(ALL);
+  const [page, setPage] = useState(1);
+  const listTop = useRef<HTMLDivElement>(null);
 
   const categories = useMemo(() => {
     const counts = new Map<string, number>();
@@ -69,43 +78,37 @@ export default function BlogExplorer({ posts }: { posts: PostMeta[] }) {
   }, [posts, query, category]);
 
   const filtering = query.trim() !== "" || category !== ALL;
-  const featured = !filtering ? (posts.find((p) => p.featured) ?? posts[0]) : undefined;
-  const rest = featured ? filtered.filter((p) => p.slug !== featured.slug) : filtered;
+  const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  const current = Math.min(page, pageCount);
+  const start = (current - 1) * PAGE_SIZE;
+  const visible = filtered.slice(start, start + PAGE_SIZE);
 
+  // Mudou a busca ou o filtro: volta para a primeira página.
+  const search = (value: string) => {
+    setQuery(value);
+    setPage(1);
+  };
+  const pickCategory = (name: string) => {
+    setCategory(name);
+    setPage(1);
+  };
   const clear = () => {
     setQuery("");
     setCategory(ALL);
+    setPage(1);
+  };
+  const goTo = (n: number) => {
+    setPage(n);
+    // Leva o leitor de volta ao topo da lista, abaixo da barra fixa.
+    listTop.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   return (
     <>
-      {/* Hero */}
-      <section className="on-graphite relative overflow-hidden bg-graphite pt-36 pb-16 sm:pb-20">
-        <div
-          aria-hidden
-          className="absolute inset-0"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(250,250,248,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(250,250,248,0.05) 1px, transparent 1px)",
-            backgroundSize: "56px 56px",
-            maskImage: "radial-gradient(90% 120% at 85% 0%, #000 10%, transparent 75%)",
-          }}
-        />
-        <div className="relative max-w-6xl mx-auto px-5">
-          <div className="rule-driven max-w-64" aria-hidden />
-          <h1 className="mt-7 font-display font-bold text-[clamp(2.4rem,5.5vw,4.25rem)] leading-[1.02] tracking-[-0.035em] text-ink text-balance max-w-[16ch]">
-            Fundações, <span className="text-brand">explicadas</span>
-          </h1>
-          <p className="mt-6 text-ink-2 text-lg leading-relaxed max-w-[52ch]">
-            Estacas, sondagem, projeto e execução: o que a engenharia considera antes de cravar a
-            primeira estaca, em linguagem direta.
-          </p>
-
-          <form
-            role="search"
-            onSubmit={(e) => e.preventDefault()}
-            className="mt-10 max-w-xl"
-          >
+      {/* Busca + filtros */}
+      <section className="bg-canvas-sunk border-b border-rule py-9 sm:py-10">
+        <div className="max-w-6xl mx-auto px-5">
+          <form role="search" onSubmit={(e) => e.preventDefault()} className="max-w-xl">
             <label htmlFor="blog-busca" className="sr-only">
               Buscar artigos
             </label>
@@ -119,7 +122,7 @@ export default function BlogExplorer({ posts }: { posts: PostMeta[] }) {
                 id="blog-busca"
                 type="search"
                 value={query}
-                onChange={(e) => setQuery(e.target.value)}
+                onChange={(e) => search(e.target.value)}
                 placeholder="Buscar artigos…"
                 autoComplete="off"
                 className="w-full pl-12 pr-12 py-4 bg-card border border-rule-strong text-ink text-[16px] placeholder:text-ink-3 outline-none transition-colors focus:border-brand [&::-webkit-search-cancel-button]:hidden"
@@ -127,7 +130,7 @@ export default function BlogExplorer({ posts }: { posts: PostMeta[] }) {
               {query && (
                 <button
                   type="button"
-                  onClick={() => setQuery("")}
+                  onClick={() => search("")}
                   aria-label="Limpar busca"
                   className="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center text-ink-3 hover:text-ink transition-colors"
                 >
@@ -136,32 +139,20 @@ export default function BlogExplorer({ posts }: { posts: PostMeta[] }) {
               )}
             </div>
           </form>
-          <p className="mt-5 text-ink-3 text-[13px] tabular-nums">
-            {posts.length} artigos · {categories.length} temas
-          </p>
-        </div>
-      </section>
 
-      {/* Filtros + lista */}
-      <section className="py-14 sm:py-20">
-        <div className="max-w-6xl mx-auto px-5">
-          <div
-            role="group"
-            aria-label="Filtrar por tema"
-            className="flex flex-wrap gap-2.5"
-          >
+          <div role="group" aria-label="Filtrar por tema" className="mt-5 flex flex-wrap gap-2.5">
             {[[ALL, posts.length] as const, ...categories].map(([name, count]) => {
               const active = category === name;
               return (
                 <button
                   key={name}
                   type="button"
-                  onClick={() => setCategory(name)}
+                  onClick={() => pickCategory(name)}
                   aria-pressed={active}
                   className={`px-4 py-2.5 border text-[13.5px] font-display font-medium transition-colors ${
                     active
                       ? "bg-graphite border-graphite text-paper"
-                      : "border-rule-strong text-ink-2 hover:border-ink hover:text-ink"
+                      : "border-rule-strong bg-card text-ink-2 hover:border-ink hover:text-ink"
                   }`}
                 >
                   {name}
@@ -174,51 +165,23 @@ export default function BlogExplorer({ posts }: { posts: PostMeta[] }) {
               );
             })}
           </div>
+        </div>
+      </section>
 
-          <p role="status" aria-live="polite" className="mt-6 text-ink-3 text-sm">
-            {filtering
-              ? `${filtered.length} ${filtered.length === 1 ? "artigo encontrado" : "artigos encontrados"}`
-              : "Mais recentes primeiro"}
+      {/* Posts + paginação */}
+      <section className="py-14 sm:py-20">
+        <div ref={listTop} className="max-w-6xl mx-auto px-5 scroll-mt-28">
+          <p role="status" aria-live="polite" className="text-ink-3 text-sm">
+            {filtered.length === 0
+              ? "Nenhum artigo encontrado"
+              : filtering
+                ? `${filtered.length} ${filtered.length === 1 ? "artigo encontrado" : "artigos encontrados"}`
+                : `${filtered.length} artigos, do mais recente ao mais antigo`}
           </p>
 
-          {featured && (
-            <article className="group relative mt-8 grid gap-x-12 gap-y-7 lg:grid-cols-[1.25fr_1fr] lg:items-center">
-              <PostCover
-                category={featured.category}
-                className="aspect-16/9 lg:aspect-4/3 border border-rule"
-              />
-              <div>
-                <Meta post={featured} />
-                <h2 className="mt-3 font-display font-bold text-[clamp(1.6rem,3vw,2.25rem)] leading-[1.1] tracking-[-0.025em] text-ink text-balance">
-                  <Link
-                    href={`/blog/${featured.slug}`}
-                    className="after:absolute after:inset-0 hover:text-brand-ink transition-colors"
-                  >
-                    {featured.title}
-                  </Link>
-                </h2>
-                <p className="mt-4 text-ink-2 text-[16px] leading-relaxed">
-                  {featured.description}
-                </p>
-                <span className="mt-6 inline-flex items-center gap-2 font-display font-bold text-[15px] text-ink">
-                  Ler artigo
-                  <ArrowRight
-                    size={17}
-                    aria-hidden
-                    className="text-brand transition-transform group-hover:translate-x-1"
-                  />
-                </span>
-              </div>
-            </article>
-          )}
-
-          {rest.length > 0 && (
-            <div
-              className={`grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3 ${
-                featured ? "mt-16 border-t-2 border-ink pt-12" : "mt-8"
-              }`}
-            >
-              {rest.map((post) => (
+          {visible.length > 0 && (
+            <div className="mt-8 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
+              {visible.map((post) => (
                 <PostCard key={post.slug} post={post} />
               ))}
             </div>
@@ -226,9 +189,7 @@ export default function BlogExplorer({ posts }: { posts: PostMeta[] }) {
 
           {filtered.length === 0 && (
             <div className="mt-8 border border-rule-strong p-8 sm:p-10 max-w-2xl">
-              <p className="font-display font-bold text-xl text-ink">
-                Nenhum artigo encontrado
-              </p>
+              <p className="font-display font-bold text-xl text-ink">Nenhum artigo encontrado</p>
               <p className="mt-3 text-ink-2 text-[15.5px] leading-relaxed">
                 Não achamos resultados para o que você buscou. Tente outro termo, escolha outro
                 tema ou fale direto com a nossa engenharia.
@@ -249,6 +210,57 @@ export default function BlogExplorer({ posts }: { posts: PostMeta[] }) {
                 </Link>
               </div>
             </div>
+          )}
+
+          {pageCount > 1 && (
+            <nav
+              aria-label="Paginação"
+              className="mt-16 pt-8 border-t-2 border-ink flex flex-wrap items-center justify-between gap-x-6 gap-y-5"
+            >
+              <p className="text-ink-3 text-sm tabular-nums">
+                Mostrando {start + 1}–{Math.min(start + PAGE_SIZE, filtered.length)} de{" "}
+                {filtered.length}
+              </p>
+
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => goTo(current - 1)}
+                  disabled={current === 1}
+                  aria-label="Página anterior"
+                  className={pagerButton}
+                >
+                  <ArrowLeft size={18} aria-hidden />
+                </button>
+
+                {Array.from({ length: pageCount }, (_, i) => i + 1).map((n) => (
+                  <button
+                    key={n}
+                    type="button"
+                    onClick={() => goTo(n)}
+                    aria-label={`Página ${n}`}
+                    aria-current={n === current ? "page" : undefined}
+                    className={`w-11 h-11 border font-display font-bold text-[15px] tabular-nums transition-colors ${
+                      n === current
+                        ? "bg-graphite border-graphite text-paper"
+                        : "border-rule-strong text-ink-2 hover:border-ink hover:text-ink"
+                    }`}
+                  >
+                    {n}
+                  </button>
+                ))}
+
+                <button
+                  type="button"
+                  onClick={() => goTo(current + 1)}
+                  disabled={current === pageCount}
+                  aria-label="Próxima página"
+                  className={pagerButton}
+                >
+                  <ArrowRight size={18} aria-hidden />
+                </button>
+              </div>
+            </nav>
           )}
         </div>
       </section>

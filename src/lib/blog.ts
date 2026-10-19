@@ -16,7 +16,6 @@ export type { PostMeta } from "./blog-shared";
  *   description: Resumo de uma ou duas frases (aparece no Google).
  *   category: Fundações
  *   date: 2026-10-19
- *   featured: true        (opcional: é o post de abertura do /blog)
  *   ---
  */
 
@@ -53,7 +52,6 @@ function parse(slug: string, raw: string): Post {
     category: data.category,
     date: data.date,
     readingMinutes: Math.max(1, Math.round(words / 200)),
-    featured: data.featured === "true",
     body,
   };
 }

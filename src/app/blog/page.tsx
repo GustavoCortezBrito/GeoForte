@@ -23,16 +23,43 @@ export default function BlogPage() {
     category: p.category,
     date: p.date,
     readingMinutes: p.readingMinutes,
-    featured: p.featured,
   }));
 
   return (
     <>
       <Navbar />
       <main>
+        {/* 1 · Hero */}
+        <section className="on-graphite relative overflow-hidden bg-graphite pt-36 pb-16 sm:pb-20">
+          <div
+            aria-hidden
+            className="absolute inset-0"
+            style={{
+              backgroundImage:
+                "linear-gradient(rgba(250,250,248,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(250,250,248,0.05) 1px, transparent 1px)",
+              backgroundSize: "56px 56px",
+              maskImage: "radial-gradient(90% 120% at 85% 0%, #000 10%, transparent 75%)",
+            }}
+          />
+          <div className="relative max-w-6xl mx-auto px-5">
+            <div className="rule-driven max-w-64" aria-hidden />
+            <h1 className="mt-7 font-display font-bold text-[clamp(2.4rem,5.5vw,4.25rem)] leading-[1.02] tracking-[-0.035em] text-ink text-balance max-w-[16ch]">
+              Fundações, <span className="text-brand">explicadas</span>
+            </h1>
+            <p className="mt-6 text-ink-2 text-lg leading-relaxed max-w-[52ch]">
+              Estacas, sondagem, projeto e execução: o que a engenharia considera antes de cravar
+              a primeira estaca, em linguagem direta.
+            </p>
+            <p className="mt-6 text-ink-3 text-[13px] tabular-nums">
+              {posts.length} artigos · {new Set(posts.map((p) => p.category)).size} temas
+            </p>
+          </div>
+        </section>
+
+        {/* 2 · Busca e filtros  +  3 · Posts e paginação */}
         <BlogExplorer posts={posts} />
 
-        {/* Fecho: do artigo para o diagnóstico */}
+        {/* 4 · CTA */}
         <section className="on-graphite relative overflow-hidden bg-graphite py-20 sm:py-28">
           <div
             aria-hidden
