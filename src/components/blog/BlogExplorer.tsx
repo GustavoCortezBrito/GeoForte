@@ -100,10 +100,21 @@ export default function BlogExplorer({ posts }: { posts: PostMeta[] }) {
 
   const activeFilters = category !== ALL ? 1 : 0;
   const filtering = query.trim() !== "" || category !== ALL;
-  const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+
+  // Destaque: o post marcado com featured ou, sem marca, o mais recente.
+  // Aparece só na visão padrão (sem busca nem tema) e sai da grade, para não repetir.
+  const featuredPost = useMemo(
+    () => posts.find((p) => p.featured) ?? [...posts].sort((a, b) => b.date.localeCompare(a.date))[0],
+    [posts],
+  );
+  const hasFeatured = !filtering && featuredPost !== undefined;
+  const list = hasFeatured ? filtered.filter((p) => p.slug !== featuredPost.slug) : filtered;
+
+  const pageCount = Math.max(1, Math.ceil(list.length / PAGE_SIZE));
   const current = Math.min(page, pageCount);
   const start = (current - 1) * PAGE_SIZE;
-  const visible = filtered.slice(start, start + PAGE_SIZE);
+  const visible = list.slice(start, start + PAGE_SIZE);
+  const showFeatured = hasFeatured && current === 1;
 
   // Mudou a busca ou um filtro: volta para a primeira página.
   const search = (value: string) => {
@@ -267,7 +278,57 @@ export default function BlogExplorer({ posts }: { posts: PostMeta[] }) {
       {/* Posts + paginação */}
       <section className="py-14 sm:py-20">
         <div ref={listTop} className="max-w-6xl mx-auto px-5 scroll-mt-28">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          {showFeatured && (
+            <article
+              aria-label="Artigo em destaque"
+              className="group relative mb-14 sm:mb-16 grid gap-x-12 gap-y-7 lg:grid-cols-[1.25fr_1fr] lg:items-center"
+            >
+              <div className="relative">
+                <PostCover
+                  category={featuredPost.category}
+                  seed={featuredPost.slug}
+                  className="aspect-16/9 lg:aspect-4/3 border border-rule"
+                />
+                <span className="absolute top-5 left-5 px-3 py-1.5 bg-brand text-graphite font-display font-bold text-[11px] uppercase tracking-[0.14em]">
+                  Em destaque
+                </span>
+              </div>
+              <div>
+                <p className="text-ink-3 text-[13px]">
+                  {featuredPost.category}
+                  <span aria-hidden> · </span>
+                  <time dateTime={featuredPost.date}>{formatDate(featuredPost.date)}</time>
+                  <span aria-hidden> · </span>
+                  {featuredPost.readingMinutes} min de leitura
+                </p>
+                <h2 className="mt-3 font-display font-bold text-[clamp(1.75rem,3.2vw,2.5rem)] leading-[1.08] tracking-[-0.025em] text-ink text-balance">
+                  <Link
+                    href={`/blog/${featuredPost.slug}`}
+                    className="after:absolute after:inset-0 hover:text-brand-ink transition-colors"
+                  >
+                    {featuredPost.title}
+                  </Link>
+                </h2>
+                <p className="mt-4 text-ink-2 text-[16.5px] leading-relaxed">
+                  {featuredPost.description}
+                </p>
+                <span className="mt-6 inline-flex items-center gap-2 font-display font-bold text-[15px] text-ink">
+                  Ler artigo
+                  <ArrowRight
+                    size={17}
+                    aria-hidden
+                    className="text-brand transition-transform group-hover:translate-x-1"
+                  />
+                </span>
+              </div>
+            </article>
+          )}
+
+          <div
+            className={`flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between ${
+              showFeatured ? "pt-10 border-t-2 border-ink" : ""
+            }`}
+          >
             <p role="status" aria-live="polite" className="text-ink-3 text-sm">
             {filtered.length === 0
               ? "Nenhum artigo encontrado"
@@ -378,8 +439,8 @@ export default function BlogExplorer({ posts }: { posts: PostMeta[] }) {
               </div>
 
               <p className="text-ink-3 text-sm tabular-nums">
-                Mostrando {start + 1}–{Math.min(start + PAGE_SIZE, filtered.length)} de{" "}
-                {filtered.length}
+                Mostrando {start + 1}–{Math.min(start + PAGE_SIZE, list.length)} de{" "}
+                {list.length}
               </p>
             </nav>
           )}

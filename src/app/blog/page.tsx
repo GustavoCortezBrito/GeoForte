@@ -28,6 +28,7 @@ export default function BlogPage() {
     category: p.category,
     date: p.date,
     readingMinutes: p.readingMinutes,
+    featured: p.featured,
   }));
 
   return (
@@ -41,6 +42,7 @@ export default function BlogPage() {
             alt=""
             fill
             priority
+            quality={85}
             sizes="100vw"
             className="object-cover object-[60%_58%]"
           />

@@ -8,6 +8,8 @@ export interface PostMeta {
   /** ISO, AAAA-MM-DD. */
   date: string;
   readingMinutes: number;
+  /** Post em destaque do /blog (campo `featured: true` no cabeçalho). */
+  featured: boolean;
 }
 
 /** `2026-10-19` → `19 de outubro de 2026` (UTC, para o dia não mudar com o fuso). */
