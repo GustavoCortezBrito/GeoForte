@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, MessageCircle } from "lucide-react";
+import { ArrowRight, Clock, MessageCircle, Phone } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import BlogExplorer from "@/components/blog/BlogExplorer";
@@ -13,6 +14,16 @@ export const metadata: Metadata = {
     "Artigos da Geoforte Fundações sobre estacas, sondagem, projeto e execução de fundações profundas, explicados de forma direta.",
   alternates: { canonical: "/blog" },
 };
+
+const gridBg =
+  "linear-gradient(rgba(250,250,248,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(250,250,248,0.05) 1px, transparent 1px)";
+
+// O que reunir para a engenharia analisar a obra (o mesmo do checklist do blog).
+const toSend = [
+  "Relatório de sondagem do terreno",
+  "Projeto estrutural ou cargas previstas",
+  "Localização e condições de acesso da obra",
+];
 
 export default function BlogPage() {
   // Só os metadados vão para o navegador; o texto dos posts fica no servidor.
@@ -30,27 +41,45 @@ export default function BlogPage() {
       <Navbar />
       <main>
         {/* 1 · Hero */}
-        <section className="on-graphite relative overflow-hidden bg-graphite pt-36 pb-16 sm:pb-20">
+        <section className="on-graphite relative overflow-hidden bg-graphite pt-40 pb-24 sm:pt-44 sm:pb-32">
+          <Image
+            src="/images/blog-hero.png"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-[72%_50%]"
+          />
+          {/* Escurece da esquerda (texto) para a direita (trado e pôr do sol) */}
+          <div
+            aria-hidden
+            className="absolute inset-0 bg-gradient-to-r from-graphite via-graphite/80 to-graphite/10"
+          />
+          <div
+            aria-hidden
+            className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-graphite to-transparent"
+          />
           <div
             aria-hidden
             className="absolute inset-0"
             style={{
-              backgroundImage:
-                "linear-gradient(rgba(250,250,248,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(250,250,248,0.05) 1px, transparent 1px)",
+              backgroundImage: gridBg,
               backgroundSize: "56px 56px",
-              maskImage: "radial-gradient(90% 120% at 85% 0%, #000 10%, transparent 75%)",
+              maskImage: "radial-gradient(70% 120% at 0% 0%, #000 0%, transparent 70%)",
             }}
           />
+
           <div className="relative max-w-6xl mx-auto px-5">
             <div className="rule-driven max-w-64" aria-hidden />
-            <h1 className="mt-7 font-display font-bold text-[clamp(2.4rem,5.5vw,4.25rem)] leading-[1.02] tracking-[-0.035em] text-ink text-balance max-w-[16ch]">
+            <h1 className="mt-7 font-display font-bold text-[clamp(2.6rem,6.2vw,4.9rem)] leading-[1.0] tracking-[-0.035em] text-ink text-balance max-w-[13ch]">
               Fundações, <span className="text-brand">explicadas</span>
             </h1>
-            <p className="mt-6 text-ink-2 text-lg leading-relaxed max-w-[52ch]">
+            <p className="mt-7 text-ink-2 text-lg leading-relaxed max-w-[46ch]">
               Estacas, sondagem, projeto e execução: o que a engenharia considera antes de cravar
               a primeira estaca, em linguagem direta.
             </p>
-            <p className="mt-6 text-ink-3 text-[13px] tabular-nums">
+            <p className="mt-8 flex items-center gap-3 text-ink-3 text-[13px] tabular-nums">
+              <span aria-hidden className="w-8 h-[2px] bg-brand" />
               {posts.length} artigos · {new Set(posts.map((p) => p.category)).size} temas
             </p>
           </div>
@@ -65,43 +94,90 @@ export default function BlogPage() {
             aria-hidden
             className="absolute inset-0"
             style={{
-              backgroundImage:
-                "linear-gradient(rgba(250,250,248,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(250,250,248,0.05) 1px, transparent 1px)",
+              backgroundImage: gridBg,
               backgroundSize: "56px 56px",
               maskImage: "radial-gradient(80% 140% at 0% 100%, #000 10%, transparent 70%)",
             }}
           />
-          <div className="relative max-w-6xl mx-auto px-5">
-            <div className="rule-driven max-w-64" aria-hidden />
-            <h2 className="mt-7 font-display font-bold text-[clamp(2rem,4.5vw,3.5rem)] leading-[1.04] tracking-[-0.03em] text-ink text-balance max-w-[20ch]">
-              Tem uma obra em planejamento?
-            </h2>
-            <p className="mt-5 text-ink-2 text-lg leading-relaxed max-w-[52ch]">
-              Envie os dados do projeto e a sondagem. A engenharia da Geoforte analisa e indica a
-              solução de fundação mais adequada para o seu caso.
-            </p>
-            <div className="mt-9 flex flex-wrap items-center gap-3">
+          <div
+            aria-hidden
+            className="absolute -right-24 top-0 w-[44rem] h-[44rem] rounded-full"
+            style={{
+              background: "radial-gradient(circle, rgba(239,108,26,0.14) 0%, transparent 62%)",
+            }}
+          />
+
+          <div className="relative max-w-6xl mx-auto px-5 grid gap-x-16 gap-y-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+            <div>
+              <div className="rule-driven max-w-64" aria-hidden />
+              <h2 className="mt-7 font-display font-bold text-[clamp(2rem,4.5vw,3.5rem)] leading-[1.04] tracking-[-0.03em] text-ink text-balance max-w-[18ch]">
+                Tem uma obra em planejamento?
+              </h2>
+              <p className="mt-5 text-ink-2 text-lg leading-relaxed max-w-[48ch]">
+                Envie os dados do projeto. A engenharia da Geoforte analisa o seu caso e indica a
+                solução de fundação mais adequada.
+              </p>
+
+              <div className="mt-9 flex flex-wrap items-center gap-3">
+                <Link
+                  href="/#contato"
+                  className="group inline-flex items-center gap-2.5 px-7 py-4 bg-brand hover:bg-brand-deep text-graphite text-[15px] font-display font-bold transition-colors"
+                >
+                  Solicitar diagnóstico técnico
+                  <ArrowRight
+                    size={17}
+                    aria-hidden
+                    className="transition-transform group-hover:translate-x-1"
+                  />
+                </Link>
+                <a
+                  href={`https://wa.me/${companyInfo.whatsapp}?text=${encodeURIComponent(
+                    "Olá! Li o blog da Geoforte e gostaria de falar sobre a fundação da minha obra.",
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2.5 px-7 py-4 text-ink text-[15px] font-display font-medium border border-white/25 hover:border-white/60 hover:bg-white/5 transition-colors"
+                >
+                  <MessageCircle size={17} aria-hidden />
+                  Conversar no WhatsApp
+                </a>
+              </div>
+
+              <p className="mt-6 flex items-center gap-2 text-ink-3 text-[13px]">
+                <Clock size={14} strokeWidth={1.75} aria-hidden />
+                Resposta da engenharia em até 1 dia útil
+              </p>
+            </div>
+
+            {/* O que enviar: tira a dúvida de quem ainda não sabe por onde começar */}
+            <div className="bg-card border border-rule-strong p-7 sm:p-9">
+              <p className="font-display font-bold text-xl text-ink">Para agilizar a análise</p>
+              <p className="mt-2 text-ink-2 text-[15px] leading-relaxed">
+                Tenha em mãos, se já existirem:
+              </p>
+              <ol className="mt-6 border-t border-rule">
+                {toSend.map((item, i) => (
+                  <li key={item} className="flex items-baseline gap-5 py-4 border-b border-rule">
+                    <span className="font-display font-bold text-2xl leading-none text-brand tabular-nums w-8 shrink-0">
+                      {i + 1}
+                    </span>
+                    <span className="text-ink text-[15.5px] leading-snug">{item}</span>
+                  </li>
+                ))}
+              </ol>
               <Link
-                href="/#contato"
-                className="group inline-flex items-center gap-2.5 px-7 py-4 bg-brand hover:bg-brand-deep text-graphite text-[15px] font-display font-bold transition-colors"
+                href="/blog/checklist-antes-de-contratar-fundacoes"
+                className="mt-6 inline-flex items-center gap-2 font-display font-bold text-sm text-ink hover:text-brand transition-colors"
               >
-                Solicitar diagnóstico técnico
-                <ArrowRight
-                  size={17}
-                  aria-hidden
-                  className="transition-transform group-hover:translate-x-1"
-                />
+                Ver o checklist completo
+                <ArrowRight size={15} aria-hidden className="text-brand" />
               </Link>
               <a
-                href={`https://wa.me/${companyInfo.whatsapp}?text=${encodeURIComponent(
-                  "Olá! Li o blog da Geoforte e gostaria de falar sobre a fundação da minha obra.",
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2.5 px-7 py-4 text-ink text-[15px] font-display font-medium border border-white/25 hover:border-white/60 hover:bg-white/5 transition-colors"
+                href={`tel:+55${companyInfo.phone.replace(/\D/g, "")}`}
+                className="mt-6 pt-6 border-t border-rule flex items-center gap-2.5 text-ink text-[15px] font-display font-medium hover:text-brand transition-colors tabular-nums"
               >
-                <MessageCircle size={17} aria-hidden />
-                Conversar no WhatsApp
+                <Phone size={16} strokeWidth={1.75} aria-hidden className="text-brand" />
+                {companyInfo.phone}
               </a>
             </div>
           </div>

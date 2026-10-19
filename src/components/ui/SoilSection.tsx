@@ -186,7 +186,7 @@ export default function SoilSection({ className = "" }: { className?: string }) 
             key={p.x}
             initial={{ scaleY: 0 }}
             animate={{ scaleY: 1 }}
-            transition={{ duration: 1.5, delay: 3.1 + i * 0.28, ease }}
+            transition={{ duration: 1.5, delay: 1.35 + i * 0.2, ease }}
             style={{ transformOrigin: `0px ${GROUND}px`, transformBox: "view-box" }}
           >
             <rect x={x0} y={GROUND} width={SHAFT} height={shaft} fill="#ef6c1a" />
@@ -204,7 +204,7 @@ export default function SoilSection({ className = "" }: { className?: string }) 
       <motion.g
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 4.9, duration: 0.6 }}
+        transition={{ delay: 2.7, duration: 0.6 }}
       >
         <path
           d={`M${piles[1].x + 36} ${GROUND}V${GROUND + piles[1].depth * PX_PER_M}`}

@@ -4,16 +4,21 @@ import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import GeoforteLogo from "./GeoforteLogo";
 
-// A estaca (.geoforte-drive, em globals.css) leva 0,55s de atraso + 1,7s de
-// queda = 2,25s até terminar de cravar. HOLD_MS precisa cobrir isso, com uma
-// folga para o olho registrar o resultado antes da saída.
-const HOLD_MS = 2600;
+// A estaca (.geoforte-drive, em globals.css) leva 0,1s de atraso + 0,75s de
+// queda = 0,85s até terminar de cravar. HOLD_MS cobre isso com uma folga curta
+// para o olho registrar o resultado antes da saída.
+const HOLD_MS = 1100;
+
+/** Marca na sessão que a abertura já foi vista (lida também pelo script do layout). */
+export const INTRO_STORAGE_KEY = "geoforte-intro";
 
 /**
  * Abertura: a estaca é cravada enquanto a marca se monta sobre a malha
  * técnica do hero. A saída fecha como uma íris centrada no símbolo — o
  * mesmo círculo do "G" abrindo caminho para a página.
  * É o único momento coreografado do site — o resto do movimento é contido.
+ * Aparece uma vez por sessão: quem volta à home (do blog, por exemplo) não
+ * espera de novo.
  */
 export default function LoadingScreen() {
   const [showing, setShowing] = useState(true);
@@ -21,6 +26,18 @@ export default function LoadingScreen() {
   const reducedRef = useRef(false);
 
   useEffect(() => {
+    // Já vista nesta sessão: o CSS já a escondeu antes da primeira pintura
+    // (data-intro="seen"); aqui só a tiramos da árvore.
+    if (document.documentElement.dataset.intro === "seen") {
+      const t = setTimeout(() => setShowing(false), 0);
+      return () => clearTimeout(t);
+    }
+    try {
+      sessionStorage.setItem(INTRO_STORAGE_KEY, "1");
+    } catch {
+      // Storage bloqueado: a abertura só volta a aparecer nas próximas visitas.
+    }
+
     reducedRef.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const hold = reducedRef.current ? 0 : HOLD_MS;
 
@@ -49,15 +66,23 @@ export default function LoadingScreen() {
   }, []);
 
   return (
-    <AnimatePresence onExitComplete={() => (document.body.style.overflow = "")}>
+    <AnimatePresence
+      onExitComplete={() => {
+        document.body.style.overflow = "";
+        // Só depois da saída: assim a íris aparece inteira, e as navegações
+        // seguintes (sem recarregar a página) pulam a abertura.
+        document.documentElement.dataset.intro = "seen";
+      }}
+    >
       {showing && (
         <motion.div
           key="geoforte-intro"
+          id="geoforte-intro"
           role="status"
           aria-live="polite"
           initial={false}
           exit={{ clipPath: "circle(0% at 50% 46%)" }}
-          transition={{ duration: 0.85, ease: [0.76, 0, 0.24, 1] }}
+          transition={{ duration: 0.45, ease: [0.76, 0, 0.24, 1] }}
           style={{ clipPath: "circle(145% at 50% 46%)" }}
           className="on-graphite fixed inset-0 z-[9999] bg-graphite flex flex-col items-center justify-center overflow-hidden"
         >
@@ -86,7 +111,7 @@ export default function LoadingScreen() {
             <motion.div
               initial={{ opacity: 0, scale: 0.88 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
             >
               <GeoforteLogo variant="stacked" size={100} driven />
             </motion.div>
@@ -94,7 +119,7 @@ export default function LoadingScreen() {
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.5 }}
+              transition={{ delay: 0.25, duration: 0.4 }}
               className="mt-11 flex items-center gap-4"
             >
               <div className="w-40 h-px bg-white/15 overflow-hidden">

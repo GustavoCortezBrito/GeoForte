@@ -215,13 +215,8 @@ export default function BlogExplorer({ posts }: { posts: PostMeta[] }) {
           {pageCount > 1 && (
             <nav
               aria-label="Paginação"
-              className="mt-16 pt-8 border-t-2 border-ink flex flex-wrap items-center justify-between gap-x-6 gap-y-5"
+              className="mt-16 pt-10 border-t-2 border-ink flex flex-col items-center gap-5"
             >
-              <p className="text-ink-3 text-sm tabular-nums">
-                Mostrando {start + 1}–{Math.min(start + PAGE_SIZE, filtered.length)} de{" "}
-                {filtered.length}
-              </p>
-
               <div className="flex items-center gap-2">
                 <button
                   type="button"
@@ -260,6 +255,11 @@ export default function BlogExplorer({ posts }: { posts: PostMeta[] }) {
                   <ArrowRight size={18} aria-hidden />
                 </button>
               </div>
+
+              <p className="text-ink-3 text-sm tabular-nums">
+                Mostrando {start + 1}–{Math.min(start + PAGE_SIZE, filtered.length)} de{" "}
+                {filtered.length}
+              </p>
             </nav>
           )}
         </div>

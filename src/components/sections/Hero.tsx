@@ -7,7 +7,7 @@ import SoilSection from "@/components/ui/SoilSection";
 
 const drive = [0.16, 1, 0.3, 1] as const;
 
-// A abertura (LoadingScreen) cobre os primeiros ~3,4 s; o hero começa a
+// A abertura (LoadingScreen) cobre os primeiros ~1,6 s; o hero começa a
 // entrar já por baixo dela para que, quando a íris abre, ele esteja pronto.
 const rise = {
   hidden: { opacity: 0, y: 20 },
