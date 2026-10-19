@@ -168,6 +168,7 @@ export const navLinks = [
   { href: "/#projetos", label: "Projetos" },
   { href: "/#empresa", label: "Empresa" },
   { href: "/#historia", label: "Trajetória" },
+  { href: "/blog", label: "Blog" },
   { href: "/#contato", label: "Contato" },
 ];
 

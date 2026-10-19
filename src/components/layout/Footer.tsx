@@ -46,6 +46,7 @@ const footerNav = [
   { href: "/#projetos", label: "Projetos de referência" },
   { href: "/#empresa", label: "Sobre a empresa" },
   { href: "/#historia", label: "Nossa trajetória" },
+  { href: "/blog", label: "Blog da Geoforte" },
   { href: "/#contato", label: "Fale conosco" },
 ];
 

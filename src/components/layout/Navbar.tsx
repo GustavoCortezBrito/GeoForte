@@ -59,7 +59,7 @@ export default function Navbar() {
             <GeoforteLogo variant="lockup" size={42} />
           </Link>
 
-          <div className="hidden lg:flex items-center gap-7">
+          <div className="hidden xl:flex items-center gap-7">
             {navLinks.slice(1).map((l) => (
               <a
                 key={l.href}
@@ -82,7 +82,7 @@ export default function Navbar() {
 
           <button
             onClick={() => setOpen(!open)}
-            className="lg:hidden text-ink p-2 -mr-2"
+            className="xl:hidden text-ink p-2 -mr-2"
             aria-label={open ? "Fechar menu" : "Abrir menu"}
             aria-expanded={open}
           >
@@ -97,7 +97,7 @@ export default function Navbar() {
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-              className="lg:hidden border-t border-rule bg-canvas overflow-hidden"
+              className="xl:hidden border-t border-rule bg-canvas overflow-hidden"
             >
               <div className="px-5 py-3">
                 {navLinks.map((l) => (
