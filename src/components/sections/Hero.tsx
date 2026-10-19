@@ -90,19 +90,22 @@ export default function Hero() {
       id="inicio"
       className="on-graphite relative min-h-[100dvh] flex flex-col bg-graphite overflow-hidden"
     >
-      {/* Vídeo de fundo — obra em execução. Cai para a malha técnica se
-          ausente: o erro de carga dispara nos <source>, não no <video>. */}
+      {/* Vídeo de fundo — obra em execução (1080p, 18 s em vai-e-volta, sem corte
+          no loop). Cai para a malha técnica se ausente: o erro de carga dispara
+          nos <source>, não no <video>. */}
       {videoOk && (
         <video
           autoPlay
           muted
           loop
           playsInline
+          preload="auto"
+          poster="/videos/hero-obra-poster.jpg"
           aria-hidden
           className="absolute inset-0 w-full h-full object-cover"
         >
           <source
-            src="/videos/hero.mp4"
+            src="/videos/hero-obra.mp4"
             type="video/mp4"
             onError={() => setVideoOk(false)}
           />

@@ -38,13 +38,13 @@ export default function BlogPage() {
         {/* 1 · Hero */}
         <section className="on-graphite relative overflow-hidden bg-graphite pt-40 pb-24 sm:pt-44 sm:pb-32">
           <Image
-            src="/images/blog-hero.jpg"
+            src="/images/blog-hero-obra.jpg"
             alt=""
             fill
             priority
             quality={85}
             sizes="100vw"
-            className="object-cover object-[60%_58%]"
+            className="object-cover object-[80%_58%] md:object-[60%_58%]"
           />
           {/* Escurece da esquerda (texto) para a direita (trado e pôr do sol) */}
           <div
