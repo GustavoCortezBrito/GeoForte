@@ -1,6 +1,10 @@
 import "server-only";
 import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
+import type { PostMeta } from "./blog-shared";
+
+export { formatDate } from "./blog-shared";
+export type { PostMeta } from "./blog-shared";
 
 /**
  * Blog em arquivos: cada post é um `content/blog/<slug>.md` com um cabeçalho
@@ -12,20 +16,11 @@ import { join } from "node:path";
  *   description: Resumo de uma ou duas frases (aparece no Google).
  *   category: Fundações
  *   date: 2026-10-19
+ *   featured: true        (opcional: é o post de abertura do /blog)
  *   ---
  */
 
 const DIR = join(process.cwd(), "content", "blog");
-
-export interface PostMeta {
-  slug: string;
-  title: string;
-  description: string;
-  category: string;
-  /** ISO, AAAA-MM-DD. */
-  date: string;
-  readingMinutes: number;
-}
 
 export interface Post extends PostMeta {
   body: string;
@@ -58,6 +53,7 @@ function parse(slug: string, raw: string): Post {
     category: data.category,
     date: data.date,
     readingMinutes: Math.max(1, Math.round(words / 200)),
+    featured: data.featured === "true",
     body,
   };
 }
@@ -74,12 +70,3 @@ export function getPost(slug: string): Post | undefined {
   return getAllPosts().find((p) => p.slug === slug);
 }
 
-/** `2026-10-19` → `19 de outubro de 2026` (UTC, para o dia não mudar com o fuso). */
-export function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString("pt-BR", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-    timeZone: "UTC",
-  });
-}

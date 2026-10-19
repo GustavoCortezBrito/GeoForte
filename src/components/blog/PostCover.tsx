@@ -1,14 +1,30 @@
 import { mark } from "@/lib/brand";
 
+// O símbolo muda de posição e escala conforme o post, para a grade de capas
+// ter ritmo. Determinístico: o mesmo slug sempre gera a mesma capa.
+const placements = [
+  "-right-6 -top-10 h-[130%] opacity-[0.16]",
+  "-left-10 -bottom-20 h-[160%] opacity-[0.13]",
+  "right-12 -top-8 h-[118%] opacity-[0.16]",
+  "left-1/2 -translate-x-1/2 -bottom-24 h-[175%] opacity-[0.12]",
+  "-right-16 -bottom-14 h-[150%] opacity-[0.15]",
+];
+
+const pick = (seed: string) =>
+  placements[[...seed].reduce((n, c) => n + c.charCodeAt(0), 0) % placements.length];
+
 /**
  * Capa dos posts enquanto não há foto: faixa grafite com a malha técnica da
  * marca e o símbolo cravado no canto. A categoria é o único texto.
  */
 export default function PostCover({
   category,
+  seed = category,
   className = "",
 }: {
   category: string;
+  /** Qualquer texto estável (use o slug) que escolhe a posição do símbolo. */
+  seed?: string;
   className?: string;
 }) {
   return (
@@ -27,7 +43,7 @@ export default function PostCover({
       />
       <svg
         viewBox={mark.viewBox}
-        className="absolute -right-6 -top-10 h-[130%] w-auto opacity-[0.16]"
+        className={`absolute w-auto ${pick(seed)}`}
         fill="#ef6c1a"
       >
         <path d={mark.ring} />

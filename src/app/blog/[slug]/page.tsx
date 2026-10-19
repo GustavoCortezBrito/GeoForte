@@ -100,6 +100,7 @@ export default async function PostPage({ params }: Props) {
 
           <PostCover
             category={post.category}
+            seed={post.slug}
             className="mt-10 aspect-16/7 border border-rule"
           />
 
