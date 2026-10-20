@@ -11,7 +11,7 @@ import Testimonials from "@/components/sections/Testimonials";
 import Contact from "@/components/sections/Contact";
 import WhatsAppButton from "@/components/ui/WhatsAppButton";
 import LoadingScreen from "@/components/ui/LoadingScreen";
-import { companyInfo } from "@/lib/data";
+import { companyInfo, services } from "@/lib/data";
 import { SITE_URL } from "@/lib/site";
 
 // Dados estruturados da empresa (schema.org), todos vindos de companyInfo.
@@ -19,14 +19,26 @@ const a = companyInfo.address;
 const businessJsonLd = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
+  "@id": `${SITE_URL}/#empresa`,
   name: companyInfo.fullName,
   alternateName: companyInfo.name,
+  logo: `${SITE_URL}/marca/geoforte-simbolo.png`,
+  image: `${SITE_URL}/opengraph-image.png`,
   slogan: companyInfo.slogan,
   url: SITE_URL,
   telephone: companyInfo.phone,
   email: companyInfo.email,
   foundingDate: "1995",
-  areaServed: "BR",
+  areaServed: { "@type": "Country", name: "Brasil" },
+  // Os serviços vêm da mesma lista exibida na página (src/lib/data.ts).
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Serviços de fundações",
+    itemListElement: services.map((s) => ({
+      "@type": "Offer",
+      itemOffered: { "@type": "Service", name: s.title, description: s.description },
+    })),
+  },
   address: {
     "@type": "PostalAddress",
     streetAddress: `${a.street}, ${a.complement}`,

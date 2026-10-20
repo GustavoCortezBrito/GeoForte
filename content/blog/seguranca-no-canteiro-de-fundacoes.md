@@ -3,6 +3,7 @@ title: Segurança no canteiro de fundações: o que observar
 description: Perfuratrizes, guindastes, concreto e escavações: os principais riscos de uma obra de fundação e as práticas que os mantêm sob controle.
 category: Obra
 date: 2026-10-17
+seoTitle: Segurança no canteiro de fundações
 ---
 
 Uma obra de fundação reúne equipamentos pesados em movimento, peças altas, concreto e solo exposto. Por isso, a segurança não é um detalhe: ela faz parte do planejamento da obra desde o início, e é regida por normas, como a **NR-18** (segurança e saúde no trabalho na indústria da construção).

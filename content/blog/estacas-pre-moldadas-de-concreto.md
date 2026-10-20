@@ -3,6 +3,7 @@ title: Estacas pré-moldadas de concreto: como funcionam e onde são usadas
 description: Peças fabricadas em usina e cravadas no terreno: vantagens do controle de fábrica, emendas, limitações e como se verifica a cravação.
 category: Técnicas
 date: 2026-10-01
+seoTitle: Estacas pré-moldadas de concreto: como funcionam
 ---
 
 A estaca pré-moldada de concreto é uma peça produzida em usina, curada e transportada pronta para a obra, onde é cravada no terreno. Por ser fabricada em ambiente controlado, essa solução costuma ser associada a uma qualidade de material bastante uniforme.

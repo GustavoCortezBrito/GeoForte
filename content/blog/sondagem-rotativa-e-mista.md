@@ -3,6 +3,7 @@ title: Sondagem rotativa e mista: quando a SPT não é suficiente
 description: Em solos muito resistentes, na presença de rocha ou de matacões, a sondagem à percussão chega ao limite. Entenda o que a sondagem rotativa e a mista acrescentam.
 category: Projeto
 date: 2026-09-26
+seoTitle: Sondagem rotativa e mista: quando a SPT não basta
 ---
 
 A [sondagem SPT](/blog/sondagem-spt-antes-do-projeto-de-fundacao) é a mais comum no Brasil e resolve a grande maioria dos casos. Mas ela tem um limite: quando o amostrador não consegue mais avançar, o furo é interrompido. Para continuar investigando, usam-se outros métodos.
