@@ -1,0 +1,12 @@
+{
+  "name": "geoforte-proposta-anexo",
+  "private": true,
+  "type": "module",
+  "description": "Gera o Anexo B (Obras executadas) da proposta GEO 2701A/25 em PDF A4.",
+  "scripts": {
+    "gerar": "node gerar.mjs"
+  },
+  "dependencies": {
+    "puppeteer-core": "^24.0.0"
+  }
+}
