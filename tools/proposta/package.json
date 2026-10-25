@@ -1,0 +1,15 @@
+{
+  "name": "geoforte-proposta",
+  "private": true,
+  "type": "module",
+  "description": "Gera a proposta GEO 2701A/25 (Grand Palladium) completa em PDF, na identidade visual do site.",
+  "scripts": {
+    "gerar": "node gerar.mjs",
+    "verificar": "node verificar.mjs"
+  },
+  "dependencies": {
+    "pdf-lib": "^1.17.1",
+    "puppeteer-core": "^24.0.0",
+    "mupdf": "^1.28.1"
+  }
+}

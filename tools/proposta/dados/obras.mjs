@@ -1,24 +1,12 @@
 /**
  * Conteúdo do Anexo B — Obras executadas (proposta GEO 2701A/25).
+ * Empresa e cabeçalho ficam em empresa.mjs, compartilhados com o resto do documento.
  *
  * Tudo vem do BRIEFING. Campo ainda sem dado = null: aparece no PDF como
  * placeholder destacado (fundo laranja-claro, borda tracejada), para a
  * Eng. Denise revisar. Para preencher, troque o null pelo texto e rode
  * `npm run gerar` de novo. Não inventar números.
  */
-
-export const proposta = {
-  codigo: "PROPOSTA GEO 2701A/25",
-  projeto: "EXPANSÃO GRAND PALLADIUM IMBASSAÍ",
-};
-
-export const empresa = {
-  razaoSocial: "Geofor Obras de Fundações Ltda",
-  cnpj: "26.214.785/0001-99",
-  endereco: "Av. Luís Viana Filho, 13145 · Hangar Business Park, Hangar 6, Sl. 419",
-  cidade: "São Cristóvão · Salvador – BA",
-  contatos: "(71) 99708-2005 · (71) 3341-2918 · projetos@geoforte.com.br",
-};
 
 export const abertura = {
   sobretitulo: "ANEXO B",
