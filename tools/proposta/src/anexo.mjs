@@ -39,7 +39,7 @@ export const htmlAnexoAbertura = () =>
     ${obras
       .map(
         (o, i) => `<article class="ab-card">
-      <div class="ab-foto"><img src="${asset("fotos/" + o.fotoPrincipal.arquivo)}" alt="${esc(o.nome)}" /></div>
+      <div class="ab-foto"><img src="${asset("fotos/" + o.fotos[0].arquivo)}" alt="${esc(o.nome)}"${o.fotos[0].foco ? ` style="object-position:${o.fotos[0].foco}"` : ""} /></div>
       <div class="ab-txt">
         <span class="ab-num">${esc(o.numero)}</span>
         <div><h2 class="ab-nome">${esc(o.nome)}</h2><p class="ab-constr">${esc(o.construtora)}</p></div>
@@ -68,13 +68,18 @@ const paginaObra = (o) => {
     <div>
       <h1 class="ob-nome">${esc(o.nome)}</h1>
       <p class="ob-linha">${esc(o.construtora)} · ${val(o.bairro, placeholders.bairro)}, Salvador – BA · ${val(o.ano, placeholders.ano)}</p>
+      ${o.fotosConfirmar ? `<p class="ob-linha"><span class="ph">${esc(placeholders.fotosConfirmar)}</span></p>` : ""}
     </div>
   </header>
 
-  <figure class="ob-foto ob-principal">
-    <img src="${asset("fotos/" + o.fotoPrincipal.arquivo)}" alt="${esc(o.fotoPrincipal.legenda)}" />
-    <figcaption>${esc(o.fotoPrincipal.legenda)}</figcaption>
-  </figure>
+  <div class="ob-mosaico n${o.pdf.length}">
+    ${o.pdf
+      .map((i, k) => {
+        const ft = o.fotos[i];
+        return `<figure class="ob-foto m${k}"><img src="${asset("fotos/" + ft.arquivo)}" alt="${esc(ft.legenda)}"${ft.foco ? ` style="object-position:${ft.foco}"` : ""} /><figcaption>${esc(ft.legenda)}</figcaption></figure>`;
+      })
+      .join("")}
+  </div>
 
   <dl class="ob-fatos">
     ${fato("Área de contenção", val(f.areaContencao, placeholders.areaContencao))}
@@ -84,19 +89,15 @@ const paginaObra = (o) => {
   </dl>
 
   <div class="ob-base">
-    <figure class="ob-foto">
-      <img src="${asset("fotos/" + o.fotoDetalhe.arquivo)}" alt="${esc(o.fotoDetalhe.legenda)}" />
-      <figcaption>${esc(o.fotoDetalhe.legenda)}</figcaption>
-    </figure>
     <div class="ob-sol">
       <p class="ob-rot">Solução</p>
       <p class="ob-sol-t">${esc(f.solucao)}</p>
       <p class="ob-sol-c"><small>Complemento</small>${complemento}</p>
-      <aside class="ob-dest">
-        <p class="ob-rot">Destaque da obra</p>
-        <p>${o.destaque ? esc(o.destaque) : `<span class="ph">${esc(placeholders.destaque)}</span>`}</p>
-      </aside>
     </div>
+    <aside class="ob-dest">
+      <p class="ob-rot">Destaque da obra</p>
+      <p>${o.destaque ? esc(o.destaque) : `<span class="ph">${esc(placeholders.destaque)}</span>`}</p>
+    </aside>
   </div>
 </section>`;
 };

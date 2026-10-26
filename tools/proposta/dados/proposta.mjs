@@ -3,7 +3,8 @@
  *
  * Transcrito da proposta original (Word, 23/10/2026). O conteúdo é o mesmo; só a
  * forma muda. As únicas alterações de texto são as correções listadas em
- * CORRECOES, todas de digitação ou pontuação, sem mudar sentido.
+ * CORRECOES (digitação, pontuação, concordância e regência), sem mudar sentido.
+ * O que mudaria sentido fica como está e vai para PONTOS_DE_ATENCAO.
  *
  * Marcação: **negrito**. `rev: true` = trecho marcado em amarelo no original
  * (ver config.marcarRevisoes em empresa.mjs).
@@ -16,6 +17,21 @@ export const CORRECOES = [
   { onde: "3.9 e 5.1", original: "fck=30 Mpa / fck = 30 Mpa", corrigido: "fck = 30 MPa" },
   { onde: "4 (introdução)", original: "inerentes a obra", corrigido: "inerentes à obra" },
   { onde: "Foro", original: "Salvador - BA. Para dirimir", corrigido: "Salvador – BA, para dirimir" },
+  // 2ª revisão (26/10/2026)
+  { onde: "Carta", original: "estacas Justapostas conforme as condições", corrigido: "estacas justapostas, conforme as condições" },
+  { onde: "1.3", original: "contenções dividida de forma estanque", corrigido: "contenções divididas de forma estanque" },
+  { onde: "2.6", original: "EPI’s", corrigido: "EPIs" },
+  { onde: "2.14", original: "Óleo Diesel", corrigido: "óleo diesel" },
+  { onde: "3.2", original: "equipamentos e ferramentas necessárias da atividade", corrigido: "equipamentos e ferramentas necessários à atividade" },
+  { onde: "4.3", original: "estacas Hélice Contínua", corrigido: "estacas hélice contínua (como em 2.15 e 2.17)" },
+  { onde: "5 (Tabela 01)", original: "Preços Global", corrigido: "Preço Global" },
+  { onde: "6 (Obs. 1)", original: "possa gerar a GEOFOR se reserva ao direito de renegociá-lo e em caso de impasse rescindi-lo", corrigido: "possa gerar, a GEOFOR se reserva o direito de renegociá-lo e, em caso de impasse, rescindi-lo" },
+  { onde: "6 (Obs. 2)", original: "e na eventualidade de inadimplência incidirá … 2 % + juros de 0,10 %", corrigido: "e, na eventualidade de inadimplência, incidirá … 2% + juros de 0,10%" },
+  { onde: "7.1", original: "dias úteis de Segunda a Sexta", corrigido: "dias úteis, de segunda a sexta-feira," },
+  { onde: "7.3", original: "será acrescido 15% e 25% respectivamente nos preços", corrigido: "serão acrescidos 15% e 25%, respectivamente, aos preços" },
+  { onde: "8.7", original: "solo com impenetrável à perfuração", corrigido: "solo impenetrável à perfuração" },
+  { onde: "9", original: "início dos serviços descrito acima", corrigido: "início dos serviços descritos acima" },
+  { onde: "Carta e 8.4", original: "Salvador - BA / Mata de São João - BA", corrigido: "Salvador – BA / Mata de São João – BA" },
 ];
 
 /** Trechos mantidos como estão, mas que merecem revisão da equipe Geoforte. */
@@ -24,17 +40,23 @@ export const PONTOS_DE_ATENCAO = [
   "1.4 — A soma das seis áreas da cláusula 1.3 dá 7.468,3 m², mas o texto diz 7.468,0 m² (sete mil quatrocentos e sessenta e oito).",
   "3.9 — “preços unitários dos na composição” parece ter uma palavra faltando (dos materiais?).",
   "11.2 — As tabelas de verificação da contenção Recepção e Túnel trazem a referência “CONTENCAO GRAND PALLADIUM DOCA”.",
+  // 2ª revisão (26/10/2026)
+  "1.1 b) — O nome do arquivo “001 - Relatório de Sondagem_260902_190936” sugere 02/09/2026, mas o texto diz que ele é de 26/06/2026.",
+  "7.2 — Conferir a citação da Instrução Normativa nº 2110/2022 (art. 130, item XVI) e o trecho entre aspas.",
+  "7.5 — Repete a regra da perda de concreto da 4.3 com outra redação (a 4.3 diz que o concreto é faturado pelo volume medido nas perfuratrizes; a 7.5 só diz que a Geofor não arca com o custo). Ver se as duas devem ficar.",
+  "2.4 e assinatura — A ART é do CREA-BA e o responsável técnico tem registro CREA/SC: conferir o visto no CREA-BA.",
+  "Anexo B — As três fotos da Riserva Vita vieram no fim do álbum “Nouvelle Blues” do WhatsApp; o briefing atribui essas cenas à Riserva Vita. Confirmar com a equipe.",
 ];
 
 export const carta = {
   codigo: "GEO 2701A / 25",
-  destinatario: ["À", "GRAND PALLADIUM", "Salvador - BA"],
+  destinatario: ["À", "GRAND PALLADIUM", "Salvador – BA"],
   atencao: "At.: Sr. Saulo Cotrim.",
   referencia:
     "Proposta para elaboração de Projeto e Execução Global das contenções em Estacas Justapostas para a obra EXPANSÃO GRAND PALLADIUM RESORT & SPA, situada em Rodovia BA-099, Km 65, S/N, Imbassaí, Mata de São João – BA.",
   saudacao: "Prezados Senhores,",
   abertura:
-    "Pela presente, formalizamos nossa proposta técnica e comercial em caráter global para a elaboração de projeto executivo geotécnico e execução integral dos serviços de contenções em estacas Justapostas conforme as condições de engenharia, premissas de campo e regramento jurídico discriminados nas cláusulas a seguir:",
+    "Pela presente, formalizamos nossa proposta técnica e comercial em caráter global para a elaboração de projeto executivo geotécnico e execução integral dos serviços de contenções em estacas justapostas, conforme as condições de engenharia, premissas de campo e regramento jurídico discriminados nas cláusulas a seguir:",
 };
 
 /**
@@ -63,7 +85,7 @@ export const secoes = [
       },
       {
         n: "1.3",
-        t: "O objeto desta contratação compreende a execução civil e engenharia aplicada de contenções dividida de forma estanque para atender a 05 (cinco) subsolos dos prédios distintos e 01 (uma) doca, localizados dentro do canteiro de obras do Grand Palladium Resort & Spa, mapeados sob os seguintes quantitativos de projeto:",
+        t: "O objeto desta contratação compreende a execução civil e engenharia aplicada de contenções divididas de forma estanque para atender a 05 (cinco) subsolos dos prédios distintos e 01 (uma) doca, localizados dentro do canteiro de obras do Grand Palladium Resort & Spa, mapeados sob os seguintes quantitativos de projeto:",
       },
       {
         tipo: "contencoes",
@@ -96,7 +118,7 @@ export const secoes = [
       { n: "2.3", t: "Informe técnico dos serviços executados e ocorrências de obra com dados de interesse comum." },
       { n: "2.4", t: "Fornecimento da ART CREA-BA." },
       { n: "2.5", t: "Recolhimento das contribuições sociais e previdenciárias da equipe que trabalhar na obra." },
-      { n: "2.6", t: "Ferramentas e EPI’s necessários para execução dos serviços contratados." },
+      { n: "2.6", t: "Ferramentas e EPIs necessários para execução dos serviços contratados." },
       { n: "2.7", t: "Programas de segurança e saúde ocupacional (PGR e PCMSO)." },
       { n: "2.8", t: "Plano de manutenção constante e livro de inspeção do equipamento." },
       { n: "2.9", t: "Exames admissionais, periódicos e demissionais de todos colaboradores (ASO)." },
@@ -104,7 +126,7 @@ export const secoes = [
       { n: "2.11", t: "Fornecimento de refeições (café, almoço, janta e cesta básica) para as equipes." },
       { n: "2.12", t: "Transporte de nossas equipes." },
       { n: "2.13", t: "Apoio de equipamento retroescavadeira para remoção do solo proveniente das escavações." },
-      { n: "2.14", t: "Fornecimento de Óleo Diesel para abastecimento da máquina." },
+      { n: "2.14", t: "Fornecimento de óleo diesel para abastecimento da máquina." },
       { n: "2.15", t: "Fornecimento das armaduras montadas (Aço CA-50) das estacas hélice contínua." },
       { n: "2.16", t: "Içamento e instalação das armaduras após concretagem das estacas." },
       { n: "2.17", t: "Fornecimento de concreto usinado e bombeamento para as estacas hélice contínua." },
@@ -125,7 +147,7 @@ export const secoes = [
     compacto: true,
     itens: [
       { n: "3.1", t: "Definir e manter no canteiro representante qualificado para acompanhar e garantir desenvolvimento normal e ininterrupto dos serviços, garantindo frente de trabalho ininterrupta." },
-      { n: "3.2", t: "Entrega e manutenção da área onde se desenvolverão os trabalhos plana e desimpedida de obstáculos visíveis ou não, de forma a permitir o livre acesso dos equipamentos e ferramentas necessárias da atividade." },
+      { n: "3.2", t: "Entrega e manutenção da área onde se desenvolverão os trabalhos plana e desimpedida de obstáculos visíveis ou não, de forma a permitir o livre acesso dos equipamentos e ferramentas necessários à atividade." },
       { n: "3.3", t: "Fornecimento de pequeno almoxarifado e vigilância de nossas ferramentas de menor porte e armários para os nossos colaboradores." },
       { n: "3.4", t: "Fornecimento dos perfis de sondagens que se fizerem necessários para uma perfeita caracterização do solo no local da obra." },
       { n: "3.5", t: "Fornecimento de água e energia elétrica cerca de 30 HP e rede trifásica 220 V com cabo trifásico de 50,0 m não situados a mais de 50 metros dos locais de utilização, instalações elétricas que sejam necessárias." },
@@ -155,7 +177,7 @@ export const secoes = [
       {
         n: "4.3",
         rev: true,
-        t: "**Do Risco de Perda de Concreto Fluido:** O processo de injeção de concreto sob pressão em estacas Hélice Contínua convive com o risco físico de perdas decorrentes de vazios no solo (cavernas subterrâneas, bolsões de areia fofa, fendas geológicas) ou sobreconsumo por colapso de paredes laterais em camadas friáveis. A GEOFOR não arcará com o custo financeiro do concreto excedente injetado, uma vez que este é um risco geológico inerente à atividade geotécnica e não foi embutido na planilha de custos ordinários. O faturamento do concreto será realizado com base no volume medido nos relatórios de injeção computadorizados das perfuratrizes.",
+        t: "**Do Risco de Perda de Concreto Fluido:** O processo de injeção de concreto sob pressão em estacas hélice contínua convive com o risco físico de perdas decorrentes de vazios no solo (cavernas subterrâneas, bolsões de areia fofa, fendas geológicas) ou sobreconsumo por colapso de paredes laterais em camadas friáveis. A GEOFOR não arcará com o custo financeiro do concreto excedente injetado, uma vez que este é um risco geológico inerente à atividade geotécnica e não foi embutido na planilha de custos ordinários. O faturamento do concreto será realizado com base no volume medido nos relatórios de injeção computadorizados das perfuratrizes.",
       },
       {
         n: "4.4",
@@ -172,7 +194,7 @@ export const secoes = [
     itens: [
       // A tabela não existe no PDF original (só a legenda). Quando ela vier,
       // troque `linhas: null` pelas linhas [descrição, valor] e o placeholder some.
-      { tipo: "tabela-precos", legenda: "Tabela 01: Preços Global das Cortinas de Contenções (GEOFOR).", linhas: null },
+      { tipo: "tabela-precos", legenda: "Tabela 01: Preço Global das Cortinas de Contenções (GEOFOR).", linhas: null },
       {
         n: "5.1",
         rev: true,
@@ -213,8 +235,8 @@ export const secoes = [
       {
         tipo: "obs",
         itens: [
-          "Qualquer alteração na Política Econômica praticada pelo Governo que provoque desequilíbrio econômico-financeiro do contrato que esta proposta possa gerar a GEOFOR se reserva ao direito de renegociá-lo e em caso de impasse rescindi-lo sem nenhum tipo de penalidade.",
-          "Todos os pagamentos deverão ser realizados na data de cada evento e na eventualidade de inadimplência incidirá sobre os valores devidos multa de 2 % + juros de 0,10 % ao dia.",
+          "Qualquer alteração na Política Econômica praticada pelo Governo que provoque desequilíbrio econômico-financeiro do contrato que esta proposta possa gerar, a GEOFOR se reserva o direito de renegociá-lo e, em caso de impasse, rescindi-lo sem nenhum tipo de penalidade.",
+          "Todos os pagamentos deverão ser realizados na data de cada evento e, na eventualidade de inadimplência, incidirá sobre os valores devidos multa de 2% + juros de 0,10% ao dia.",
         ],
       },
     ],
@@ -223,9 +245,9 @@ export const secoes = [
     n: "7",
     titulo: "Diversos",
     itens: [
-      { n: "7.1", t: "Os preços desta proposta foram compostos com base na premissa de atividade nos dias úteis de Segunda a Sexta num total de 44 horas semanais." },
+      { n: "7.1", t: "Os preços desta proposta foram compostos com base na premissa de atividade nos dias úteis, de segunda a sexta-feira, num total de 44 horas semanais." },
       { n: "7.2", t: "A GEOFOR está dispensada de retenção do INSS de acordo com Instrução Normativa nº 2110/2022 - Art.130 item XVI, “estão isentos de Retenção as Empresas de Prestação de Serviços de Geotecnia e Fundações” no que a GEOFOR se enquadra." },
-      { n: "7.3", t: "Caso o cliente solicite trabalho aos sábados e domingos, será acrescido 15% e 25% respectivamente nos preços unitários das estacas executadas." },
+      { n: "7.3", t: "Caso o cliente solicite trabalho aos sábados e domingos, serão acrescidos 15% e 25%, respectivamente, aos preços unitários das estacas executadas." },
       { n: "7.4", t: "No escopo de orçamento não está previsto haver retenção técnica ou contratual dos serviços. No caso de incluir retenção no Contrato da Contratante, os valores unitários serão ajustados no mesmo valor percentual (%) da retenção e acrescidos os impostos incidentes." },
       { n: "7.5", rev: true, t: "Caso aconteça perda de concreto, a GEOFOR não arcará com esse custo, pois não está considerado na composição de custo este risco inerente da atividade." },
       {
@@ -245,7 +267,7 @@ export const secoes = [
       {
         n: "8.4",
         rev: true,
-        t: "**Paralisações por Força Maior e Intempéries Climáticas (Chuvas):** Considerando as características geotécnicas do solo litorâneo da Mata de São João - BA, a GEOFOR fica integralmente isenta de penalidades, multas contratuais ou imputação de atrasos causados por chuvas torrenciais ou índices pluviométricos que impeçam a circulação segura das máquinas pesadas nas pistas ou que comprometam a qualidade civil do concreto fluido. Os dias afetados por fortes precipitações e o período subsequente necessário para a secagem/restabelecimento da compactação do solo serão automaticamente estendidos ao prazo final de entrega.",
+        t: "**Paralisações por Força Maior e Intempéries Climáticas (Chuvas):** Considerando as características geotécnicas do solo litorâneo da Mata de São João – BA, a GEOFOR fica integralmente isenta de penalidades, multas contratuais ou imputação de atrasos causados por chuvas torrenciais ou índices pluviométricos que impeçam a circulação segura das máquinas pesadas nas pistas ou que comprometam a qualidade civil do concreto fluido. Os dias afetados por fortes precipitações e o período subsequente necessário para a secagem/restabelecimento da compactação do solo serão automaticamente estendidos ao prazo final de entrega.",
       },
       {
         n: "8.5",
@@ -268,7 +290,7 @@ export const secoes = [
       {
         n: "8.7",
         rev: true,
-        t: "**Obstáculos Geológicos Ocultos:** Caso sejam interceptados no subsolo matacões de rocha sã, blocos de concreto de obras antigas, tubulações de concreto armado blindadas ou solo com impenetrável à perfuração mecânica ordinária com o trado padrão, a GEOFOR paralisará o respectivo ponto. O tempo decorrente de tentativas de quebra, substituição de ponteiras avariadas ou redesenho locacional será computado como hora trabalhada extraordinária. Caso seja necessária metodologia especial (como perfuratrizes pneumáticas de rocha), os custos serão formalizados via Termo Aditivo.",
+        t: "**Obstáculos Geológicos Ocultos:** Caso sejam interceptados no subsolo matacões de rocha sã, blocos de concreto de obras antigas, tubulações de concreto armado blindadas ou solo impenetrável à perfuração mecânica ordinária com o trado padrão, a GEOFOR paralisará o respectivo ponto. O tempo decorrente de tentativas de quebra, substituição de ponteiras avariadas ou redesenho locacional será computado como hora trabalhada extraordinária. Caso seja necessária metodologia especial (como perfuratrizes pneumáticas de rocha), os custos serão formalizados via Termo Aditivo.",
       },
     ],
   },
@@ -278,7 +300,7 @@ export const secoes = [
     itens: [
       {
         tipo: "paragrafo",
-        t: "A autorização por V.S.as., para colocação dos nossos equipamentos no canteiro de obra e consequente início dos serviços descrito acima, mesmo que verbal, implicará no aceite tácito de todas as cláusulas constantes desta proposta.",
+        t: "A autorização por V.S.as., para colocação dos nossos equipamentos no canteiro de obra e consequente início dos serviços descritos acima, mesmo que verbal, implicará no aceite tácito de todas as cláusulas constantes desta proposta.",
       },
     ],
   },

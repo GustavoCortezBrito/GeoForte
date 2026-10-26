@@ -7,6 +7,8 @@ import VideoFundo from "@/components/propostas/VideoFundo";
 import IndiceCapitulos, { type ItemIndice } from "@/components/propostas/IndiceCapitulos";
 import BarrasContencoes from "@/components/propostas/BarrasContencoes";
 import CorteCortina from "@/components/propostas/CorteCortina";
+import ExecucaoPassos from "@/components/propostas/ExecucaoPassos";
+import GaleriaObras from "@/components/propostas/GaleriaObras";
 import { CronogramaPrazos, DivisaoFaturamento } from "@/components/propostas/Graficos";
 import Rico from "@/components/propostas/Rico";
 import {
@@ -168,15 +170,23 @@ export default function PropostaGrandPalladium() {
           <div className="on-graphite relative flex min-h-[64svh] flex-col justify-end overflow-hidden bg-graphite lg:col-span-7 lg:min-h-0">
             <VideoFundo src={`${MIDIA}/hero.mp4`} poster={`${MIDIA}/hero.jpg`} prioridade sizes="(min-width: 1024px) 58vw, 100vw" />
             <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-graphite via-graphite/55 to-graphite/5" />
-            <p className="absolute right-4 top-4 bg-graphite/70 px-2 py-1 text-[12px] font-display font-medium text-ink-2">Imagem ilustrativa</p>
+            <p className="absolute right-4 top-4 bg-graphite/70 px-2 py-1 text-[12px] font-display font-medium text-paper/80">Imagem ilustrativa</p>
             <div className="relative px-5 pb-10 pt-32 sm:px-8 lg:px-12 lg:pb-14">
-              <h1 className="max-w-[12ch] font-display text-[clamp(2.6rem,5.4vw,5rem)] font-bold leading-[0.98] tracking-[-0.035em] text-ink text-balance">
-                Contenções em estacas justapostas
+              <h1
+                aria-label="Contenções em estacas justapostas"
+                className="font-display text-[clamp(2.6rem,5.4vw,5rem)] font-bold leading-[0.98] tracking-[-0.035em] text-ink"
+              >
+                {["Contenções", "em estacas", "justapostas"].map((linha, i) => (
+                  <span key={linha} className="proposta-linha" aria-hidden>
+                    <span style={{ animationDelay: `${0.15 + i * 0.09}s` }}>{linha}</span>
+                  </span>
+                ))}
               </h1>
-              <p className="mt-5 max-w-[34ch] font-display text-[clamp(1.1rem,1.6vw,1.35rem)] font-medium leading-snug text-ink">
+              <span aria-hidden className="proposta-fio mt-6 block h-[3px] w-24 bg-brand" />
+              <p className="proposta-surge mt-5 max-w-[34ch] font-display text-[clamp(1.1rem,1.6vw,1.35rem)] font-medium leading-snug text-ink">
                 Projeto executivo geotécnico e execução global para a {cabecalho.obra}
               </p>
-              <p className="mt-3 text-[15px] text-ink-2">{cabecalho.localObra}</p>
+              <p className="proposta-surge mt-3 text-[15px] text-ink-2">{cabecalho.localObra}</p>
             </div>
           </div>
 
@@ -312,38 +322,22 @@ export default function PropostaGrandPalladium() {
                 <ListaClausulas itens={responsabilidades.geoforte.itens} colunas />
               </div>
 
-              <div className="on-graphite relative mt-16 overflow-hidden bg-graphite">
-                <VideoFundo src={`${MIDIA}/trado.mp4`} poster={`${MIDIA}/trado.jpg`} sizes="(min-width: 1024px) 58rem, 100vw" />
-                <div aria-hidden className="absolute inset-0 bg-gradient-to-r from-graphite via-graphite/90 to-graphite/35" />
-                <div className="relative max-w-[36rem] px-6 py-12 sm:px-10 lg:py-16">
-                  <h3 className="font-display text-[clamp(1.5rem,2.6vw,2.1rem)] font-bold leading-[1.08] tracking-[-0.02em] text-ink">
-                    Como a cortina é executada
-                  </h3>
-                  <p className="mt-4 text-[15.5px] leading-relaxed text-ink-2">
-                    <Rico t={execucao.equipamentos.texto} />{" "}
-                    <span className="font-display text-[13px] font-semibold text-ink-3">{execucao.equipamentos.n}</span>
-                  </p>
-                  <ol className="mt-8 space-y-0">
-                    {execucao.passos.map((p, i) => (
-                      <li key={p.n} className="grid grid-cols-[2.5rem_minmax(0,1fr)] border-t border-rule py-4">
-                        <span className="font-display text-[22px] font-bold leading-none text-brand tabular-nums">{i + 1}</span>
-                        <span className="text-[15px] leading-relaxed text-ink">
-                          {p.t} <span className="font-display text-[13px] font-semibold text-ink-3">{p.n}</span>
-                        </span>
-                      </li>
-                    ))}
-                  </ol>
-                  <p className="mt-6 text-[14px] leading-relaxed text-ink-2">
-                    E, antes de tudo, o projeto: {execucao.projeto.t.charAt(0).toLowerCase() + execucao.projeto.t.slice(1)}{" "}
-                    <span className="font-display text-[13px] font-semibold text-ink-3">{execucao.projeto.n}</span>
-                  </p>
-                </div>
-                <p className="absolute bottom-3 right-4 bg-graphite/70 px-2 py-1 text-[12px] font-display font-medium text-ink-2">Imagem ilustrativa</p>
-              </div>
 
-              <h3 className="mt-16 font-display text-[19px] font-bold text-ink">{responsabilidades.cliente.titulo}</h3>
+              <h3 className="mt-14 font-display text-[19px] font-bold text-ink">{responsabilidades.cliente.titulo}</h3>
               <div className="mt-4">
                 <ListaClausulas itens={responsabilidades.cliente.itens} />
+              </div>
+
+              <div className="mt-20">
+                <h3 className="font-display text-[clamp(1.5rem,2.6vw,2.1rem)] font-bold leading-[1.08] tracking-[-0.02em] text-ink">
+                  Como a cortina é executada
+                </h3>
+                <p className="mt-3 max-w-[60ch] text-[16px] leading-relaxed text-ink-2">
+                  Do furo à estaca pronta: os itens do escopo da Geoforte na ordem em que acontecem no canteiro.
+                </p>
+                <div className="mt-8">
+                  <ExecucaoPassos passos={execucao.passos} />
+                </div>
               </div>
             </Capitulo>
 
@@ -477,56 +471,7 @@ export default function PropostaGrandPalladium() {
               titulo="Obras executadas"
               lead="Contenções executadas pela Geoforte em Salvador com a mesma solução prevista para o Grand Palladium: cortinas de estacas justapostas, em terrenos litorâneos e junto a edificações existentes."
             >
-              <div className="space-y-16">
-                {obras.map((o, i) => (
-                  <article key={o.numero} className="grid gap-5 md:grid-cols-12 md:gap-6">
-                    <figure className={`relative md:col-span-8 ${i % 2 ? "md:order-2" : ""}`}>
-                      <Image
-                        src={o.principal.src}
-                        alt={`${o.nome}: ${o.principal.legenda.toLowerCase()}`}
-                        placeholder="blur"
-                        sizes="(min-width: 1024px) 38rem, 100vw"
-                        className="aspect-[16/10] w-full object-cover"
-                      />
-                      <figcaption className="mt-2 text-[13px] text-ink-3">{o.principal.legenda}</figcaption>
-                    </figure>
-                    <div className={`flex flex-col md:col-span-4 ${i % 2 ? "md:order-1" : ""}`}>
-                      <h3 className="font-display text-[clamp(1.5rem,2.4vw,1.9rem)] font-bold leading-tight tracking-[-0.02em] text-ink">
-                        {o.nome}
-                      </h3>
-                      <p className="mt-1.5 text-[15px] text-ink-2">
-                        {o.construtora} · {o.local}
-                        {o.ano ? ` · ${o.ano}` : ""}
-                      </p>
-                      <p className="mt-4 text-[15px] leading-relaxed text-ink">
-                        {o.solucao}
-                        {o.complemento ? ` com ${o.complemento.toLowerCase()}` : ""}.
-                      </p>
-                      {o.ficha.length > 0 && (
-                        <dl className="mt-4 text-[14px]">
-                          {o.ficha.map(([k, v]) => (
-                            <div key={k} className="flex justify-between gap-4 border-t border-rule py-2">
-                              <dt className="text-ink-2">{k}</dt>
-                              <dd className="font-display font-semibold text-ink">{v}</dd>
-                            </div>
-                          ))}
-                        </dl>
-                      )}
-                      {o.destaque && <p className="mt-4 text-[15px] leading-relaxed text-ink-2">{o.destaque}</p>}
-                      <figure className="mt-auto pt-6">
-                        <Image
-                          src={o.detalhe.src}
-                          alt={`${o.nome}: ${o.detalhe.legenda.toLowerCase()}`}
-                          placeholder="blur"
-                          sizes="(min-width: 1024px) 18rem, 100vw"
-                          className="aspect-[16/9] w-full object-cover"
-                        />
-                        <figcaption className="mt-2 text-[13px] text-ink-3">{o.detalhe.legenda}</figcaption>
-                      </figure>
-                    </div>
-                  </article>
-                ))}
-              </div>
+              <GaleriaObras obras={obras} />
 
               <div className="mt-20 grid items-center gap-8 border-t border-rule pt-10 sm:grid-cols-[auto_minmax(0,1fr)_auto_minmax(0,1fr)]">
                 <Image src={seloGeoselos} alt="Selo GeoSelos" className="h-20 w-auto" />
@@ -542,7 +487,7 @@ export default function PropostaGrandPalladium() {
 
         {/* ─── Fechamento ─── */}
         <section id="fechamento" aria-labelledby="fechamento-t" className="on-graphite relative overflow-hidden bg-graphite">
-          <Image src={`${MIDIA}/parede.jpg`} alt="" fill sizes="100vw" className="object-cover opacity-50" />
+          <VideoFundo src={`${MIDIA}/parede.mp4`} poster={`${MIDIA}/parede.jpg`} className="opacity-50" />
           <div aria-hidden className="absolute inset-0 bg-gradient-to-r from-graphite via-graphite/92 to-graphite/45" />
           <div className="relative mx-auto grid max-w-[90rem] gap-14 px-5 py-24 sm:px-8 lg:grid-cols-12 lg:px-8 lg:py-32">
             <div className="lg:col-span-7">
@@ -590,7 +535,7 @@ export default function PropostaGrandPalladium() {
             </div>
           </div>
           <div className="relative mx-auto flex max-w-[90rem] flex-wrap items-center justify-between gap-4 border-t border-rule px-5 py-6 text-[12px] text-ink-3 sm:px-8 lg:px-8">
-            <p>Imagens de abertura, do encarte e deste fechamento são ilustrativas, geradas por IA. As fotos das obras executadas são registros reais.</p>
+            <p>Os vídeos da abertura, da execução e deste fechamento são ilustrativos, gerados por IA. As fotos das obras executadas são reais.</p>
             <Link href="/" className="font-display font-semibold text-ink-2 hover:text-ink">
               geoforte.com.br
             </Link>

@@ -72,8 +72,15 @@ Por padrão o PDF sai limpo. Com `config.marcarRevisoes = true`
 
 ## Fotos
 
-`assets/fotos/` tem só as 8 fotos indicadas no briefing, recortadas dos folders
-(~970 px de largura): ficam moles impressas em A4. Para trocar por originais em
-alta, salve com o mesmo nome. `manakai-1.jpg` e `manakai-2.jpg` não são usadas
-(parecem processadas por IA); `imbui-2.jpg` também mostra textura de
-processamento quando ampliada.
+`assets/fotos/` tem as 20 fotos originais que a equipe mandou por WhatsApp em
+26/10/2026 (até 1600 px), com o nome da obra (`manakai-01.jpg`…). A origem de
+cada uma (arquivo original, álbum) está gravada no próprio arquivo. Em
+`dados/obras.mjs`, `fotos` lista todas (a 1ª é a principal) e `pdf` escolhe as
+2 ou 3 da página do PDF; a proposta web mostra todas na galeria.
+
+- `manakai-01` e `-02` são os originais sem tratamento de
+  `documento/fotos/manakai-1.jpg` e `-2.jpg` (essas continuam proibidas). A
+  `manakai-01` foi recortada embaixo para tirar a data gravada pela câmera.
+- As três da Riserva Vita vieram no fim do álbum "Nouvelle Blues", mas o
+  briefing atribui essas cenas à Riserva Vita. Até a equipe confirmar, a página
+  dela no PDF mostra um aviso `[confirmar…]` (`fotosConfirmar`).

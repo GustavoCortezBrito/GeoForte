@@ -249,6 +249,57 @@ a {
   --agua: #6aa5e0;
 }
 
+/* Capa da proposta: o título sobe por trás de uma máscara e o fio laranja é
+   cravado, uma vez, ao carregar. Só CSS, então o título aparece mesmo sem JS;
+   o bloco prefers-reduced-motion acima torna tudo instantâneo. */
+@keyframes proposta-sobe {
+  from {
+    transform: translateY(105%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes proposta-crava {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+@keyframes proposta-surge {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.proposta-linha {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.06em;
+}
+.proposta-linha > span {
+  display: block;
+  animation: proposta-sobe 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.proposta-fio {
+  transform-origin: left;
+  animation: proposta-crava 0.7s cubic-bezier(0.65, 0, 0.35, 1) 0.55s both;
+}
+.proposta-surge {
+  animation: proposta-surge 0.7s ease-out 0.75s both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .proposta-linha > span,
+  .proposta-fio,
+  .proposta-surge {
+    animation: none;
+  }
+}
+
 /* ─── Linha do tempo (react-vertical-timeline-component) ─────────────────── */
 
 .geoforte-timeline .vertical-timeline::before {

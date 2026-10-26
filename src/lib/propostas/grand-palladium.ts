@@ -12,14 +12,26 @@ import { proposta, empresa } from "@proposta/dados/empresa.mjs";
 import { secoes, assinatura as assinaturaPdf } from "@proposta/dados/proposta.mjs";
 import { memorial } from "@proposta/dados/memorial.mjs";
 import { obras as obrasPdf } from "@proposta/dados/obras.mjs";
-import manakai1 from "@proposta/assets/fotos/manakai-vigas-1.jpg";
-import manakai2 from "@proposta/assets/fotos/manakai-vigas-2.jpg";
-import nouvelle1 from "@proposta/assets/fotos/nouvelle-1.jpg";
-import nouvelle2 from "@proposta/assets/fotos/nouvelle-vigas-2.jpg";
-import riserva1 from "@proposta/assets/fotos/riserva-1.jpg";
-import riserva2 from "@proposta/assets/fotos/riserva-2.jpg";
-import imbui1 from "@proposta/assets/fotos/imbui-1.jpg";
-import imbui2 from "@proposta/assets/fotos/imbui-2.jpg";
+import manakai01 from "@proposta/assets/fotos/manakai-01.jpg";
+import manakai02 from "@proposta/assets/fotos/manakai-02.jpg";
+import manakai03 from "@proposta/assets/fotos/manakai-03.jpg";
+import manakai04 from "@proposta/assets/fotos/manakai-04.jpg";
+import manakai05 from "@proposta/assets/fotos/manakai-05.jpg";
+import manakai06 from "@proposta/assets/fotos/manakai-06.jpg";
+import manakai07 from "@proposta/assets/fotos/manakai-07.jpg";
+import manakai08 from "@proposta/assets/fotos/manakai-08.jpg";
+import manakai09 from "@proposta/assets/fotos/manakai-09.jpg";
+import manakai10 from "@proposta/assets/fotos/manakai-10.jpg";
+import manakai11 from "@proposta/assets/fotos/manakai-11.jpg";
+import manakai12 from "@proposta/assets/fotos/manakai-12.jpg";
+import nouvelle01 from "@proposta/assets/fotos/nouvelle-01.jpg";
+import nouvelle02 from "@proposta/assets/fotos/nouvelle-02.jpg";
+import nouvelle03 from "@proposta/assets/fotos/nouvelle-03.jpg";
+import riserva01 from "@proposta/assets/fotos/riserva-01.jpg";
+import riserva02 from "@proposta/assets/fotos/riserva-02.jpg";
+import riserva03 from "@proposta/assets/fotos/riserva-03.jpg";
+import imbui01 from "@proposta/assets/fotos/imbui-01.jpg";
+import imbui02 from "@proposta/assets/fotos/imbui-02.jpg";
 
 /** PDF completo (gerado por tools/proposta, copiado para public/ a cada `npm run gerar`). */
 export const PDF_URL = "/propostas/grand-palladium/Proposta-GEO-2701A-25-Grand-Palladium.pdf";
@@ -136,8 +148,17 @@ export const execucao = {
   },
   instalacao: { n: "8.2", texto: clausula("8.2").t },
   mobilizacao: { n: "8.1", texto: clausula("8.1").t },
-  /** O passo a passo da estaca hélice contínua, nas palavras do escopo. */
-  passos: ["2.17", "2.15", "2.16", "2.20"].map((n) => ({ n, t: clausula(n).t })),
+  /**
+   * A execução em quatro passos, cada um com o texto das cláusulas do escopo da
+   * Geoforte que o descrevem (o título é só o nome do passo). `midia` aponta o
+   * vídeo ilustrativo em public/propostas/grand-palladium/.
+   */
+  passos: [
+    { titulo: "Perfuração", refs: ["2.2", "2.22"], midia: "trado" },
+    { titulo: "Concretagem", refs: ["2.17", "2.18", "2.19"], midia: "concreto" },
+    { titulo: "Armação", refs: ["2.15", "2.16"], midia: "armadura" },
+    { titulo: "Controle tecnológico", refs: ["2.20", "2.3"], midia: "controle" },
+  ].map((p) => ({ ...p, clausulas: p.refs.map((n) => ({ n, t: clausula(n).t })) })),
   projeto: { n: "2.21", t: clausula("2.21").t },
 };
 
@@ -297,15 +318,28 @@ export const memorialWeb: { n: string; titulo: string; contencoes: ContencaoMemo
 
 // ─── Anexo B. Obras executadas ──────────────────────────────────────────────
 
+// As fotos são importadas uma a uma (o Next gera tamanhos e o blur de cada uma).
 const FOTOS: Record<string, StaticImageData> = {
-  "manakai-vigas-1.jpg": manakai1,
-  "manakai-vigas-2.jpg": manakai2,
-  "nouvelle-1.jpg": nouvelle1,
-  "nouvelle-vigas-2.jpg": nouvelle2,
-  "riserva-1.jpg": riserva1,
-  "riserva-2.jpg": riserva2,
-  "imbui-1.jpg": imbui1,
-  "imbui-2.jpg": imbui2,
+  "manakai-01.jpg": manakai01,
+  "manakai-02.jpg": manakai02,
+  "manakai-03.jpg": manakai03,
+  "manakai-04.jpg": manakai04,
+  "manakai-05.jpg": manakai05,
+  "manakai-06.jpg": manakai06,
+  "manakai-07.jpg": manakai07,
+  "manakai-08.jpg": manakai08,
+  "manakai-09.jpg": manakai09,
+  "manakai-10.jpg": manakai10,
+  "manakai-11.jpg": manakai11,
+  "manakai-12.jpg": manakai12,
+  "nouvelle-01.jpg": nouvelle01,
+  "nouvelle-02.jpg": nouvelle02,
+  "nouvelle-03.jpg": nouvelle03,
+  "riserva-01.jpg": riserva01,
+  "riserva-02.jpg": riserva02,
+  "riserva-03.jpg": riserva03,
+  "imbui-01.jpg": imbui01,
+  "imbui-02.jpg": imbui02,
 };
 const foto = (arquivo: string) => {
   const f = FOTOS[arquivo];
@@ -323,8 +357,8 @@ export const obras = obrasPdf.map((o) => ({
   construtora: o.construtora,
   local: [o.bairro, "Salvador – BA"].filter(Boolean).join(", "),
   ano: o.ano,
-  principal: { src: foto(o.fotoPrincipal.arquivo), legenda: o.fotoPrincipal.legenda },
-  detalhe: { src: foto(o.fotoDetalhe.arquivo), legenda: o.fotoDetalhe.legenda },
+  /** Todas as fotos da obra, na ordem de dados/obras.mjs (a 1ª é a principal). */
+  fotos: o.fotos.map((ft) => ({ src: foto(ft.arquivo), legenda: ft.legenda, foco: "foco" in ft ? (ft.foco as string) : undefined })),
   solucao: o.ficha.solucao,
   complemento: o.ficha.complemento.confirmar ? null : o.ficha.complemento.valor,
   ficha: [

@@ -326,7 +326,12 @@ const anexo = `
   background:linear-gradient(to top,rgba(34,37,42,.88),rgba(34,37,42,0));
   color:#fff;font-family:var(--mono);font-weight:500;font-size:9pt;letter-spacing:.01em}
 .ob-foto figcaption::before{content:"";display:inline-block;width:5mm;height:.6mm;background:var(--o);vertical-align:middle;margin-right:2.4mm;transform:translateY(-.3mm)}
-.ob-principal{margin-top:5mm;flex:1;min-height:0}
+/* mosaico: a 1ª foto grande, as outras empilhadas ao lado (fotos originais, até 1600 px) */
+.ob-mosaico{margin-top:5mm;flex:1;min-height:0;display:grid;gap:2.5mm;grid-template-columns:1.85fr 1fr;grid-template-rows:1fr 1fr}
+.ob-mosaico .m0{grid-row:1 / 3}
+.ob-mosaico.n2 .m1{grid-row:1 / 3}
+.ob-mosaico .m1 figcaption,.ob-mosaico .m2 figcaption{padding:7mm 3mm 2.4mm;font-size:9pt;line-height:1.25}
+.ob-mosaico .m1 figcaption::before,.ob-mosaico .m2 figcaption::before{display:none}
 
 /* números da obra: mesma régua laranja + grafite da capa */
 .ob-fatos{flex-shrink:0;display:grid;grid-template-columns:1fr 1fr 1.2fr 1.35fr;padding-top:.7mm;border-bottom:.25mm solid var(--fio);
@@ -337,13 +342,13 @@ const anexo = `
 .ob-fatos dd{margin-top:1.6mm;font-family:var(--mono);font-weight:700;font-size:12.5pt;line-height:1.2;letter-spacing:-.01em;color:var(--g)}
 .ob-fatos dd .ph{font-size:9.6pt;letter-spacing:0}
 
-.ob-base{margin-top:6mm;display:grid;grid-template-columns:1fr 1fr;gap:6mm;height:63mm;flex-shrink:0}
+.ob-base{margin-top:6mm;display:grid;grid-template-columns:1fr 1fr;gap:6mm;align-items:stretch;flex-shrink:0}
 .ob-sol{display:flex;flex-direction:column;min-height:0}
 .ob-rot{font-family:var(--mono);font-weight:700;font-size:9pt;letter-spacing:.14em;text-transform:uppercase;color:var(--oi)}
 .ob-sol-t{margin-top:1.8mm;font-family:var(--mono);font-weight:700;font-size:15pt;line-height:1.15;letter-spacing:-.015em}
 .ob-sol-c{margin-top:2.6mm;padding-top:2.2mm;border-top:.25mm solid var(--fio);font-family:var(--mono);font-weight:600;font-size:10pt;line-height:1.35;color:var(--g)}
 .ob-sol-c small{display:block;margin-bottom:.6mm;font-family:var(--texto);font-weight:400;font-size:9pt;color:var(--g2)}
-.ob-dest{margin-top:auto;background:var(--g);padding:4.4mm 5mm 4.8mm;border-top:.7mm solid var(--o)}
+.ob-dest{background:var(--g);padding:4.4mm 5mm 4.8mm;border-top:.7mm solid var(--o)}
 .ob-dest .ob-rot{color:var(--o)}
 .ob-dest p + p{margin-top:2mm;font-size:10.6pt;line-height:1.5;color:#f1f2f4}
 .ob-dest .ph{color:#ffd9bf;background:rgba(239,108,26,.18);box-shadow:inset 0 -.45mm 0 var(--o)}

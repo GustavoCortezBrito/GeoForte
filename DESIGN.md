@@ -112,6 +112,16 @@ components:
     textColor: "{colors.brand-ink}"
     rounded: "{rounded.none}"
     padding: "32px 24px"
+  media-chip:
+    backgroundColor: "rgba(34, 37, 42, 0.7)"
+    textColor: "{colors.paper}"
+    rounded: "{rounded.none}"
+    padding: "4px 8px"
+  viewer-control:
+    backgroundColor: "rgba(34, 37, 42, 0.6)"
+    textColor: "{colors.paper}"
+    rounded: "{rounded.none}"
+    size: "48px"
 ---
 
 # Design System: Geoforte Fundações
@@ -181,7 +191,7 @@ Three brand colors and an accessibility variant, plus a small drawing palette; e
 ### Hierarchy
 - **Display** (700, clamp(2.6rem, 6vw, 4.9rem), 1.02, -0.035em): the page's one h1 on hero and cover bands; the proposal cover runs up to 5rem at 0.98.
 - **Headline** (700, clamp(2rem, 4.2vw, 3.25rem), 1.04, -0.03em): section titles under the driven rule; chapter titles use clamp(1.8rem, 3.3vw, 2.75rem).
-- **Numeral** (700, clamp(2.1rem, 4vw, 3.25rem), tabular, Burnt Orange): the chapter or clause number set on the baseline beside a headline. Smaller numerals (22px, brand orange on graphite) number execution steps.
+- **Numeral** (700, clamp(2.1rem, 4vw, 3.25rem), tabular, Burnt Orange): the chapter or clause number set on the baseline beside a headline. Execution steps use a smaller numeral (clamp(2rem, 3.4vw, 2.75rem), leading 1): Burnt Orange on the step being read, Steel on the others from the large breakpoint up.
 - **Title** (700, 17px, snug): list-item titles, sub-heads, definition terms; 19px for subsections inside a chapter.
 - **Lead** (400, 17px, 1.625): the paragraph under a section title, max 58 to 64ch.
 - **Body** (400, 15 to 15.5px, 1.625): running text, max 62 to 66ch.
@@ -201,9 +211,11 @@ Content is gridded by hairlines: lists, definition lists, spec tables and clause
 
 Long documents (the proposal) widen to 90rem with a 14rem sticky chapter index on the left and a 58rem reading column; on mobile the index becomes a horizontally scrolling row of outlined chips. Covers can split 7/12 graphite media to 5/12 paper content from the large breakpoint. Breakpoints are the Tailwind defaults (640, 768, 1024, 1280px); anchors scroll with 88px top padding for the fixed bar.
 
+A scroll-pinned sequence splits 0.85fr text to 1.15fr stage from the large breakpoint: each step holds at least 64vh, and the stage sticks below the 64px bar at full remaining viewport height, centred, as a 4:5 plate capped at the viewport minus 9rem. Below the large breakpoint it is a plain stack with a 16:10 still above each step. A media-led record (a work, a case) is a 12-column article: an 8-column 4:3 lead photo beside a 4-column information column, alternating sides from one record to the next, 80px between records. Extra photos follow the count: up to two sit as a 2-up grid in the information column; more run as a 6-column grid under the record from the medium breakpoint, and as a horizontal snap strip bleeding to the 20px gutter (with 20px scroll padding) on mobile.
+
 ## Elevation & Depth
 
-The system is flat. Depth is conveyed by tonal bands (paper, sunk paper, graphite, raised graphite), by full-bleed media under a graphite gradient scrim, and by hairlines. The fixed top bar is paper at 95% with a background blur and a bottom hairline. Two shadows exist in the build and both are situational: a long, soft drop under the contact form card where it sits on a graphite band, and a soft hover shadow on timeline cards. Neither is a general elevation scale.
+The system is flat. Depth is conveyed by tonal bands (paper, sunk paper, graphite, raised graphite), by full-bleed media under a graphite gradient scrim, and by hairlines. The fixed top bar is paper at 95% with a background blur and a bottom hairline. Two shadows exist in the build and both are situational: a long, soft drop under the contact form card where it sits on a graphite band, and a soft hover shadow on timeline cards. Neither is a general elevation scale. Media over media is also tonal: captions sit on a graphite gradient scrim (80 to 85% at the bottom third), chips and controls on graphite at 60 to 70%, and the full-screen photo viewer is a graphite band at 96%.
 
 ### Shadow Vocabulary
 - **Form on band** (`box-shadow: 0 30px 60px -24px rgba(0,0,0,0.35)`): the white form card floating on the graphite contact band.
@@ -266,8 +278,17 @@ One series in Data Orange, 18px tall (56px for a labelled split), 4px cap on the
 ### Missing Figure
 A figure the source does not contain is shown, never invented: inline as Burnt Orange semibold text on Orange Wash in brackets; as a block, a 2px dashed Burnt Orange frame on Orange Wash with a bold bracketed instruction.
 
+### Execution Sequence (signature)
+Steps that happen in order, read with the scroll. A 2px Hairline track runs down the left of the step list with a Geoforte Orange line over it whose height follows reading progress (scaleY from the scroll position, origin top). Each step is its numeral, a title (700, clamp(1.4rem, 2.2vw, 1.75rem)) and its clauses with the clause number inline in the clause-reference style. The sticky stage beside it shows the active step's clip: the new clip enters by a top-down clip-path wipe (0.75s, pile curve) over the outgoing one, which fades after 0.4s. A caption on the bottom scrim reads "01 / 04 · title" (numeral in Geoforte Orange, total at 60% paper). Under the stage, one 3px Hairline segment per step fills with Geoforte Orange from the left as each step is reached. Below the large breakpoint, or with reduced motion, it is a plain sequence with stills.
+
+### Works Gallery and Viewer (signature)
+Real photographs, opened in place. The lead photo is a square-cornered 4:3 button on Sunk Paper with a bottom graphite scrim and a caption in Space Grotesk 500 at 14px led by a 20px by 2px Geoforte Orange dash; an expand control (36px square, graphite 70%) appears on hover or focus; the image scales 1.03 on hover (thumbnails 1.05) on the site ease. The record's text action is ink Space Grotesk 600 at 14px over a 2px Geoforte Orange underline, turning Burnt Orange on hover. When a 6-column thumbnail grid has one free cell it is closed by a Strong Hairline tile with the photo count (22px, 700, tabular) over "ver todas". The viewer is a modal graphite band at 96% (`.on-graphite`): the clicked photo grows from its place by a shared layout transition; header with title and a tabular "n / total" in Slate; square 1px Strong Hairline controls (44px close, 48px arrows on graphite 60%) whose border turns ink on hover; photos change by arrows, keyboard (arrows, Escape) or a horizontal drag past 70px, sliding 60px on the site ease; the caption repeats the orange dash, with a Steel source line. Focus returns to the opening photo.
+
+### Background Video
+Muted looping footage behind a band or inside a stage. The poster image is always rendered (and is the LCP where it leads the page); the video mounts only from 768px, without reduced motion or save-data, and pauses when less than 15% is on screen. A focus point (object-position) keeps the subject inside crops narrower than the 16:9 source. Every generated clip carries the media chip "Imagem ilustrativa" (Space Grotesk 500 at 12px, paper text on graphite 70%, 4px by 8px, square, top right), so it is never read as a site record.
+
 ### Motion
-One grammar on two curves. Site ease `cubic-bezier(0.16, 1, 0.3, 1)` for reveals and morphs; the pile curve `cubic-bezier(0.65, 0, 0.35, 1)` (even, so the descent is seen) for anything driven from a baseline: the mark's pile, soil-section piles, data bars, schedule bars. Driven marks run once on first view, 0.7 to 1.5s, with small staggers. All motion respects reduced-motion (framer-motion `reducedMotion="user"` plus CSS fallbacks).
+One grammar on two curves. Site ease `cubic-bezier(0.16, 1, 0.3, 1)` for reveals and morphs; the pile curve `cubic-bezier(0.65, 0, 0.35, 1)` (even, so the descent is seen) for anything driven from a baseline: the mark's pile, soil-section piles, data bars, schedule bars. Driven marks run once on first view, 0.7 to 1.5s, with small staggers. A cover enters once on load in CSS only, so it shows without JavaScript: title lines rise from a mask (translateY 105% to 0, 0.85s, site ease), then the orange rule is driven by scaleX from the left (0.7s, pile curve, 0.55s delay), then the subtitle fades in (0.7s, 0.75s delay). Scroll-linked marks (the reading line, the progress bars) follow the scroll rather than playing. Stage clips enter by a top-down clip-path wipe on the pile curve; photos travel by shared layout on the site ease. Ambient footage loops but pauses offscreen. No fade-up on text blocks. All motion respects reduced-motion (framer-motion `reducedMotion="user"` plus CSS fallbacks; posters and instant states replace video and wipes).
 
 ## Do's and Don'ts
 
@@ -280,6 +301,8 @@ One grammar on two curves. Site ease `cubic-bezier(0.16, 1, 0.3, 1)` for reveals
 - **Do** draw charts and sections in the system tokens: Data Orange for the one measured series, Sand strata with ink-dot hatching, Water Blue only for water.
 - **Do** drive data marks in once from their baseline on the pile curve, and respect reduced motion.
 - **Do** show a missing figure as a visible bracketed placeholder on Orange Wash.
+- **Do** label every generated or illustrative clip with the "Imagem ilustrativa" media chip, and keep real photographs in the gallery labelled as real.
+- **Do** render the poster first and mount background video only from 768px without reduced motion or save-data, pausing it offscreen.
 
 ### Don't:
 - **Don't** place an eyebrow, kicker or tagline above a headline; the driven rule is the opener.
@@ -289,4 +312,4 @@ One grammar on two curves. Site ease `cubic-bezier(0.16, 1, 0.3, 1)` for reveals
 - **Don't** add shadows to resting surfaces on the same ground; use a tonal band or a hairline. The one resting shadow is a light card lifted off a graphite band.
 - **Don't** hard-code light-surface colors inside components that can sit on a graphite band or in the dark theme.
 - **Don't** recolor, rotate, distort or retype the mark; the pile is always vertical.
-- **Don't** loop or repeat driven animations; a mark is driven once.
+- **Don't** loop or repeat driven animations; a mark is driven once. Ambient background footage is the only loop, and it pauses offscreen.

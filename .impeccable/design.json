@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-26T04:27:25.172Z",
+  "generatedAt": "2026-10-26T17:30:02.415Z",
   "title": "Design System: Geoforte Fundações",
   "extensions": {
     "colorMeta": {
@@ -314,7 +314,7 @@
       },
       "numeral": {
         "displayName": "Chapter Numeral",
-        "purpose": "Clause/chapter number beside a headline, Burnt Orange, tabular."
+        "purpose": "Clause/chapter number beside a headline, Burnt Orange, tabular. Execution steps use clamp(2rem, 3.4vw, 2.75rem): Burnt Orange when active, Steel when inactive (lg+)."
       },
       "title": {
         "displayName": "Title",
@@ -384,6 +384,36 @@
         "name": "reduced-motion",
         "value": "MotionConfig reducedMotion=\"user\" plus CSS fallback",
         "purpose": "All motion respects prefers-reduced-motion."
+      },
+      {
+        "name": "cover-entrance",
+        "value": "proposta-sobe 0.85s cubic-bezier(0.16,1,0.3,1) both; proposta-crava 0.7s cubic-bezier(0.65,0,0.35,1) 0.55s both; proposta-surge 0.7s ease-out 0.75s both",
+        "purpose": "CSS-only cover entrance on load: title lines rise from a mask (translateY 105% to 0), the orange rule is driven by scaleX from the left, the subtitle fades. Disabled under prefers-reduced-motion."
+      },
+      {
+        "name": "scroll-line",
+        "value": "scaleY = scrollYProgress, offset [start 65%, end 65%], origin top",
+        "purpose": "Orange 2px line over a hairline track that follows reading through the execution sequence."
+      },
+      {
+        "name": "clip-wipe",
+        "value": "clip-path inset(0 0 100% 0) to inset(0), 0.75s cubic-bezier(0.65,0,0.35,1); outgoing fades 0.35s after 0.4s",
+        "purpose": "Stage clip entering top-down like a pile being driven."
+      },
+      {
+        "name": "step-progress",
+        "value": "scaleX 0 to 1, 0.5s cubic-bezier(0.65,0,0.35,1), origin left",
+        "purpose": "One 3px segment per step fills orange as the step is reached."
+      },
+      {
+        "name": "shared-layout",
+        "value": "layoutId transition, 0.45s cubic-bezier(0.16,1,0.3,1); swipe 60px slide, drag threshold 70px",
+        "purpose": "Gallery photo grows from its place into the viewer; next/previous slide on the site ease."
+      },
+      {
+        "name": "video-loop",
+        "value": "muted loop playsInline; mounts at min-width 768px without reduced motion or save-data; pauses below 15% visible",
+        "purpose": "Ambient footage; the only loop in the system. Poster is always rendered and is the LCP on the cover."
       }
     ],
     "focus": {
@@ -421,7 +451,24 @@
     "drawing": {
       "hatching": "Ink dots r 1 to 1.6 at 0.2 to 0.28 opacity on 14 to 18px tiles; line, cross and diagonal hatches for other strata.",
       "dimensionText": "Space Grotesk, true minus sign, pt-BR decimals; labels scale up on small screens."
-    }
+    },
+    "overlays": [
+      {
+        "name": "caption-scrim",
+        "value": "linear-gradient(to top, rgba(34,37,42,0.8 to 0.85), transparent) over the bottom third",
+        "purpose": "Paper caption legibility over photos and clips."
+      },
+      {
+        "name": "media-chip",
+        "value": "rgba(34,37,42,0.7), Space Grotesk 500 12px, 4px 8px",
+        "purpose": "\"Imagem ilustrativa\" on every generated clip."
+      },
+      {
+        "name": "viewer",
+        "value": ".on-graphite, rgba(34,37,42,0.96), z 70",
+        "purpose": "Full-screen photo viewer band."
+      }
+    ]
   },
   "components": [
     {
@@ -495,6 +542,30 @@
       "description": "A figure absent from the source, shown as a visible bracketed placeholder.",
       "html": "<div class=\"ds-missing\"><p class=\"ds-missing-t\">[Preço global: inserir a Tabela 01 antes do envio]</p><p class=\"ds-missing-s\">A tabela não consta no arquivo original da proposta.</p></div>",
       "css": ".ds-missing{max-width:640px;padding:32px 24px;text-align:center;background:var(--brand-wash,#fbf0e8);border:2px dashed var(--brand-ink,#b94e0c)}.ds-missing-t{margin:0;font-family:var(--font-display,\"Space Grotesk\",system-ui,sans-serif);font-size:18px;font-weight:700;color:var(--brand-ink,#b94e0c)}.ds-missing-s{margin:8px 0 0;font-family:var(--font-body,Manrope,system-ui,sans-serif);font-size:14px;color:var(--ink-2,#555b66)}"
+    },
+    {
+      "name": "Execution Sequence",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Steps read with the scroll: orange line follows progress over a hairline track; active numeral Burnt Orange, inactive Steel; 4:5 stage with step caption and segment progress.",
+      "html": "<div class=\"ds-exec\"><ol class=\"ds-exec-steps\"><span class=\"ds-exec-track\"></span><span class=\"ds-exec-line\"></span><li class=\"is-on\"><p class=\"ds-exec-n\">01</p><h4 class=\"ds-exec-t\">Perfuração</h4><p class=\"ds-exec-c\"><span class=\"ds-cn\">4.1</span>Perfuração com hélice contínua até a cota de projeto.</p></li><li><p class=\"ds-exec-n\">02</p><h4 class=\"ds-exec-t\">Concretagem</h4><p class=\"ds-exec-c\"><span class=\"ds-cn\">4.2</span>Concreto bombeado pela haste durante a subida.</p></li></ol><div class=\"ds-exec-stage\"><div class=\"ds-exec-plate\"><span class=\"ds-chip\">Imagem ilustrativa</span><p class=\"ds-exec-cap\"><b>01</b><i> / 04</i> · Perfuração</p></div><ol class=\"ds-exec-seg\"><li class=\"on\"></li><li></li><li></li><li></li></ol></div></div>",
+      "css": ".ds-exec{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:40px;max-width:820px}.ds-exec-steps{position:relative;list-style:none;margin:0;padding:0 0 0 28px}.ds-exec-track,.ds-exec-line{position:absolute;left:0;top:0;width:2px}.ds-exec-track{bottom:0;background:var(--rule,rgba(34,37,42,.12))}.ds-exec-line{height:45%;background:var(--color-brand,#ef6c1a)}.ds-exec-steps li{padding:24px 0}.ds-exec-n{margin:0;font-family:var(--font-display,\"Space Grotesk\",system-ui,sans-serif);font-size:clamp(2rem,3.4vw,2.75rem);font-weight:700;line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums;color:var(--ink-3,#696f7a);transition:color .5s}.ds-exec-steps li.is-on .ds-exec-n{color:var(--brand-ink,#b94e0c)}.ds-exec-t{margin:12px 0 0;font-family:var(--font-display,\"Space Grotesk\",system-ui,sans-serif);font-size:clamp(1.4rem,2.2vw,1.75rem);font-weight:700;letter-spacing:-.02em;color:var(--ink,#22252a)}.ds-exec-c{margin:16px 0 0;font-family:var(--font-body,Manrope,system-ui,sans-serif);font-size:15px;line-height:1.625;color:var(--ink-2,#555b66)}.ds-cn{margin-right:8px;font-family:var(--font-display,\"Space Grotesk\",system-ui,sans-serif);font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink-3,#696f7a)}.ds-exec-plate{position:relative;aspect-ratio:4/5;background:linear-gradient(to top,rgba(34,37,42,.8),transparent 33%),#3a3f47}.ds-chip{position:absolute;right:12px;top:12px;padding:4px 8px;background:rgba(34,37,42,.7);color:rgba(250,250,248,.8);font-family:var(--font-display,\"Space Grotesk\",system-ui,sans-serif);font-size:12px;font-weight:500}.ds-exec-cap{position:absolute;left:16px;bottom:16px;margin:0;font-family:var(--font-display,\"Space Grotesk\",system-ui,sans-serif);font-size:14px;font-weight:600;color:#fafaf8}.ds-exec-cap b{color:#ef6c1a;font-variant-numeric:tabular-nums}.ds-exec-cap i{font-style:normal;color:rgba(250,250,248,.6)}.ds-exec-seg{list-style:none;margin:16px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.ds-exec-seg li{height:3px;background:var(--rule,rgba(34,37,42,.12))}.ds-exec-seg li.on{background:var(--color-brand,#ef6c1a)}"
+    },
+    {
+      "name": "Gallery Lead Photo",
+      "kind": "card",
+      "refersTo": null,
+      "description": "Square 4:3 photo button with graphite scrim, orange-dash caption and an expand control on hover; opens the viewer by shared layout.",
+      "html": "<button class=\"ds-photo\" aria-label=\"Ampliar: contenção concluída\"><span class=\"ds-photo-img\"></span><span class=\"ds-photo-scrim\"></span><span class=\"ds-photo-cap\"><span class=\"ds-dash\"></span>Contenção concluída</span><span class=\"ds-photo-x\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m15 15 6 6\"/><path d=\"m15 9 6-6\"/><path d=\"M21 16v5h-5\"/><path d=\"M21 8V3h-5\"/><path d=\"M3 16v5h5\"/><path d=\"m3 21 6-6\"/><path d=\"M3 8V3h5\"/><path d=\"M9 9 3 3\"/></svg></span></button>",
+      "css": ".ds-photo{position:relative;display:block;width:100%;max-width:560px;aspect-ratio:4/3;padding:0;border:0;border-radius:0;overflow:hidden;background:var(--canvas-sunk,#f1f0ec);cursor:pointer}.ds-photo-img{position:absolute;inset:0;background:linear-gradient(135deg,#8c8578,#5b574f);transition:transform .7s cubic-bezier(.16,1,.3,1)}.ds-photo:hover .ds-photo-img{transform:scale(1.03)}.ds-photo-scrim{position:absolute;left:0;right:0;bottom:0;height:33%;background:linear-gradient(to top,rgba(34,37,42,.85),transparent)}.ds-photo-cap{position:absolute;left:16px;right:16px;bottom:16px;display:flex;align-items:center;gap:10px;font-family:var(--font-display,\"Space Grotesk\",system-ui,sans-serif);font-size:14px;font-weight:500;color:#fafaf8}.ds-dash{width:20px;height:2px;flex-shrink:0;background:#ef6c1a}.ds-photo-x{position:absolute;right:12px;top:12px;display:flex;align-items:center;justify-content:center;width:36px;height:36px;background:rgba(34,37,42,.7);color:#fafaf8;opacity:0;transition:opacity .15s}.ds-photo:hover .ds-photo-x,.ds-photo:focus-visible .ds-photo-x{opacity:1}.ds-photo:focus-visible{outline:2px solid var(--focus-ring,#b94e0c);outline-offset:3px}"
+    },
+    {
+      "name": "Viewer Control",
+      "kind": "button",
+      "refersTo": "viewer-control",
+      "description": "Square bordered arrow/close control inside the graphite photo viewer.",
+      "html": "<div class=\"ds-viewer\"><button class=\"ds-vc\" aria-label=\"Próxima foto\"><svg width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m9 18 6-6-6-6\"/></svg></button><span class=\"ds-vn\">3 / 12</span></div>",
+      "css": ".ds-viewer{display:flex;align-items:center;gap:16px;padding:24px;background:rgba(34,37,42,.96)}.ds-vc{display:flex;align-items:center;justify-content:center;width:48px;height:48px;padding:0;background:rgba(34,37,42,.6);color:#fafaf8;border:1px solid rgba(250,250,248,.3);border-radius:0;cursor:pointer;transition:border-color .15s}.ds-vc:hover{border-color:#fafaf8}.ds-vc:focus-visible{outline:2px solid #ef6c1a;outline-offset:3px}.ds-vn{font-family:var(--font-display,\"Space Grotesk\",system-ui,sans-serif);font-size:15px;font-weight:500;font-variant-numeric:tabular-nums;color:#a8adb6}"
     }
   ],
   "narrative": {
@@ -553,7 +624,9 @@
       "Do separate content with hairline rows and close totals with a 2px ink rule.",
       "Do draw charts and sections in the system tokens: Data Orange for the one measured series, Sand strata with ink-dot hatching, Water Blue only for water.",
       "Do drive data marks in once from their baseline on the pile curve, and respect reduced motion.",
-      "Do show a missing figure as a visible bracketed placeholder on Orange Wash."
+      "Do show a missing figure as a visible bracketed placeholder on Orange Wash.",
+      "Do label every generated or illustrative clip with the \"Imagem ilustrativa\" media chip, and keep real photographs in the gallery labelled as real.",
+      "Do render the poster first and mount background video only from 768px without reduced motion or save-data, pausing it offscreen."
     ],
     "donts": [
       "Don't place an eyebrow, kicker or tagline above a headline; the driven rule is the opener.",
@@ -563,7 +636,7 @@
       "Don't add shadows to resting surfaces on the same ground; use a tonal band or a hairline. The one resting shadow is a light card lifted off a graphite band.",
       "Don't hard-code light-surface colors inside components that can sit on a graphite band or in the dark theme.",
       "Don't recolor, rotate, distort or retype the mark; the pile is always vertical.",
-      "Don't loop or repeat driven animations; a mark is driven once."
+      "Don't loop or repeat driven animations; a mark is driven once. Ambient background footage is the only loop, and it pauses offscreen."
     ]
   }
 }

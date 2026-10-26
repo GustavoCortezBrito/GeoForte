@@ -34,7 +34,7 @@ What a proposal page must prove (confirmed):
 - Next.js 16 App Router site, Tailwind v4 tokens, framer-motion; hosted on Vercel.
 - Proposal pages are private links: noindex, outside the sitemap and the site menu (confirmed).
 - Proposal content comes from `tools/proposta/dados`, the same source as the PDF generator. Never invent numbers; missing data stays visible as a placeholder until filled.
-- Generated imagery (Higgsfield) is illustrative atmosphere only, never presented as a Geoforte work. Photos of executed works are used untouched; `manakai-1.jpg` and `manakai-2.jpg` are banned (look AI-processed).
+- Generated imagery (Higgsfield) is illustrative atmosphere only, never presented as a Geoforte work, and labeled "Imagem ilustrativa" where it appears. Photos of executed works are used untouched (a crop at most). `documento/fotos/manakai-1.jpg` and `manakai-2.jpg` are AI-processed and banned; their unprocessed originals are `tools/proposta/assets/fotos/manakai-01.jpg` and `-02.jpg`.
 
 ## Brand Commitments
 
@@ -44,7 +44,7 @@ What a proposal page must prove (confirmed):
 ## Evidence on Hand
 
 - Proposal GEO 2701A/25 (Expansão Grand Palladium Imbassaí): clauses, scope areas, phases and calculation results in `tools/proposta/dados/`.
-- 8 real photos of 4 executed works in `tools/proposta/assets/fotos/` (~970 px wide), ABEF and GeoSelos logos, GeoSelos certificate.
+- 20 real photos of 4 executed works in `tools/proposta/assets/fotos/` (originals sent by the Geoforte team on 26/10/2026, up to 1600 px; origin embedded in each file), ABEF and GeoSelos logos, GeoSelos certificate. The three Riserva Vita photos arrived in the Nouvelle Blues album and still need the team's confirmation.
 - Company stats in `src/lib/data.ts`.
 - Absent, do not fabricate: the proposal's global price table (Tabela 01 is missing in the original), the works' technical sheets (area, height, piles, dates, neighborhood, year), testimonials.
 

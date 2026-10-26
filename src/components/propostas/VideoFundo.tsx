@@ -27,10 +27,12 @@ interface Props {
   prioridade?: boolean;
   sizes?: string;
   className?: string;
+  /** Ponto que não pode sair do recorte (object-position), para quadros mais estreitos que o vídeo. */
+  foco?: string;
 }
 
 /** Vídeo de fundo, mudo e em loop. Fora da tela ele pausa. */
-export default function VideoFundo({ src, poster, prioridade = false, sizes = "100vw", className = "" }: Props) {
+export default function VideoFundo({ src, poster, prioridade = false, sizes = "100vw", className = "", foco }: Props) {
   const tocar = useSyncExternalStore(assinar, podeTocar, () => false);
   const [ok, setOk] = useState(true);
   const ref = useRef<HTMLVideoElement>(null);
@@ -47,7 +49,7 @@ export default function VideoFundo({ src, poster, prioridade = false, sizes = "1
 
   return (
     <div className={`absolute inset-0 ${className}`}>
-      <Image src={poster} alt="" fill priority={prioridade} sizes={sizes} className="object-cover" />
+      <Image src={poster} alt="" fill priority={prioridade} sizes={sizes} className="object-cover" style={foco ? { objectPosition: foco } : undefined} />
       {tocar && ok && (
         <video
           ref={ref}
@@ -58,6 +60,7 @@ export default function VideoFundo({ src, poster, prioridade = false, sizes = "1
           poster={poster}
           aria-hidden
           className="absolute inset-0 h-full w-full object-cover"
+          style={foco ? { objectPosition: foco } : undefined}
         >
           <source src={src} type="video/mp4" onError={() => setOk(false)} />
         </video>
