@@ -3,6 +3,7 @@ title: Fundações e vizinhança: como reduzir vibração e ruído na obra
 description: Em áreas urbanas, a execução da fundação precisa respeitar o entorno. Veja as escolhas de técnica, o laudo cautelar e o monitoramento que protegem vizinhos e a obra.
 category: Obra
 date: 2026-10-10
+seoTitle: Fundações e vizinhança: vibração e ruído na obra
 ---
 
 A fase de fundação é, em geral, a mais barulhenta e a que mais mexe no solo de uma obra. Em áreas urbanas, com prédios e casas ao lado, isso exige planejamento: vibração e ruído mal geridos geram reclamações, paralisações e, no pior caso, danos a construções vizinhas.

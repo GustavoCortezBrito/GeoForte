@@ -8,7 +8,14 @@
         "value": "arial",
         "createdAt": "2026-10-16T17:44:24.620Z",
         "reason": "Assistant decision, not user-confirmed: font stack in the transactional e-mail HTML (api/contato/route.ts); mail clients cannot load web fonts, so a web-safe stack is required, not a design choice"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "arial",
+        "createdAt": "2026-10-26T04:29:10.557Z",
+        "reason": "Assistant decision, not user-confirmed: font stack in the transactional e-mail HTML (api/contato/route.ts); mail clients cannot load web fonts, so a web-safe stack is required, not a design choice"
       }
     ]
-  }
+  },
+  "buildPath": "code"
 }

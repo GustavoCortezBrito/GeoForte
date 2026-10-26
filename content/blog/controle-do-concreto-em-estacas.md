@@ -3,6 +3,7 @@ title: Controle do concreto em estacas: o que é verificado e por quê
 description: Resistência, consistência, volume e rastreabilidade: como o concreto das estacas moldadas no local é controlado para garantir que cada estaca saia como projetada.
 category: Qualidade
 date: 2026-10-14
+seoTitle: Controle do concreto em estacas: o que verificar
 ---
 
 Nas estacas moldadas no local, o concreto é lançado dentro do furo e não pode ser inspecionado depois de pronto. Por isso, a qualidade precisa ser **garantida durante a execução**, com controles que se registram estaca por estaca.

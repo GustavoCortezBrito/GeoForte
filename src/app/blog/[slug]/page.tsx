@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import Markdown from "@/components/blog/Markdown";
 import PostCover from "@/components/blog/PostCover";
 import { companyInfo } from "@/lib/data";
@@ -25,7 +26,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!post) return {};
 
   return {
-    title: post.title,
+    // Título curto para o Google; o H1 da página continua o completo.
+    title: post.seoTitle ?? post.title,
     description: post.description,
     alternates: { canonical: `/blog/${post.slug}` },
     openGraph: {
@@ -59,10 +61,18 @@ export default async function PostPage({ params }: Props) {
     headline: post.title,
     description: post.description,
     datePublished: post.date,
+    dateModified: post.date,
     inLanguage: "pt-BR",
+    articleSection: post.category,
+    image: `${SITE_URL}/blog/${post.slug}/opengraph-image`,
     mainEntityOfPage: `${SITE_URL}/blog/${post.slug}`,
     author: { "@type": "Organization", name: companyInfo.name, url: SITE_URL },
-    publisher: { "@type": "Organization", name: companyInfo.fullName, url: SITE_URL },
+    publisher: {
+      "@type": "Organization",
+      name: companyInfo.fullName,
+      url: SITE_URL,
+      logo: { "@type": "ImageObject", url: `${SITE_URL}/marca/geoforte-simbolo.png` },
+    },
   };
 
   return (
@@ -76,13 +86,13 @@ export default async function PostPage({ params }: Props) {
       <Navbar />
       <main className="pt-32 pb-28">
         <article className="max-w-[68ch] mx-auto px-5">
-          <Link
-            href="/blog"
-            className="inline-flex items-center gap-2 font-display font-medium text-sm text-ink-2 hover:text-ink transition-colors"
-          >
-            <ArrowLeft size={15} aria-hidden />
-            Todos os artigos
-          </Link>
+          <Breadcrumbs
+            items={[
+              { name: "Início", href: "/" },
+              { name: "Blog", href: "/blog" },
+              { name: post.seoTitle ?? post.title },
+            ]}
+          />
 
           <h1 className="mt-8 font-display font-bold text-[clamp(2rem,4.8vw,3.1rem)] leading-[1.06] tracking-[-0.03em] text-ink text-balance">
             {post.title}

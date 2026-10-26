@@ -3,6 +3,7 @@ title: Quanto custa uma fundação? O que realmente pesa no preço
 description: Não existe preço único por metro de estaca. Veja os fatores que definem o custo de uma fundação e por que o menor valor unitário nem sempre é o mais econômico.
 category: Obra
 date: 2026-10-06
+seoTitle: Quanto custa uma fundação? O que pesa no preço
 ---
 
 "Quanto custa a fundação?" é a primeira pergunta de quase toda obra, e a resposta honesta é: depende. Não existe um valor por metro de estaca que sirva para qualquer terreno. O preço final nasce da combinação de vários fatores, e entendê-los ajuda a comparar propostas com mais segurança.

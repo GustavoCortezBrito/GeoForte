@@ -17,6 +17,7 @@ export type { PostMeta } from "./blog-shared";
  *   category: Fundações
  *   date: 2026-10-19
  *   featured: true        (opcional: é o destaque do /blog; sem ele, o mais recente)
+ *   seoTitle: Título curto   (opcional: título para o Google, até ~49 caracteres)
  *   ---
  */
 
@@ -24,6 +25,8 @@ const DIR = join(process.cwd(), "content", "blog");
 
 export interface Post extends PostMeta {
   body: string;
+  /** Título curto para o Google (até ~49 caracteres); sem ele, vale o título. */
+  seoTitle?: string;
 }
 
 function parse(slug: string, raw: string): Post {
@@ -54,6 +57,7 @@ function parse(slug: string, raw: string): Post {
     date: data.date,
     readingMinutes: Math.max(1, Math.round(words / 200)),
     featured: data.featured === "true",
+    seoTitle: data.seoTitle || undefined,
     body,
   };
 }

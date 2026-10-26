@@ -3,6 +3,7 @@ title: Checklist: o que ter em mãos antes de contratar a fundação
 description: Sondagem, projeto, acesso, entorno e escopo: a lista do que reunir para receber uma proposta de fundação precisa e evitar surpresas na obra.
 category: Obra
 date: 2026-10-19
+seoTitle: Checklist antes de contratar a fundação
 ---
 
 Uma proposta de fundação só é tão precisa quanto as informações em que se baseia. Reunir os itens abaixo antes de pedir orçamentos acelera o processo e reduz o risco de aditivos e atrasos.

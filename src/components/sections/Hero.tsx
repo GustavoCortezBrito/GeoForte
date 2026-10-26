@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useSyncExternalStore } from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import SoilSection from "@/components/ui/SoilSection";
@@ -82,25 +83,55 @@ function AnimatedStat({
   );
 }
 
+// O vídeo (5,6 MB) só carrega onde compensa: tela de desktop, sem pedido de
+// "reduzir movimento" e sem "economia de dados". No resto, o poster basta.
+// No servidor o valor é falso, então o HTML inicial já traz só o poster.
+const subscribeMotion = (notify: () => void) => {
+  const queries = [
+    window.matchMedia("(min-width: 768px)"),
+    window.matchMedia("(prefers-reduced-motion: reduce)"),
+  ];
+  queries.forEach((q) => q.addEventListener("change", notify));
+  return () => queries.forEach((q) => q.removeEventListener("change", notify));
+};
+const canPlayVideo = () => {
+  const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } })
+    .connection?.saveData;
+  return (
+    window.matchMedia("(min-width: 768px)").matches &&
+    !window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
+    !saveData
+  );
+};
+
 export default function Hero() {
   const [videoOk, setVideoOk] = useState(true);
+  const playVideo = useSyncExternalStore(subscribeMotion, canPlayVideo, () => false);
 
   return (
     <section
       id="inicio"
       className="on-graphite relative min-h-[100dvh] flex flex-col bg-graphite overflow-hidden"
     >
-      {/* Vídeo de fundo — obra em execução (1080p, 18 s em vai-e-volta, sem corte
-          no loop). Cai para a malha técnica se ausente: o erro de carga dispara
-          nos <source>, não no <video>. */}
-      {videoOk && (
+      {/* Fundo: o poster é a imagem principal (carrega com prioridade, é o que
+          o Google mede como LCP). O vídeo entra por cima só quando compensa
+          (ver canPlayVideo) e começa no mesmo quadro do poster, sem salto. Se
+          o arquivo faltar, o erro dispara no <source>, não no <video>. */}
+      <Image
+        src="/videos/hero-obra-poster.jpg"
+        alt=""
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover"
+      />
+      {playVideo && videoOk && (
         <video
           autoPlay
           muted
           loop
           playsInline
           preload="auto"
-          poster="/videos/hero-obra-poster.jpg"
           aria-hidden
           className="absolute inset-0 w-full h-full object-cover"
         >
@@ -132,9 +163,7 @@ export default function Hero() {
             "radial-gradient(circle, rgba(239,108,26,0.16) 0%, transparent 62%)",
         }}
       />
-      {videoOk && (
-        <div className="absolute inset-0 bg-gradient-to-b from-graphite/80 via-graphite/68 to-graphite/88" />
-      )}
+      <div className="absolute inset-0 bg-gradient-to-b from-graphite/80 via-graphite/68 to-graphite/88" />
 
       <div className="relative z-10 flex-1 flex items-center w-full max-w-6xl mx-auto px-5 pt-32 pb-12 lg:pt-28">
         <div className="grid w-full items-center gap-14 lg:grid-cols-[1.02fr_0.98fr] lg:gap-10">

@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
     default: "Geoforte Fundações — Qualidade do projeto à execução",
-    template: "%s — Geoforte Fundações",
+    template: "%s | Geoforte",
   },
   description:
     "Há 30 anos executando fundações profundas em todo o Brasil. +1500 obras, 26 equipamentos, 8 soluções técnicas. Solicite um diagnóstico.",

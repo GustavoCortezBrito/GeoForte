@@ -8,9 +8,10 @@ import BlogExplorer from "@/components/blog/BlogExplorer";
 import { companyInfo } from "@/lib/data";
 import { mark } from "@/lib/brand";
 import { getAllPosts, type PostMeta } from "@/lib/blog";
+import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Blog",
+  title: "Blog de fundações: estacas, sondagem e projeto",
   description:
     "Artigos da Geoforte Fundações sobre estacas, sondagem, projeto e execução de fundações profundas, explicados de forma direta.",
   alternates: { canonical: "/blog" },
@@ -18,6 +19,17 @@ export const metadata: Metadata = {
 
 const gridBg =
   "linear-gradient(rgba(250,250,248,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(250,250,248,0.05) 1px, transparent 1px)";
+
+const blogJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  name: "Blog Geoforte Fundações",
+  description:
+    "Artigos sobre estacas, sondagem, projeto e execução de fundações profundas.",
+  url: `${SITE_URL}/blog`,
+  inLanguage: "pt-BR",
+  publisher: { "@type": "Organization", name: companyInfo.fullName, url: SITE_URL },
+};
 
 export default function BlogPage() {
   // Só os metadados vão para o navegador; o texto dos posts fica no servidor.
@@ -33,6 +45,12 @@ export default function BlogPage() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(blogJsonLd).replace(/</g, "\u003c"),
+        }}
+      />
       <Navbar />
       <main>
         {/* 1 · Hero */}

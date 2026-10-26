@@ -6,6 +6,9 @@ import { brand, mark, markSpecs } from "@/lib/brand";
 
 export const metadata: Metadata = {
   title: "Identidade visual",
+  alternates: { canonical: "/marca" },
+  // Manual interno de marca: continua público, mas fora do índice do Google.
+  robots: { index: false, follow: true },
   description:
     "Manual de aplicação da marca Geoforte Fundações — Conceito 01 “Pilar”: símbolo, versões, paleta, tipografia e regras de uso.",
 };
