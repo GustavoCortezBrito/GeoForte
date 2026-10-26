@@ -8,10 +8,10 @@
  * build falha (melhor do que publicar um número errado).
  */
 import type { StaticImageData } from "next/image";
-import { proposta, empresa } from "@proposta/dados/empresa.mjs";
+import { proposta, empresa, numerosGeoforte } from "@proposta/dados/empresa.mjs";
 import { secoes, assinatura as assinaturaPdf } from "@proposta/dados/proposta.mjs";
 import { memorial } from "@proposta/dados/memorial.mjs";
-import { obras as obrasPdf } from "@proposta/dados/obras.mjs";
+import { obras as obrasPdf, etapas as etapasPdf, grandPalladium } from "@proposta/dados/obras.mjs";
 import manakai01 from "@proposta/assets/fotos/manakai-01.jpg";
 import manakai02 from "@proposta/assets/fotos/manakai-02.jpg";
 import manakai03 from "@proposta/assets/fotos/manakai-03.jpg";
@@ -364,7 +364,21 @@ export const obras = obrasPdf.map((o) => ({
   local: [o.bairro, "Salvador – BA"].filter(Boolean).join(", "),
   ano: o.ano,
   /** Todas as fotos da obra, na ordem de dados/obras.mjs (a 1ª é a principal). */
-  fotos: o.fotos.map((ft) => ({ src: foto(ft.arquivo), legenda: ft.legenda, foco: "foco" in ft ? (ft.foco as string) : undefined })),
+  fotos: o.fotos.map((ft) => ({
+    src: foto(ft.arquivo),
+    legenda: ft.legenda,
+    etapa: ft.etapa,
+    foco: "foco" in ft ? (ft.foco as string) : undefined,
+  })),
+  cenario: o.cenario,
+  /** Para cada etapa da execução: quantas fotos a obra tem dela e qual é a primeira (índice em `fotos`). */
+  etapas: etapasPdf.map((e) => {
+    const idx = o.fotos.map((ft, i) => (ft.etapa === e.id ? i : -1)).filter((i) => i >= 0);
+    return { id: e.id, nome: e.nome, fotos: idx.length, primeira: idx[0] ?? null };
+  }),
+  complementoConfirmar: o.ficha.complemento.confirmar,
+  complementoTexto: o.ficha.complemento.valor,
+  fotosConfirmar: Boolean((o as { fotosConfirmar?: boolean }).fotosConfirmar),
   solucao: o.ficha.solucao,
   complemento: o.ficha.complemento.confirmar ? null : o.ficha.complemento.valor,
   ficha: [
@@ -375,3 +389,14 @@ export const obras = obrasPdf.map((o) => ({
   ].filter((x): x is [string, string] => Boolean(x[1])),
   destaque: o.destaque,
 }));
+
+/** Linha do Grand Palladium e os números da Geoforte, para o comparativo do capítulo B. */
+export const comparativo = {
+  grandPalladium: {
+    ...grandPalladium,
+    contencoes: escopo.contencoes.length,
+    area: escopo.total.valor,
+  },
+  numeros: numerosGeoforte as { valor: string; rotulo: string }[],
+  etapas: etapasPdf as { id: string; nome: string }[],
+};

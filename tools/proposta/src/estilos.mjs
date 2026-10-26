@@ -336,6 +336,40 @@ const anexo = `
 .ob-mosaico{margin-top:5mm;flex:1;min-height:0;display:grid;gap:2.5mm;grid-template-columns:1.85fr 1fr;grid-template-rows:1fr 1fr}
 .ob-mosaico .m0{grid-row:1 / 3}
 .ob-mosaico.n2 .m1{grid-row:1 / 3}
+.ob-mosaico.n5{grid-template-columns:1.7fr 1fr 1fr}
+.ob-cenario{margin-top:3mm;font-size:10pt;color:var(--g2)}
+.ob-cenario + .ob-mosaico{margin-top:3mm}
+
+/* etapas registradas: caixa laranja quando a obra tem foto da etapa */
+.ob-etapas{flex-shrink:0;margin-top:3mm;list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:2mm}
+.ob-etapas li{display:grid;grid-template-columns:3.4mm 1fr;column-gap:2mm;align-items:center;padding:1.6mm 0;border-top:.3mm solid var(--fio2);font-size:8.6pt;line-height:1.25;color:var(--g3)}
+.ob-etapas i{grid-row:1 / 3;width:3.4mm;height:3.4mm;border:.35mm solid var(--g4)}
+.ob-etapas b{grid-column:2;font-weight:500;font-size:8pt}
+.ob-etapas li.sim{border-top-color:var(--g);color:var(--g)}
+.ob-etapas li.sim i{background:var(--o);border-color:var(--o)}
+.ob-etapas li.sim b{color:var(--oi);font-weight:700}
+
+/* página B.2: comparativo */
+.cmp{margin-top:5mm;font-size:8.8pt;line-height:1.35}
+.cmp th{background:var(--g);color:#fff;font-size:8pt;padding:1.8mm 2.4mm}
+.cmp td{padding:2.2mm 2.4mm;border-bottom:.25mm solid var(--fio);vertical-align:top}
+.cmp td:first-child b{display:block;font-family:var(--mono);font-size:10pt;letter-spacing:-.01em}
+.cmp td small{display:block;margin-top:.6mm;font-size:8pt;color:var(--g3)}
+.cmp-n{float:left;margin-right:2mm;font-family:var(--mono);font-weight:700;font-size:14pt;line-height:1;color:var(--o)}
+.cmp tr.gp td{background:var(--painel);border-top:.5mm solid var(--g);border-bottom:0}
+.cmp-et{display:inline-flex;gap:1mm;vertical-align:middle}
+.cmp-et i{width:3.4mm;height:3.4mm;border:.35mm solid var(--g4)}
+.cmp-et i.sim{background:var(--o);border-color:var(--o)}
+.cmp-leg{margin-top:2mm;font-size:8pt;color:var(--g3)}
+.cmp-leg .cmp-et{margin-right:1.5mm}
+.cmp-h{margin-top:7mm;font-family:var(--mono);font-weight:700;font-size:11.5pt;letter-spacing:-.01em;break-after:avoid}
+.cmp-fotos{margin-top:3mm;flex:1;min-height:0;list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:3mm}
+.cmp-fotos li{display:flex;flex-direction:column;min-height:0}
+.cmp-fotos .ob-foto{flex:1;min-height:30mm}
+.cmp-fotos p{margin-top:1.8mm;padding-top:1.6mm;border-top:.5mm solid var(--g);font-size:8.4pt;line-height:1.3;color:var(--g2)}
+.cmp-fotos p b{display:block;font-family:var(--mono);font-size:9pt;color:var(--g)}
+.cmp-frase{flex-shrink:0;margin-top:5mm;padding-top:3mm;border-top:.3mm solid var(--fio2);font-size:10pt;line-height:1.5;color:var(--g2)}
+.cmp-frase b{font-family:var(--mono);color:var(--g)}
 .ob-marca{position:absolute;left:0;top:0;min-width:6.4mm;height:6.4mm;display:flex;align-items:center;justify-content:center;
   background:var(--g);color:#fff;font-family:var(--mono);font-weight:700;font-size:9.5pt}
 /* legenda das fotos: aberta pelo fio de 2px em tinta, como as legendas do site */

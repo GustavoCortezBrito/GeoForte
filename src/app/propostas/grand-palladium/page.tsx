@@ -9,12 +9,14 @@ import BarrasContencoes from "@/components/propostas/BarrasContencoes";
 import CorteCortina from "@/components/propostas/CorteCortina";
 import ExecucaoPassos from "@/components/propostas/ExecucaoPassos";
 import GaleriaObras from "@/components/propostas/GaleriaObras";
+import ComparativoObras from "@/components/propostas/ComparativoObras";
 import { CronogramaPrazos, DivisaoFaturamento } from "@/components/propostas/Graficos";
 import Rico from "@/components/propostas/Rico";
 import {
   PDF_URL,
   assinatura,
   cabecalho,
+  comparativo,
   condicoes,
   empresa,
   escopo,
@@ -471,6 +473,12 @@ export default function PropostaGrandPalladium() {
               titulo="Obras executadas"
               lead={`Contenções executadas pela Geoforte em Salvador com a mesma solução prevista para o ${cabecalho.cliente}: cortinas de estacas justapostas, em terrenos litorâneos e junto a edificações existentes.`}
             >
+              <ComparativoObras obras={obras} c={comparativo} />
+
+              <h3 className="mt-20 font-display text-[19px] font-bold text-ink">Fotos das obras</h3>
+              <p className="mt-2 mb-8 max-w-[60ch] text-[15px] leading-relaxed text-ink-2">
+                {obras.reduce((n, o) => n + o.fotos.length, 0)} fotos reais, da perfuração à cortina concluída. Toque numa foto, ou numa etapa, para ampliar.
+              </p>
               <GaleriaObras obras={obras} />
 
               <div className="mt-20 grid items-center gap-8 border-t border-rule pt-10 sm:grid-cols-[auto_minmax(0,1fr)_auto_minmax(0,1fr)]">

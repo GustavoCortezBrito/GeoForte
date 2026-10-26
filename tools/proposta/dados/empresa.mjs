@@ -27,6 +27,14 @@ export const empresa = {
   email: "projetos@geoforte.com.br",
 };
 
+/** Números da Geoforte no site (src/lib/data.ts, stats): manter iguais. */
+export const numerosGeoforte = [
+  { valor: "1995", rotulo: "ano de fundação" },
+  { valor: "+1.500", rotulo: "obras executadas" },
+  { valor: "+3,3 mi", rotulo: "metros de estacas" },
+  { valor: "26", rotulo: "equipamentos" },
+];
+
 export const config = {
   /**
    * A proposta original marca em amarelo as cláusulas 2.22, 4 (inteira), 5.1, 5.2,

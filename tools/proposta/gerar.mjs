@@ -114,7 +114,7 @@ for (const [nome, bytes, esperado] of [
   ["capa", capa, 1],
   ["sumário", sumarioBruto, 1],
   ["abertura do anexo", abertura, 1],
-  ["anexo", anexoBruto, obras.length],
+  ["anexo", anexoBruto, obras.length + 1], // comparativo + uma página por obra
 ]) {
   const n = await contarPaginas(bytes);
   if (n !== esperado) throw new Error(`${nome}: ${n} páginas (esperado ${esperado}) — algum conteúdo transbordou.`);

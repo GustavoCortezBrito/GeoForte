@@ -17,6 +17,9 @@ interface Obra {
   local: string;
   ano: string | null;
   fotos: Foto[];
+  cenario: string;
+  etapas: { id: string; nome: string; fotos: number; primeira: number | null }[];
+  fotosConfirmar: boolean;
   solucao: string;
   complemento: string | null;
   ficha: [string, string][];
@@ -116,11 +119,14 @@ function Tira({
   reduzir,
   className,
   v,
+  fecha = false,
 }: {
   obra: Obra;
   o: number;
   lugares: number;
   v: string;
+  /** Fecha a última linha da grade com um bloco "ver todas" quando a conta fecha (11 extras + 1 = 12). */
+  fecha?: boolean;
   abrir: (o: number, f: number, v?: string) => (e: React.MouseEvent<HTMLElement>) => void;
   cliente: boolean;
   reduzir: boolean | null;
@@ -155,7 +161,52 @@ function Tira({
           </li>
         );
       })}
+      {fecha && resto === 0 && mostradas.length % 6 === 5 && (
+        <li>
+          <button
+            type="button"
+            onClick={abrir(o, 0, v)}
+            className="flex aspect-[4/3] w-full flex-col items-center justify-center gap-0.5 border border-rule-strong font-display text-ink transition-colors hover:border-ink hover:text-brand-ink"
+          >
+            <span className="text-[20px] font-bold leading-none tabular-nums">{obra.fotos.length}</span>
+            <span className="text-[12px] font-semibold">ver todas</span>
+          </button>
+        </li>
+      )}
     </ul>
+  );
+}
+
+/** Etapas da execução com foto: caixa laranja cheia quando a obra tem registro da etapa; clicar abre a 1ª foto dela. */
+function Etapas({ obra, o, abrir, larga }: { obra: Obra; o: number; larga: boolean; abrir: (o: number, f: number, v?: string) => (e: React.MouseEvent<HTMLElement>) => void }) {
+  return (
+    <ol className={`mt-5 grid grid-cols-2 gap-x-4 gap-y-2 ${larga ? "sm:grid-cols-4" : ""}`} aria-label={`Etapas de ${obra.nome} registradas em foto`}>
+      {obra.etapas.map((e) => {
+        const tem = e.fotos > 0 && e.primeira != null;
+        const miolo = (
+          <>
+            <span aria-hidden className={`mt-[3px] h-3 w-3 shrink-0 border ${tem ? "border-brand bg-brand" : "border-ink-3"}`} />
+            <span className="min-w-0">
+              <span className={`block font-display text-[13px] font-semibold leading-snug ${tem ? "text-ink" : "text-ink-3"}`}>{e.nome}</span>
+              <span className={`block text-[12px] ${tem ? "font-medium text-brand-ink" : "text-ink-3"}`}>
+                {tem ? `${e.fotos} ${e.fotos > 1 ? "fotos" : "foto"}` : "sem foto"}
+              </span>
+            </span>
+          </>
+        );
+        return (
+          <li key={e.id} className={`border-t pt-2 ${tem ? "border-ink" : "border-rule"}`}>
+            {tem ? (
+              <button type="button" onClick={abrir(o, e.primeira!)} className="flex w-full items-start gap-2 text-left transition-colors hover:text-brand-ink">
+                {miolo}
+              </button>
+            ) : (
+              <div className="flex items-start gap-2">{miolo}</div>
+            )}
+          </li>
+        );
+      })}
+    </ol>
   );
 }
 
@@ -211,8 +262,11 @@ export default function GaleriaObras({ obras }: { obras: Obra[] }) {
               {destaque && (
                 <>
                   <Tira obra={o} o={oi} lugares={3} v="-m" abrir={abrir} cliente={cliente} reduzir={reduzir} className="grid grid-cols-3 md:hidden" />
-                  <Tira obra={o} o={oi} lugares={6} v="-d" abrir={abrir} cliente={cliente} reduzir={reduzir} className="hidden md:grid md:grid-cols-6" />
+                  <Tira obra={o} o={oi} lugares={11} v="-d" fecha abrir={abrir} cliente={cliente} reduzir={reduzir} className="hidden md:grid md:grid-cols-6" />
                 </>
+              )}
+              {!destaque && o.fotos.length > 1 && (
+                <Tira obra={o} o={oi} lugares={3} v="-c" abrir={abrir} cliente={cliente} reduzir={reduzir} className="grid grid-cols-3" />
               )}
 
               <figcaption className="mt-5 border-t-2 border-ink pt-4">
@@ -231,9 +285,10 @@ export default function GaleriaObras({ obras }: { obras: Obra[] }) {
                     <span className="font-medium text-brand-ink">{o.construtora}</span>
                   </p>
                 </div>
-                <p className="mt-2.5 text-[15px] leading-relaxed text-ink-2">
+                <p className="mt-2.5 text-[15px] font-medium leading-relaxed text-ink">{o.cenario}.</p>
+                <p className="mt-1 text-[15px] leading-relaxed text-ink-2">
                   {o.solucao}
-                  {o.complemento ? ` com ${o.complemento.toLowerCase()}` : ""}. <span className="text-ink-3">{principal.legenda}.</span>
+                  {o.complemento ? ` com ${o.complemento.toLowerCase()}` : ""}.
                 </p>
                 {o.ficha.length > 0 && (
                   <dl className="mt-3 text-[14px]">
@@ -246,6 +301,7 @@ export default function GaleriaObras({ obras }: { obras: Obra[] }) {
                   </dl>
                 )}
                 {o.destaque && <p className="mt-3 text-[15px] leading-relaxed text-ink">{o.destaque}</p>}
+                <Etapas obra={o} o={oi} abrir={abrir} larga={destaque} />
               </figcaption>
             </figure>
           );

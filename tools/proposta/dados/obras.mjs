@@ -38,23 +38,24 @@ export const obras = [
     construtora: "São Conrado Empreendimentos",
     bairro: null,
     ano: null,
+    cenario: "Orla marítima, entre edificações vizinhas",
     // manakai-01 e -02: a mensagem diz "As duas últimas Mana Kai". São os originais
     // sem tratamento de documento/fotos/manakai-1.jpg e -2.jpg (proibidas pelo briefing).
     fotos: [
-      { arquivo: "manakai-01.jpg", legenda: "Execução das estacas com perfuratriz, junto à orla", foco: "68% 50%" },
-      { arquivo: "manakai-02.jpg", legenda: "Escavação interna com a cortina já executada" },
-      { arquivo: "manakai-03.jpg", legenda: "Perfuratriz entre as edificações vizinhas" },
-      { arquivo: "manakai-04.jpg", legenda: "Perfuratriz junto à cortina" },
-      { arquivo: "manakai-05.jpg", legenda: "Operação da perfuratriz" },
-      { arquivo: "manakai-06.jpg", legenda: "Perfuratriz e escavadeira na frente de trabalho" },
-      { arquivo: "manakai-07.jpg", legenda: "Perfuratriz e mangote na frente de trabalho" },
-      { arquivo: "manakai-08.jpg", legenda: "Escavação com a cortina ao fundo" },
-      { arquivo: "manakai-09.jpg", legenda: "Vigas de coroamento" },
-      { arquivo: "manakai-10.jpg", legenda: "Cortina de estacas justapostas concluída" },
-      { arquivo: "manakai-11.jpg", legenda: "Vista geral da cortina executada" },
-      { arquivo: "manakai-12.jpg", legenda: "Cortina com viga de coroamento" },
+      { arquivo: "manakai-01.jpg", etapa: "execucao", legenda: "Execução das estacas com perfuratriz, junto à orla", foco: "68% 50%" },
+      { arquivo: "manakai-02.jpg", etapa: "escavacao", legenda: "Escavação interna com a cortina já executada" },
+      { arquivo: "manakai-03.jpg", etapa: "execucao", legenda: "Perfuratriz entre as edificações vizinhas" },
+      { arquivo: "manakai-04.jpg", etapa: "execucao", legenda: "Perfuratriz junto à cortina" },
+      { arquivo: "manakai-05.jpg", etapa: "execucao", legenda: "Operação da perfuratriz" },
+      { arquivo: "manakai-06.jpg", etapa: "execucao", legenda: "Perfuratriz e escavadeira na frente de trabalho" },
+      { arquivo: "manakai-07.jpg", etapa: "execucao", legenda: "Perfuratriz e mangote na frente de trabalho" },
+      { arquivo: "manakai-08.jpg", etapa: "escavacao", legenda: "Escavação com a cortina ao fundo" },
+      { arquivo: "manakai-09.jpg", etapa: "vigas", legenda: "Vigas de coroamento" },
+      { arquivo: "manakai-10.jpg", etapa: "concluida", legenda: "Cortina de estacas justapostas concluída" },
+      { arquivo: "manakai-11.jpg", etapa: "concluida", legenda: "Vista geral da cortina executada" },
+      { arquivo: "manakai-12.jpg", etapa: "vigas", legenda: "Cortina com viga de coroamento" },
     ],
-    pdf: [0, 2, 9],
+    pdf: [0, 2, 8, 9, 5],
     ficha: {
       solucao: "Cortina de estacas justapostas",
       complemento: { valor: "Vigas de coroamento", confirmar: false },
@@ -71,10 +72,11 @@ export const obras = [
     construtora: "André Guimarães",
     bairro: null,
     ano: null,
+    cenario: "Escavação colada a edificações existentes",
     fotos: [
-      { arquivo: "nouvelle-01.jpg", legenda: "Execução da cortina junto a edificações vizinhas" },
-      { arquivo: "nouvelle-02.jpg", legenda: "Estacas e viga de coroamento" },
-      { arquivo: "nouvelle-03.jpg", legenda: "Cortina junto à edificação vizinha" },
+      { arquivo: "nouvelle-01.jpg", etapa: "execucao", legenda: "Execução da cortina junto a edificações vizinhas" },
+      { arquivo: "nouvelle-02.jpg", etapa: "vigas", legenda: "Estacas e viga de coroamento" },
+      { arquivo: "nouvelle-03.jpg", etapa: "concluida", legenda: "Cortina junto à edificação vizinha" },
     ],
     pdf: [0, 1, 2],
     ficha: {
@@ -93,10 +95,11 @@ export const obras = [
     construtora: "SCR Construtora",
     bairro: null,
     ano: null,
+    cenario: "Escavação profunda, com perfuratriz em operação",
     fotos: [
-      { arquivo: "riserva-01.jpg", legenda: "Execução das estacas com perfuratriz" },
-      { arquivo: "riserva-02.jpg", legenda: "Movimentação de armaduras" },
-      { arquivo: "riserva-03.jpg", legenda: "Escavação com a cortina executada" },
+      { arquivo: "riserva-01.jpg", etapa: "execucao", legenda: "Execução das estacas com perfuratriz" },
+      { arquivo: "riserva-02.jpg", etapa: "execucao", legenda: "Movimentação de armaduras" },
+      { arquivo: "riserva-03.jpg", etapa: "escavacao", legenda: "Escavação com a cortina executada" },
     ],
     // As três vieram no fim do álbum "Nouvelle Blues", mas o briefing atribui as cenas
     // à Riserva Vita (outra obra: solo vermelho, parede cinza). Confirmar com a equipe.
@@ -118,9 +121,10 @@ export const obras = [
     construtora: "BTS Empreendimentos",
     bairro: null,
     ano: null,
+    cenario: "Encosta, com cortina em planta curva",
     fotos: [
-      { arquivo: "imbui-01.jpg", legenda: "Cortina concluída em planta curva" },
-      { arquivo: "imbui-02.jpg", legenda: "Perfuratriz em operação na encosta" },
+      { arquivo: "imbui-01.jpg", etapa: "concluida", legenda: "Cortina concluída em planta curva" },
+      { arquivo: "imbui-02.jpg", etapa: "execucao", legenda: "Perfuratriz em operação na encosta" },
     ],
     pdf: [0, 1],
     ficha: {
@@ -134,6 +138,28 @@ export const obras = [
     destaque: null,
   },
 ];
+
+/**
+ * Etapas da execução de uma cortina, na ordem em que acontecem. Uma etapa só aparece
+ * preenchida na obra que tem foto dela (`etapa` em cada foto) — nada é afirmado sem registro.
+ */
+export const etapas = [
+  { id: "execucao", nome: "Perfuração e armação" },
+  { id: "escavacao", nome: "Escavação" },
+  { id: "vigas", nome: "Vigas de coroamento" },
+  { id: "concluida", nome: "Cortina concluída" },
+];
+
+/**
+ * Linha do Grand Palladium no comparativo. Cada valor vem da própria proposta:
+ * cláusula 4.2 (complexo hoteleiro pré-existente), 8.4 (solo litorâneo) e 3.8 (vigas a cargo da Contratante).
+ */
+export const grandPalladium = {
+  nome: "Grand Palladium",
+  cenario: "Complexo hoteleiro existente, em solo litorâneo",
+  solucao: "Cortinas de estacas justapostas",
+  complemento: "Vigas de coroamento a cargo da Contratante (cl. 3.8)",
+};
 
 /** Texto mostrado em cada placeholder enquanto o campo estiver null. */
 export const placeholders = {
