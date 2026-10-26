@@ -401,6 +401,11 @@
         "purpose": "Stage clip entering top-down like a pile being driven."
       },
       {
+        "name": "tile-reveal",
+        "value": "clip-path inset(0 0 100% 0) to inset(0), 0.8s cubic-bezier(0.65,0,0.35,1), strip stagger 0.06s, viewport once amount 0.3; hidden state applied only after hydration; duration 0 under reduced motion",
+        "purpose": "Works photos driven in top-down once; the frame observes the viewport and drives an inner clipped layer by variants."
+      },
+      {
         "name": "step-progress",
         "value": "scaleX 0 to 1, 0.5s cubic-bezier(0.65,0,0.35,1), origin left",
         "purpose": "One 3px segment per step fills orange as the step is reached."
@@ -408,7 +413,7 @@
       {
         "name": "shared-layout",
         "value": "layoutId transition, 0.45s cubic-bezier(0.16,1,0.3,1); swipe 60px slide, drag threshold 70px",
-        "purpose": "Gallery photo grows from its place into the viewer; next/previous slide on the site ease."
+        "purpose": "Gallery photo grows from its place into the viewer (layoutId with a per-variant suffix so phone and desktop strips never share an id); next/previous slide on the site ease."
       },
       {
         "name": "video-loop",
@@ -459,9 +464,14 @@
         "purpose": "Paper caption legibility over photos and clips."
       },
       {
+        "name": "remainder-tile",
+        "value": "rgba(34,37,42,0.7), 0.55 on hover; \"+N\" Space Grotesk 700 17px, Paper",
+        "purpose": "Last slot of the featured work's photo strip when it has more photos than slots; opens the viewer."
+      },
+      {
         "name": "media-chip",
         "value": "rgba(34,37,42,0.7), Space Grotesk 500 12px, 4px 8px",
-        "purpose": "\"Imagem ilustrativa\" on every generated clip."
+        "purpose": "\"Imagem ilustrativa\" on every generated clip; the same chip carries the \"N fotos\" count on works photos (with a 13px icon)."
       },
       {
         "name": "viewer",
@@ -552,12 +562,12 @@
       "css": ".ds-exec{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:40px;max-width:820px}.ds-exec-steps{position:relative;list-style:none;margin:0;padding:0 0 0 28px}.ds-exec-track,.ds-exec-line{position:absolute;left:0;top:0;width:2px}.ds-exec-track{bottom:0;background:var(--rule,rgba(34,37,42,.12))}.ds-exec-line{height:45%;background:var(--color-brand,#ef6c1a)}.ds-exec-steps li{padding:24px 0}.ds-exec-n{margin:0;font-family:var(--font-display,\"Space Grotesk\",system-ui,sans-serif);font-size:clamp(2rem,3.4vw,2.75rem);font-weight:700;line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums;color:var(--ink-3,#696f7a);transition:color .5s}.ds-exec-steps li.is-on .ds-exec-n{color:var(--brand-ink,#b94e0c)}.ds-exec-t{margin:12px 0 0;font-family:var(--font-display,\"Space Grotesk\",system-ui,sans-serif);font-size:clamp(1.4rem,2.2vw,1.75rem);font-weight:700;letter-spacing:-.02em;color:var(--ink,#22252a)}.ds-exec-c{margin:16px 0 0;font-family:var(--font-body,Manrope,system-ui,sans-serif);font-size:15px;line-height:1.625;color:var(--ink-2,#555b66)}.ds-cn{margin-right:8px;font-family:var(--font-display,\"Space Grotesk\",system-ui,sans-serif);font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink-3,#696f7a)}.ds-exec-plate{position:relative;aspect-ratio:4/5;background:linear-gradient(to top,rgba(34,37,42,.8),transparent 33%),#3a3f47}.ds-chip{position:absolute;right:12px;top:12px;padding:4px 8px;background:rgba(34,37,42,.7);color:rgba(250,250,248,.8);font-family:var(--font-display,\"Space Grotesk\",system-ui,sans-serif);font-size:12px;font-weight:500}.ds-exec-cap{position:absolute;left:16px;bottom:16px;margin:0;font-family:var(--font-display,\"Space Grotesk\",system-ui,sans-serif);font-size:14px;font-weight:600;color:#fafaf8}.ds-exec-cap b{color:#ef6c1a;font-variant-numeric:tabular-nums}.ds-exec-cap i{font-style:normal;color:rgba(250,250,248,.6)}.ds-exec-seg{list-style:none;margin:16px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.ds-exec-seg li{height:3px;background:var(--rule,rgba(34,37,42,.12))}.ds-exec-seg li.on{background:var(--color-brand,#ef6c1a)}"
     },
     {
-      "name": "Gallery Lead Photo",
-      "kind": "card",
+      "name": "Works Showcase",
+      "kind": "custom",
       "refersTo": null,
-      "description": "Square 4:3 photo button with graphite scrim, orange-dash caption and an expand control on hover; opens the viewer by shared layout.",
-      "html": "<button class=\"ds-photo\" aria-label=\"Ampliar: contenção concluída\"><span class=\"ds-photo-img\"></span><span class=\"ds-photo-scrim\"></span><span class=\"ds-photo-cap\"><span class=\"ds-dash\"></span>Contenção concluída</span><span class=\"ds-photo-x\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m15 15 6 6\"/><path d=\"m15 9 6-6\"/><path d=\"M21 16v5h-5\"/><path d=\"M21 8V3h-5\"/><path d=\"M3 16v5h5\"/><path d=\"m3 21 6-6\"/><path d=\"M3 8V3h5\"/><path d=\"M9 9 3 3\"/></svg></span></button>",
-      "css": ".ds-photo{position:relative;display:block;width:100%;max-width:560px;aspect-ratio:4/3;padding:0;border:0;border-radius:0;overflow:hidden;background:var(--canvas-sunk,#f1f0ec);cursor:pointer}.ds-photo-img{position:absolute;inset:0;background:linear-gradient(135deg,#8c8578,#5b574f);transition:transform .7s cubic-bezier(.16,1,.3,1)}.ds-photo:hover .ds-photo-img{transform:scale(1.03)}.ds-photo-scrim{position:absolute;left:0;right:0;bottom:0;height:33%;background:linear-gradient(to top,rgba(34,37,42,.85),transparent)}.ds-photo-cap{position:absolute;left:16px;right:16px;bottom:16px;display:flex;align-items:center;gap:10px;font-family:var(--font-display,\"Space Grotesk\",system-ui,sans-serif);font-size:14px;font-weight:500;color:#fafaf8}.ds-dash{width:20px;height:2px;flex-shrink:0;background:#ef6c1a}.ds-photo-x{position:absolute;right:12px;top:12px;display:flex;align-items:center;justify-content:center;width:36px;height:36px;background:rgba(34,37,42,.7);color:#fafaf8;opacity:0;transition:opacity .15s}.ds-photo:hover .ds-photo-x,.ds-photo:focus-visible .ds-photo-x{opacity:1}.ds-photo:focus-visible{outline:2px solid var(--focus-ring,#b94e0c);outline-offset:3px}"
+      "description": "Works chapter on paper in the 'Projetos de referência' grammar: first work full width at 21:9 with a strip of its other photos (last slot '+N' on graphite 70%), others in 3 columns at 4:3; hairline-bordered photos with an 'N fotos' chip; caption below a 2px ink rule: orange number + bold name, MapPin + location · constructor in Burnt Orange, solution and lead legend. Photos wipe in top-down once and open the viewer by shared layout.",
+      "html": "<div class=\"ds-works\"><figure class=\"ds-fig\"><div class=\"ds-ph ds-wide\"><span class=\"ds-img\"></span><span class=\"ds-nf\">9 fotos</span></div><ul class=\"ds-strip\"><li><span class=\"ds-img\"></span></li><li><span class=\"ds-img\"></span></li><li><span class=\"ds-img\"></span><span class=\"ds-more\">+4</span></li></ul><figcaption class=\"ds-cp\"><p class=\"ds-cp-h\"><span class=\"ds-cp-n\">01</span>Edifício Mar Azul</p><p class=\"ds-cp-m\">Salvador – BA · <b>Construtora Exemplo</b></p><p class=\"ds-cp-s\">Cortina de estacas justapostas com tirantes. <span>Contenção concluída.</span></p></figcaption></figure></div>",
+      "css": ".ds-works{max-width:720px}.ds-ph{position:relative;overflow:hidden;border:1px solid var(--rule,rgba(34,37,42,.12));background:var(--canvas-sunk,#f1f0ec)}.ds-wide{aspect-ratio:21/9}.ds-img{position:absolute;inset:0;background:linear-gradient(135deg,#8c8578,#5b574f)}.ds-nf{position:absolute;right:12px;bottom:12px;padding:4px 8px;background:rgba(34,37,42,.7);color:rgba(250,250,248,.85);font-family:var(--font-display,\"Space Grotesk\",system-ui,sans-serif);font-size:12px;font-weight:500}.ds-strip{list-style:none;margin:8px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.ds-strip li{position:relative;aspect-ratio:4/3;overflow:hidden;border:1px solid var(--rule,rgba(34,37,42,.12))}.ds-more{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(34,37,42,.7);color:#fafaf8;font-family:var(--font-display,\"Space Grotesk\",system-ui,sans-serif);font-size:17px;font-weight:700}.ds-cp{margin:20px 0 0;padding-top:16px;border-top:2px solid var(--ink,#22252a)}.ds-cp-h{margin:0;font-family:var(--font-display,\"Space Grotesk\",system-ui,sans-serif);font-size:24px;font-weight:700;line-height:1.3;color:var(--ink,#22252a)}.ds-cp-n{margin-right:8px;font-variant-numeric:tabular-nums;color:var(--brand-ink,#b94e0c)}.ds-cp-m{margin:6px 0 0;font-size:14px;color:var(--ink-2,#555b66)}.ds-cp-m b{font-weight:500;color:var(--brand-ink,#b94e0c)}.ds-cp-s{margin:10px 0 0;font-family:var(--font-body,Manrope,system-ui,sans-serif);font-size:15px;line-height:1.625;color:var(--ink-2,#555b66)}.ds-cp-s span{color:var(--ink-3,#696f7a)}"
     },
     {
       "name": "Viewer Control",

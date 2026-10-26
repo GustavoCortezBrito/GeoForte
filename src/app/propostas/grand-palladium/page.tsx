@@ -469,7 +469,7 @@ export default function PropostaGrandPalladium() {
               id="obras"
               n="B"
               titulo="Obras executadas"
-              lead="Contenções executadas pela Geoforte em Salvador com a mesma solução prevista para o Grand Palladium: cortinas de estacas justapostas, em terrenos litorâneos e junto a edificações existentes."
+              lead={`Contenções executadas pela Geoforte em Salvador com a mesma solução prevista para o ${cabecalho.cliente}: cortinas de estacas justapostas, em terrenos litorâneos e junto a edificações existentes.`}
             >
               <GaleriaObras obras={obras} />
 

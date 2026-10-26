@@ -292,7 +292,9 @@ figcaption.leg{margin-top:1.8mm;font-size:7.8pt;color:var(--g3);font-family:var(
 /* B.1 — abertura em página inteira: usa a base da capa (.capa, malha, topo, fio) */
 const abertura = `
 .ab-cab{position:relative;margin-top:15mm}
-.ab-titulo{margin-top:4mm;font-family:var(--mono);font-weight:700;font-size:46pt;line-height:.98;letter-spacing:-.035em;color:var(--papel)}
+/* "B" em laranja antes do título, como o capítulo B da proposta web (sem rótulo acima do título) */
+.ab-letra{color:var(--o);margin-right:.3em}
+.ab-titulo{margin-top:0;font-family:var(--mono);font-weight:700;font-size:46pt;line-height:.98;letter-spacing:-.035em;color:var(--papel)}
 .ab-sub{margin-top:4mm;font-family:var(--mono);font-weight:500;font-size:15pt;line-height:1.25;color:#c9ccd2}
 .ab .capa-fio{margin-top:8mm}
 .ab-intro{margin-top:6mm;max-width:152mm;font-size:10.6pt;line-height:1.6;color:#b9bdc4}
@@ -300,7 +302,8 @@ const abertura = `
 .ab-card{display:flex;flex-direction:column;min-height:0}
 .ab-foto{flex:1;min-height:0;overflow:hidden;background:#2c3036}
 .ab-foto img{width:100%;height:100%;object-fit:cover}
-.ab-txt{display:grid;grid-template-columns:9mm 1fr auto;gap:2mm;align-items:baseline;padding:3.2mm 0 2.8mm;border-bottom:.3mm solid rgba(250,250,248,.2)}
+/* legenda aberta pelo fio de 2px, como nas obras do site (aqui em papel, sobre o grafite) */
+.ab-txt{display:grid;grid-template-columns:9mm 1fr auto;gap:2mm;align-items:baseline;margin-top:2.6mm;padding-top:2.6mm;border-top:.5mm solid rgba(250,250,248,.85)}
 .ab-num{font-family:var(--mono);font-weight:700;font-size:13.5pt;line-height:1.1;color:var(--o);font-variant-numeric:tabular-nums}
 .ab-nome{font-family:var(--mono);font-weight:700;font-size:13.5pt;line-height:1.1;letter-spacing:-.015em;color:var(--papel)}
 .ab-constr{margin-top:1mm;font-size:9.4pt;color:#b9bdc4}
@@ -315,10 +318,13 @@ const anexo = `
 .pag{width:174mm;height:234mm;overflow:hidden;display:flex;flex-direction:column;break-after:page}
 .pag:last-child{break-after:auto}
 
-.ob-topo{display:grid;grid-template-columns:auto 1fr;gap:5mm;align-items:end;padding-bottom:4mm;border-bottom:.25mm solid var(--fio)}
-.ob-num{font-family:var(--mono);font-weight:700;font-size:50pt;line-height:.78;letter-spacing:-.04em;color:var(--o);font-variant-numeric:tabular-nums}
-.ob-nome{font-family:var(--mono);font-weight:700;font-size:26pt;line-height:1;letter-spacing:-.03em}
+/* cabeçalho no mesmo desenho dos títulos de seção do PDF (número laranja, fio laranja que vira fio fino) */
+.ob-topo{padding-bottom:3.2mm;background:linear-gradient(to right,var(--o) 0,var(--o) 14mm,var(--fio) 14mm) left bottom/100% .55mm no-repeat}
+.ob-tit{display:flex;align-items:baseline;gap:3.5mm;font-family:var(--mono);font-weight:700;letter-spacing:-.025em}
+.ob-num{font-size:24pt;line-height:1;color:var(--o);font-variant-numeric:tabular-nums}
+.ob-nome{font-size:24pt;line-height:1.05}
 .ob-linha{margin-top:2mm;font-size:10pt;color:var(--g2)}
+.ob-constr{color:var(--oi);font-weight:600}
 
 .ob-foto{position:relative;overflow:hidden;background:var(--painel)}
 .ob-foto img{width:100%;height:100%;object-fit:cover}
@@ -330,11 +336,14 @@ const anexo = `
 .ob-mosaico{margin-top:5mm;flex:1;min-height:0;display:grid;gap:2.5mm;grid-template-columns:1.85fr 1fr;grid-template-rows:1fr 1fr}
 .ob-mosaico .m0{grid-row:1 / 3}
 .ob-mosaico.n2 .m1{grid-row:1 / 3}
-.ob-mosaico .m1 figcaption,.ob-mosaico .m2 figcaption{padding:7mm 3mm 2.4mm;font-size:9pt;line-height:1.25}
-.ob-mosaico .m1 figcaption::before,.ob-mosaico .m2 figcaption::before{display:none}
+.ob-marca{position:absolute;left:0;top:0;min-width:6.4mm;height:6.4mm;display:flex;align-items:center;justify-content:center;
+  background:var(--g);color:#fff;font-family:var(--mono);font-weight:700;font-size:9.5pt}
+/* legenda das fotos: aberta pelo fio de 2px em tinta, como as legendas do site */
+.ob-legenda{flex-shrink:0;margin-top:3mm;padding-top:2.2mm;border-top:.5mm solid var(--g);list-style:none;display:flex;flex-wrap:wrap;gap:1mm 6mm;font-size:9pt;line-height:1.35;color:var(--g2)}
+.ob-legenda b{margin-right:1.6mm;font-family:var(--mono);font-weight:700;color:var(--oi)}
 
 /* números da obra: mesma régua laranja + grafite da capa */
-.ob-fatos{flex-shrink:0;display:grid;grid-template-columns:1fr 1fr 1.2fr 1.35fr;padding-top:.7mm;border-bottom:.25mm solid var(--fio);
+.ob-fatos{flex-shrink:0;margin-top:5mm;display:grid;grid-template-columns:1fr 1fr 1.2fr 1.35fr;padding-top:.7mm;border-bottom:.25mm solid var(--fio);
   background:linear-gradient(to right,var(--o) 0,var(--o) 24mm,var(--g) 24mm) left top/100% .7mm no-repeat}
 .ob-fatos div{padding:3.6mm 2.5mm 3.4mm 3.6mm;border-left:.25mm solid var(--fio)}
 .ob-fatos div:first-child{padding-left:0;border-left:0}
@@ -344,14 +353,13 @@ const anexo = `
 
 .ob-base{margin-top:6mm;display:grid;grid-template-columns:1fr 1fr;gap:6mm;align-items:stretch;flex-shrink:0}
 .ob-sol{display:flex;flex-direction:column;min-height:0}
-.ob-rot{font-family:var(--mono);font-weight:700;font-size:9pt;letter-spacing:.14em;text-transform:uppercase;color:var(--oi)}
+/* rótulo de campo: o mesmo de "Complemento" e da ficha (sem caixa alta espaçada) */
+.ob-campo{font-size:9pt;line-height:1.3;color:var(--g2)}
 .ob-sol-t{margin-top:1.8mm;font-family:var(--mono);font-weight:700;font-size:15pt;line-height:1.15;letter-spacing:-.015em}
 .ob-sol-c{margin-top:2.6mm;padding-top:2.2mm;border-top:.25mm solid var(--fio);font-family:var(--mono);font-weight:600;font-size:10pt;line-height:1.35;color:var(--g)}
 .ob-sol-c small{display:block;margin-bottom:.6mm;font-family:var(--texto);font-weight:400;font-size:9pt;color:var(--g2)}
-.ob-dest{background:var(--g);padding:4.4mm 5mm 4.8mm;border-top:.7mm solid var(--o)}
-.ob-dest .ob-rot{color:var(--o)}
-.ob-dest p + p{margin-top:2mm;font-size:10.6pt;line-height:1.5;color:#f1f2f4}
-.ob-dest .ph{color:#ffd9bf;background:rgba(239,108,26,.18);box-shadow:inset 0 -.45mm 0 var(--o)}
+.ob-dest{background:var(--painel);padding:4.4mm 5mm 4.8mm}
+.ob-dest p + p{margin-top:2mm;font-size:10.6pt;line-height:1.5;color:var(--g)}
 `;
 
 export const estiloCapa = () => fontes() + tokens + base + capa;

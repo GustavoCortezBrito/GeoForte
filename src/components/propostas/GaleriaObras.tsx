@@ -1,9 +1,9 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import Image, { type StaticImageData } from "next/image";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { ChevronLeft, ChevronRight, Expand, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, Images, MapPin, X } from "lucide-react";
 
 interface Foto {
   src: StaticImageData;
@@ -24,39 +24,155 @@ interface Obra {
 }
 
 const drive = [0.16, 1, 0.3, 1] as const;
+const crava = [0.65, 0, 0.35, 1] as const;
+// `v` separa as versões da mesma foto (tira do celular × tira do desktop): dois elementos com o
+// mesmo layoutId fazem o framer-motion esconder um deles.
+const idFoto = (o: number, f: number, v = "") => `obra-${o}-foto-${f}${v}`;
+const semAssinatura = () => () => {};
 
-/** Miniatura que abre o visor; a imagem tem o mesmo layoutId da foto ampliada. */
-function Miniatura({ ft, o, f, abrir, className }: { ft: Foto; o: number; f: number; abrir: (e: React.MouseEvent<HTMLElement>) => void; className: string }) {
+/**
+ * Moldura que revela a foto de cima para baixo (o gesto da estaca cravada).
+ * O lado de fora percebe a entrada na tela e passa a revelação para dentro (um
+ * alvo todo recortado nunca "aparece" para o IntersectionObserver). No servidor e
+ * sem JS a foto já vem visível; o recorte só existe depois da hidratação.
+ */
+function Revela({
+  cliente,
+  reduzir,
+  atraso = 0,
+  className,
+  children,
+}: {
+  cliente: boolean;
+  reduzir: boolean | null;
+  atraso?: number;
+  className: string;
+  children: React.ReactNode;
+}) {
   return (
-    <button type="button" onClick={abrir} aria-label={`Ampliar: ${ft.legenda}`} className={`group relative block overflow-hidden bg-canvas-sunk ${className}`}>
-      <motion.div layoutId={idFoto(o, f)} className="absolute inset-0">
+    <motion.div
+      key={cliente ? "js" : "ssr"}
+      className={`relative ${className}`}
+      initial={cliente ? "oculto" : false}
+      whileInView="visivel"
+      viewport={{ once: true, amount: 0.3 }}
+    >
+      <motion.div
+        className="absolute inset-0 overflow-hidden bg-canvas-sunk"
+        variants={{ oculto: { clipPath: "inset(0% 0% 100% 0%)" }, visivel: { clipPath: "inset(0% 0% 0% 0%)" } }}
+        transition={{ duration: reduzir ? 0 : 0.8, delay: reduzir ? 0 : atraso, ease: crava }}
+      >
+        {children}
+      </motion.div>
+    </motion.div>
+  );
+}
+
+/** Foto clicável: a imagem leva o layoutId que o visor usa para crescer a partir dela. */
+function FotoBotao({
+  ft,
+  o,
+  f,
+  abrir,
+  sizes,
+  rotulo,
+  children,
+  v = "",
+}: {
+  ft: Foto;
+  o: number;
+  f: number;
+  v?: string;
+  abrir: (e: React.MouseEvent<HTMLElement>) => void;
+  sizes: string;
+  rotulo: string;
+  children?: React.ReactNode;
+}) {
+  return (
+    <button type="button" onClick={abrir} aria-label={rotulo} className="group/foto absolute inset-0 block text-left">
+      <motion.div layoutId={idFoto(o, f, v)} className="absolute inset-0">
         <Image
           src={ft.src}
           alt=""
           fill
           placeholder="blur"
-          sizes="12rem"
-          className="object-cover transition-transform duration-500 ease-drive group-hover:scale-105"
+          sizes={sizes}
+          className="object-cover transition-transform duration-700 ease-drive group-hover/foto:scale-[1.03]"
           style={ft.foco ? { objectPosition: ft.foco } : undefined}
         />
       </motion.div>
+      {children}
     </button>
   );
 }
-const idFoto = (o: number, f: number) => `obra-${o}-foto-${f}`;
+
+/** Miniaturas da obra em destaque; a última vira "+N" quando há mais fotos do que lugares. */
+function Tira({
+  obra,
+  o,
+  lugares,
+  abrir,
+  cliente,
+  reduzir,
+  className,
+  v,
+}: {
+  obra: Obra;
+  o: number;
+  lugares: number;
+  v: string;
+  abrir: (o: number, f: number, v?: string) => (e: React.MouseEvent<HTMLElement>) => void;
+  cliente: boolean;
+  reduzir: boolean | null;
+  className: string;
+}) {
+  const extras = obra.fotos.slice(1);
+  const mostradas = extras.slice(0, lugares);
+  const resto = extras.length - mostradas.length;
+  return (
+    <ul className={`mt-2 gap-2 ${className}`} aria-label={`Mais fotos de ${obra.nome}`}>
+      {mostradas.map((ft, i) => {
+        const mais = i === mostradas.length - 1 && resto > 0;
+        return (
+          <li key={ft.legenda + i}>
+            <Revela cliente={cliente} reduzir={reduzir} atraso={0.25 + i * 0.06} className="aspect-[4/3]">
+              <FotoBotao
+                ft={ft}
+                o={o}
+                f={i + 1}
+                v={v}
+                abrir={abrir(o, i + 1, v)}
+                sizes="10rem"
+                rotulo={mais ? `Ver todas as ${obra.fotos.length} fotos de ${obra.nome}` : `Ampliar: ${ft.legenda}`}
+              >
+                {mais && (
+                  <span className="absolute inset-0 flex items-center justify-center bg-graphite/70 font-display text-[17px] font-bold text-paper transition-colors group-hover/foto:bg-graphite/55">
+                    +{resto + 1}
+                  </span>
+                )}
+              </FotoBotao>
+            </Revela>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
 
 /**
- * Obras executadas: foto principal, ficha e a tira com todas as fotos reais.
- * Qualquer foto abre o visor: ela cresce do lugar onde estava (layoutId) e o
- * visitante passa as outras por setas, teclado ou arrasto.
+ * Obras executadas na gramática dos projetos do site: a primeira em destaque na
+ * largura toda (com a tira das outras fotos), as demais lado a lado; legenda
+ * embaixo, aberta pelo fio de 2px em tinta. Qualquer foto abre o visor.
  */
 export default function GaleriaObras({ obras }: { obras: Obra[] }) {
-  const [aberta, setAberta] = useState<{ o: number; f: number; inicial: number } | null>(null);
+  const [aberta, setAberta] = useState<{ o: number; f: number; inicial: number; v: string } | null>(null);
   const gatilho = useRef<HTMLElement | null>(null);
+  const reduzir = useReducedMotion();
+  const cliente = useSyncExternalStore(semAssinatura, () => true, () => false);
 
-  const abrir = (o: number, f: number) => (e: React.MouseEvent<HTMLElement>) => {
+  const abrir = (o: number, f: number, v = "") => (e: React.MouseEvent<HTMLElement>) => {
     gatilho.current = e.currentTarget;
-    setAberta({ o, f, inicial: f });
+    setAberta({ o, f, inicial: f, v });
   };
   const fechar = useCallback(() => {
     setAberta(null);
@@ -65,53 +181,62 @@ export default function GaleriaObras({ obras }: { obras: Obra[] }) {
 
   return (
     <>
-      <div className="space-y-20">
+      <div className="grid gap-x-6 gap-y-14 md:grid-cols-3">
         {obras.map((o, oi) => {
-          const [principal, ...demais] = o.fotos;
-          const inverter = oi % 2 === 1;
-          // até 2 fotos extras: ficam em par na coluna do texto; mais que isso, numa faixa abaixo
-          const poucas = demais.length <= 2;
+          const destaque = oi === 0;
+          const principal = o.fotos[0];
           return (
-            <article key={o.numero} className="grid gap-x-6 gap-y-5 md:grid-cols-12">
-              <button
-                type="button"
-                onClick={abrir(oi, 0)}
-                aria-label={`Ampliar: ${o.nome}, ${principal.legenda.toLowerCase()}`}
-                className={`group relative aspect-[4/3] overflow-hidden bg-canvas-sunk text-left md:col-span-8 ${inverter ? "md:order-2" : ""}`}
+            <figure key={o.numero} className={`group flex flex-col ${destaque ? "md:col-span-3" : ""}`}>
+              <Revela
+                cliente={cliente}
+                reduzir={reduzir}
+                atraso={destaque ? 0 : oi * 0.08}
+                className={`border border-rule transition-colors group-hover:border-rule-strong ${destaque ? "aspect-[4/3] md:aspect-[21/9]" : "aspect-[4/3]"}`}
               >
-                <motion.div layoutId={idFoto(oi, 0)} className="absolute inset-0">
-                  <Image
-                    src={principal.src}
-                    alt=""
-                    fill
-                    placeholder="blur"
-                    sizes="(min-width: 1024px) 38rem, 100vw"
-                    className="object-cover transition-transform duration-700 ease-drive group-hover:scale-[1.03]"
-                    style={principal.foco ? { objectPosition: principal.foco } : undefined}
-                  />
-                </motion.div>
-                <span aria-hidden className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-graphite/85 to-transparent" />
-                <span className="absolute bottom-4 left-4 right-4 flex items-center gap-2.5 font-display text-[14px] font-medium text-paper">
-                  <span aria-hidden className="h-[2px] w-5 shrink-0 bg-brand" />
-                  {principal.legenda}
-                </span>
-                <span aria-hidden className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center bg-graphite/70 text-paper opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
-                  <Expand size={16} />
-                </span>
-              </button>
+                <FotoBotao
+                  ft={principal}
+                  o={oi}
+                  f={0}
+                  abrir={abrir(oi, 0)}
+                  sizes={destaque ? "(min-width: 1024px) 58rem, 100vw" : "(min-width: 768px) 19rem, 100vw"}
+                  rotulo={`Ver as ${o.fotos.length} fotos de ${o.nome}`}
+                >
+                  <span className="absolute bottom-3 right-3 inline-flex items-center gap-1.5 bg-graphite/70 px-2 py-1 font-display text-[12px] font-medium text-paper/85">
+                    <Images size={13} strokeWidth={1.75} aria-hidden />
+                    {o.fotos.length} fotos
+                  </span>
+                </FotoBotao>
+              </Revela>
 
-              <div className={`flex flex-col md:col-span-4 ${inverter ? "md:order-1" : ""}`}>
-                <h3 className="font-display text-[clamp(1.5rem,2.4vw,1.9rem)] font-bold leading-tight tracking-[-0.02em] text-ink">{o.nome}</h3>
-                <p className="mt-1.5 text-[15px] text-ink-2">
-                  {o.construtora} · {o.local}
-                  {o.ano ? ` · ${o.ano}` : ""}
-                </p>
-                <p className="mt-4 text-[15px] leading-relaxed text-ink">
+              {destaque && (
+                <>
+                  <Tira obra={o} o={oi} lugares={3} v="-m" abrir={abrir} cliente={cliente} reduzir={reduzir} className="grid grid-cols-3 md:hidden" />
+                  <Tira obra={o} o={oi} lugares={6} v="-d" abrir={abrir} cliente={cliente} reduzir={reduzir} className="hidden md:grid md:grid-cols-6" />
+                </>
+              )}
+
+              <figcaption className="mt-5 border-t-2 border-ink pt-4">
+                <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1.5">
+                  <p className={`font-display font-bold leading-snug text-ink ${destaque ? "text-2xl" : "text-lg"}`}>
+                    <span className="mr-2 tabular-nums text-brand-ink">{o.numero}</span>
+                    {o.nome}
+                  </p>
+                  <p className="flex items-center gap-1.5 text-sm text-ink-2">
+                    <MapPin size={14} strokeWidth={1.75} aria-hidden className="shrink-0" />
+                    {o.local}
+                    {o.ano ? ` · ${o.ano}` : ""}
+                    <span aria-hidden className="text-ink-3">
+                      ·
+                    </span>
+                    <span className="font-medium text-brand-ink">{o.construtora}</span>
+                  </p>
+                </div>
+                <p className="mt-2.5 text-[15px] leading-relaxed text-ink-2">
                   {o.solucao}
-                  {o.complemento ? ` com ${o.complemento.toLowerCase()}` : ""}.
+                  {o.complemento ? ` com ${o.complemento.toLowerCase()}` : ""}. <span className="text-ink-3">{principal.legenda}.</span>
                 </p>
                 {o.ficha.length > 0 && (
-                  <dl className="mt-4 text-[14px]">
+                  <dl className="mt-3 text-[14px]">
                     {o.ficha.map(([k, v]) => (
                       <div key={k} className="flex justify-between gap-4 border-t border-rule py-2">
                         <dt className="text-ink-2">{k}</dt>
@@ -120,51 +245,9 @@ export default function GaleriaObras({ obras }: { obras: Obra[] }) {
                     ))}
                   </dl>
                 )}
-                {o.destaque && <p className="mt-4 text-[15px] leading-relaxed text-ink-2">{o.destaque}</p>}
-                <button
-                  type="button"
-                  onClick={abrir(oi, 0)}
-                  className="mt-6 inline-flex items-center gap-2 self-start border-b-2 border-brand pb-1 font-display text-[14px] font-semibold text-ink transition-colors hover:text-brand-ink"
-                >
-                  Ver as {o.fotos.length} fotos da obra
-                </button>
-                {poucas && demais.length > 0 && (
-                  <ul className="mt-5 grid grid-cols-2 gap-2" aria-label={`Mais fotos de ${o.nome}`}>
-                    {demais.map((ft, i) => (
-                      <li key={ft.legenda + i}>
-                        <Miniatura ft={ft} o={oi} f={i + 1} abrir={abrir(oi, i + 1)} className="aspect-[4/3] w-full" />
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-
-              {!poucas && (
-                <ul
-                  className="-mx-5 flex snap-x scroll-px-5 gap-2 overflow-x-auto px-5 pb-1 md:order-3 md:col-span-12 md:mx-0 md:grid md:grid-cols-6 md:overflow-visible md:px-0"
-                  aria-label={`Mais fotos de ${o.nome}`}
-                >
-                  {demais.map((ft, i) => (
-                    <li key={ft.legenda + i} className="shrink-0 snap-start">
-                      <Miniatura ft={ft} o={oi} f={i + 1} abrir={abrir(oi, i + 1)} className="h-28 w-36 sm:h-32 sm:w-44 md:aspect-[4/3] md:h-auto md:w-full" />
-                    </li>
-                  ))}
-                  {/* fecha a grade de 6 colunas quando sobra um lugar (11 fotos + este) */}
-                  {demais.length % 6 === 5 && (
-                    <li className="hidden md:block">
-                      <button
-                        type="button"
-                        onClick={abrir(oi, 0)}
-                        className="flex aspect-[4/3] w-full flex-col items-center justify-center gap-1 border border-rule-strong font-display text-ink transition-colors hover:border-ink hover:text-brand-ink"
-                      >
-                        <span className="text-[22px] font-bold leading-none tabular-nums">{o.fotos.length}</span>
-                        <span className="text-[13px] font-semibold">ver todas</span>
-                      </button>
-                    </li>
-                  )}
-                </ul>
-              )}
-            </article>
+                {o.destaque && <p className="mt-3 text-[15px] leading-relaxed text-ink">{o.destaque}</p>}
+              </figcaption>
+            </figure>
           );
         })}
       </div>
@@ -176,6 +259,7 @@ export default function GaleriaObras({ obras }: { obras: Obra[] }) {
             o={aberta.o}
             f={aberta.f}
             inicial={aberta.inicial}
+            v={aberta.v}
             ir={(f) => setAberta((a) => (a ? { ...a, f } : a))}
             fechar={fechar}
           />
@@ -190,6 +274,7 @@ function Visor({
   o,
   f,
   inicial,
+  v,
   ir,
   fechar,
 }: {
@@ -197,6 +282,7 @@ function Visor({
   o: number;
   f: number;
   inicial: number;
+  v: string;
   ir: (f: number) => void;
   fechar: () => void;
 }) {
@@ -263,15 +349,26 @@ function Visor({
         </button>
       </div>
 
-      <div className="relative flex min-h-0 flex-1 items-center justify-center px-5 sm:px-20" onClick={(e) => e.target === e.currentTarget && fechar()}>
+      <div
+        className="relative flex min-h-0 flex-1 items-center justify-center px-5 sm:px-20"
+        onClick={(e) => e.target === e.currentTarget && fechar()}
+      >
         <AnimatePresence initial={false} custom={direcao} mode="popLayout">
           <motion.div
             key={f}
-            layoutId={f === inicial ? idFoto(o, f) : undefined}
+            layoutId={f === inicial ? idFoto(o, f, v) : undefined}
             custom={direcao}
-            initial={f === inicial ? false : { opacity: 0, x: reduzir ? 0 : direcao * 60 }}
+            initial={
+              f === inicial
+                ? false
+                : { opacity: 0, x: reduzir ? 0 : direcao * 60 }
+            }
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: reduzir ? 0 : direcao * -60, transition: { duration: 0.2 } }}
+            exit={{
+              opacity: 0,
+              x: reduzir ? 0 : direcao * -60,
+              transition: { duration: 0.2 },
+            }}
             transition={{ duration: 0.45, ease: drive }}
             drag={total > 1 ? "x" : false}
             dragConstraints={{ left: 0, right: 0 }}
@@ -281,9 +378,19 @@ function Visor({
               else if (info.offset.x > 70) passar(-1);
             }}
             className="relative max-h-full cursor-grab active:cursor-grabbing"
-            style={{ aspectRatio: proporcao, width: `min(100%, calc((100svh - 13rem) * ${proporcao}))` }}
+            style={{
+              aspectRatio: proporcao,
+              width: `min(100%, calc((100svh - 13rem) * ${proporcao}))`,
+            }}
           >
-            <Image src={foto.src} alt={`${obra.nome}: ${foto.legenda}`} fill sizes="92vw" className="pointer-events-none object-cover" draggable={false} />
+            <Image
+              src={foto.src}
+              alt={`${obra.nome}: ${foto.legenda}`}
+              fill
+              sizes="92vw"
+              className="pointer-events-none object-cover"
+              draggable={false}
+            />
           </motion.div>
         </AnimatePresence>
 
@@ -314,7 +421,10 @@ function Visor({
           <span aria-hidden className="h-[2px] w-5 bg-brand" />
           {foto.legenda}
         </p>
-        <p className="mt-1 text-[13px] text-ink-3">Foto real da obra{total > 1 ? " · use as setas ou arraste para o lado" : ""}</p>
+        <p className="mt-1 text-[13px] text-ink-3">
+          Foto real da obra
+          {total > 1 ? " · use as setas ou arraste para o lado" : ""}
+        </p>
       </div>
     </motion.div>
   );

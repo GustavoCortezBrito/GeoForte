@@ -433,7 +433,8 @@ export default function CorteCortina({ contencoes }: { contencoes: ContencaoMemo
 
       <div className="mt-10 grid gap-x-10 gap-y-6 md:grid-cols-3">
         {c.estabilidade.map((k) => {
-          const atual = k.fases[fi]?.fs ?? k.fases[0].fs;
+          const faseFs = k.fases[fi] ?? k.fases[0];
+          const atual = faseFs.fs;
           const escala = (v: number) => 8 + (Math.min(v, 3.6) / 3.6) * 384;
           return (
             <div key={k.criterio} className="border-t border-rule-strong pt-4">
@@ -459,8 +460,9 @@ export default function CorteCortina({ contencoes }: { contencoes: ContencaoMemo
               </svg>
               <p className="mt-2 flex items-baseline justify-between gap-3 text-[14px] text-ink-2">
                 <span>
-                  <strong className="font-display font-bold text-[17px] text-ink">{num(atual, atual < 10 ? 3 : 2)}</strong>{" "}
-                  · mínimo {num(k.minimo, 1)}
+                  {/* como o memorial escreve: 2,26 e não 2,260; mínimo 2 e não 2,0 */}
+                  <strong className="font-display font-bold text-[17px] text-ink">{faseFs.texto}</strong>{" "}
+                  · mínimo {k.minimoTexto}
                 </span>
                 <span className="inline-flex items-center gap-1 font-display font-semibold text-ink">
                   <Check size={15} strokeWidth={2.6} className="text-[var(--serie)]" aria-hidden />

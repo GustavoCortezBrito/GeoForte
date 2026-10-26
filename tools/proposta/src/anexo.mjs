@@ -28,8 +28,7 @@ export const htmlAnexoAbertura = () =>
   </div>
 
   <div class="ab-cab">
-    <p class="capa-tipo">${esc(abertura.sobretitulo)}</p>
-    <h1 class="ab-titulo">${esc(abertura.titulo)}</h1>
+    <h1 class="ab-titulo"><span class="ab-letra">B</span>${esc(abertura.titulo)}</h1>
     <p class="ab-sub">${esc(abertura.subtitulo)}</p>
     <div class="capa-fio" aria-hidden="true"></div>
     <p class="ab-intro">${esc(abertura.texto)}</p>
@@ -64,22 +63,20 @@ const paginaObra = (o) => {
   return `
 <section class="pag">
   <header class="ob-topo">
-    <span class="ob-num">${esc(o.numero)}</span>
-    <div>
-      <h1 class="ob-nome">${esc(o.nome)}</h1>
-      <p class="ob-linha">${esc(o.construtora)} · ${val(o.bairro, placeholders.bairro)}, Salvador – BA · ${val(o.ano, placeholders.ano)}</p>
-      ${o.fotosConfirmar ? `<p class="ob-linha"><span class="ph">${esc(placeholders.fotosConfirmar)}</span></p>` : ""}
-    </div>
+    <h1 class="ob-tit"><span class="ob-num">${esc(o.numero)}</span><span class="ob-nome">${esc(o.nome)}</span></h1>
+    <p class="ob-linha">${val(o.bairro, placeholders.bairro)}, Salvador – BA · ${val(o.ano, placeholders.ano)} · <span class="ob-constr">${esc(o.construtora)}</span></p>
+    ${o.fotosConfirmar ? `<p class="ob-linha"><span class="ph">${esc(placeholders.fotosConfirmar)}</span></p>` : ""}
   </header>
 
   <div class="ob-mosaico n${o.pdf.length}">
     ${o.pdf
       .map((i, k) => {
         const ft = o.fotos[i];
-        return `<figure class="ob-foto m${k}"><img src="${asset("fotos/" + ft.arquivo)}" alt="${esc(ft.legenda)}"${ft.foco ? ` style="object-position:${ft.foco}"` : ""} /><figcaption>${esc(ft.legenda)}</figcaption></figure>`;
+        return `<figure class="ob-foto m${k}"><img src="${asset("fotos/" + ft.arquivo)}" alt="${esc(ft.legenda)}"${ft.foco ? ` style="object-position:${ft.foco}"` : ""} /><span class="ob-marca">${k + 1}</span></figure>`;
       })
       .join("")}
   </div>
+  <ol class="ob-legenda">${o.pdf.map((i, k) => `<li><b>${k + 1}</b>${esc(o.fotos[i].legenda)}</li>`).join("")}</ol>
 
   <dl class="ob-fatos">
     ${fato("Área de contenção", val(f.areaContencao, placeholders.areaContencao))}
@@ -90,12 +87,12 @@ const paginaObra = (o) => {
 
   <div class="ob-base">
     <div class="ob-sol">
-      <p class="ob-rot">Solução</p>
+      <p class="ob-campo">Solução</p>
       <p class="ob-sol-t">${esc(f.solucao)}</p>
       <p class="ob-sol-c"><small>Complemento</small>${complemento}</p>
     </div>
     <aside class="ob-dest">
-      <p class="ob-rot">Destaque da obra</p>
+      <p class="ob-campo">Destaque da obra</p>
       <p>${o.destaque ? esc(o.destaque) : `<span class="ph">${esc(placeholders.destaque)}</span>`}</p>
     </aside>
   </div>

@@ -258,7 +258,8 @@ export interface ContencaoMemorial {
     /** Momento fletor (kN·m/m) ao longo da profundidade. */
     momentos: { cota: number; v: number }[];
   }[];
-  estabilidade: { criterio: string; curto: string; minimo: number; fases: { fase: string; fs: number }[] }[];
+  /** `texto` e `minimoTexto` guardam o valor como o memorial escreve (sem inventar casas decimais). */
+  estabilidade: { criterio: string; curto: string; minimo: number; minimoTexto: string; fases: { fase: string; fs: number; texto: string }[] }[];
   cortante: { calculado: string; maximo: string };
   armadura: { vertical: string; horizontal: string };
 }
@@ -305,7 +306,12 @@ export const memorialWeb: { n: string; titulo: string; contencoes: ContencaoMemo
         criterio: k.titulo.replace(/:$/, ""),
         curto: nomeCurto(k.titulo),
         minimo: Number(k.minimo.replace(/[^\d.]/g, "")),
-        fases: k.fases.map(([nome, fs]) => ({ fase: nome.replace(/:.*$/, "").replace(/^Fase \d - /, ""), fs: Number(fs) })),
+        minimoTexto: k.minimo.replace(/[^\d.]/g, "").replace(".", ","),
+        fases: k.fases.map(([nome, fs]) => ({
+          fase: nome.replace(/:.*$/, "").replace(/^Fase \d - /, ""),
+          fs: Number(fs),
+          texto: fs.replace(".", ","),
+        })),
       })),
       cortante: {
         calculado: cortante?.valores[1]?.replace("Calculado: ", "") ?? "",
