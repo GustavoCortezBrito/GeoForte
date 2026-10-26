@@ -9,9 +9,8 @@
  * Única normalização: o rótulo do software "Fase 3- Escavação" virou
  * "Fase 3 - Escavação".
  */
-import { readFileSync } from "node:fs";
-
-const resultados = JSON.parse(readFileSync(new URL("./memorial-resultados.json", import.meta.url), "utf8"));
+// Import de JSON (sem fs): o mesmo módulo serve ao gerador do PDF e à proposta web do site.
+import resultados from "./memorial-resultados.json" with { type: "json" };
 
 const FASES = { BERMA: "Fase 1 - Berma", ESCORA: "Fase 2 - Escora", "ESCAVAÇÃO": "Fase 3 - Escavação" };
 const nomeFase = (f) => FASES[f.replace(/^Fase \d - /, "")] ?? f;
@@ -107,6 +106,9 @@ const fase = (n, nome, img, cota, berma) => ({
   ref: `Fase ${n}`,
   nome,
   img,
+  // em metros, para os desenhos da proposta web (o texto abaixo é o do software)
+  cotaEscavacao: parseFloat(cota),
+  alturaBerma: berma ? parseFloat(berma) : null,
   descricao: [
     "Tipo de fase: Construtiva",
     `Cota de escavação: ${cota}`,

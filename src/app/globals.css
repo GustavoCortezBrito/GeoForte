@@ -232,6 +232,23 @@ a {
   }
 }
 
+/* ─── Desenho técnico das propostas (corte da cortina, gráficos) ─────────────
+   --serie é o laranja de dados: #D25A0E passa contraste (≥ 3:1) e as checagens
+   de daltonismo sobre papel, grafite e o fundo do tema escuro; o laranja da
+   marca (#EF6C1A) fica para os botões e o símbolo. */
+:root {
+  --solo-1: #ece3d2;
+  --solo-2: #ddd0b6;
+  --agua: #2f6fb0;
+  --serie: #d25a0e;
+}
+.on-graphite,
+:root[data-theme="dark"] {
+  --solo-1: #3a352c;
+  --solo-2: #2f2a22;
+  --agua: #6aa5e0;
+}
+
 /* ─── Linha do tempo (react-vertical-timeline-component) ─────────────────── */
 
 .geoforte-timeline .vertical-timeline::before {

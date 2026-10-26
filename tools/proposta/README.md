@@ -47,6 +47,22 @@ depois de qualquer mudança no texto.
 - **Pontos de atenção** (mantidos como no original, para a equipe revisar):
   ver `PONTOS_DE_ATENCAO` em `dados/proposta.mjs`.
 
+## Proposta web
+
+A mesma proposta tem uma versão web no site, em `/propostas/grand-palladium`
+(`src/app/propostas/grand-palladium/`). É um link privado: fora do Google
+(noindex), do sitemap e do menu. A página lê os mesmos arquivos de `dados/`
+(via `src/lib/propostas/grand-palladium.ts`), então texto, números e cláusulas
+mudam junto com o PDF.
+
+- `npm run gerar` também copia o PDF para `public/propostas/grand-palladium/`,
+  de onde a página oferece o download. Gere de novo antes de publicar.
+- Na web, campo `null` de `dados/obras.mjs` não aparece (no PDF ele vira
+  placeholder). A Tabela 01 vazia aparece como aviso nos dois.
+- Vídeos e imagens de fundo da página foram gerados no Higgsfield e são só
+  ilustrativos (a página diz isso). O prompt de cada um está gravado no
+  próprio arquivo.
+
 ## Revisões em amarelo
 
 O original marca em amarelo as cláusulas 2.22, 4, 5.1, 5.2, 7.5, 7.6 e 8.4–8.7.

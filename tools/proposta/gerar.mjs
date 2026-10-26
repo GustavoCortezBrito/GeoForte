@@ -10,7 +10,7 @@
  * Usa o Chrome instalado (ou CHROME_PATH). Fontes, logos e fotos são locais:
  * não precisa de internet.
  */
-import { writeFileSync, mkdirSync, existsSync, readFileSync } from "node:fs";
+import { writeFileSync, mkdirSync, existsSync, readFileSync, copyFileSync } from "node:fs";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 import puppeteer from "puppeteer-core";
@@ -138,6 +138,9 @@ final.setSubject("Proposta técnica e comercial: projeto e execução global das
 final.setLanguage("pt-BR");
 final.setCreator("Geoforte — gerador de propostas (tools/proposta)");
 writeFileSync(ARQUIVO_FINAL, await final.save());
+// Cópia baixada pela proposta web do site (/propostas/grand-palladium).
+const pastaWeb = join(raiz, "..", "..", "public", "propostas", "grand-palladium");
+if (existsSync(pastaWeb)) copyFileSync(ARQUIVO_FINAL, join(pastaWeb, "Proposta-GEO-2701A-25-Grand-Palladium.pdf"));
 
 console.log("Páginas das seções (Pág. n):", JSON.stringify(paginas));
 console.log(`Corpo: ${nCorpo} páginas · Total: ${final.getPageCount()} páginas`);

@@ -8,6 +8,13 @@ export const proposta = {
   /** Duas linhas à direita do cabeçalho de todas as páginas (BRIEFING). */
   cabecalho: ["PROPOSTA GEO 2701A/25", "EXPANSÃO GRAND PALLADIUM IMBASSAÍ"],
   cidadeData: "Salvador, 23 de outubro de 2026.",
+  emissao: "23 de outubro de 2026",
+  /** Capa do PDF e topo da proposta web (texto da carta e das cláusulas 1.3 e 10). */
+  obra: "Expansão Grand Palladium Resort & Spa",
+  localObra: "Rodovia BA-099, Km 65, S/N · Imbassaí, Mata de São João – BA",
+  cliente: "Grand Palladium",
+  atencao: "Sr. Saulo Cotrim",
+  validade: "30 dias",
 };
 
 export const empresa = {

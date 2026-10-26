@@ -19,7 +19,8 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@proposta/*": ["./tools/proposta/*"]
     }
   },
   "include": [

@@ -1,0 +1,569 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-26T04:27:25.172Z",
+  "title": "Design System: Geoforte Fundações",
+  "extensions": {
+    "colorMeta": {
+      "brand": {
+        "role": "primary",
+        "displayName": "Geoforte Orange",
+        "canonical": "#EF6C1A",
+        "tonalRamp": [
+          "#260000",
+          "#560000",
+          "#830000",
+          "#a92800",
+          "#cf4f19",
+          "#f17749",
+          "#ffad8f",
+          "#ffe8e0"
+        ],
+        "note": "CSS --color-brand. Fill and large text only on paper."
+      },
+      "brand-deep": {
+        "role": "primary",
+        "displayName": "Driven Orange",
+        "canonical": "#D25A0E",
+        "tonalRamp": [
+          "#250000",
+          "#540000",
+          "#800000",
+          "#a52f00",
+          "#cb5328",
+          "#ec7a52",
+          "#fdaf93",
+          "#ffe9e1"
+        ],
+        "note": "CSS --color-brand-deep. Hover/pressed fill of orange buttons."
+      },
+      "brand-ink": {
+        "role": "primary",
+        "displayName": "Burnt Orange",
+        "canonical": "#B94E0C",
+        "tonalRamp": [
+          "#230000",
+          "#500000",
+          "#7b0d00",
+          "#9f360c",
+          "#c55933",
+          "#e67e5b",
+          "#f8b198",
+          "#ffe9e2"
+        ],
+        "note": "CSS --brand-ink (context token).",
+        "dark": "#EF6C1A"
+      },
+      "brand-wash": {
+        "role": "secondary",
+        "displayName": "Orange Wash",
+        "canonical": "#FBF0E8",
+        "tonalRamp": [
+          "#0e0a08",
+          "#29231f",
+          "#463e39",
+          "#655c56",
+          "#857b76",
+          "#a69c97",
+          "#c9c3c0",
+          "#f0eeee"
+        ],
+        "note": "CSS --brand-wash (context token).",
+        "dark": "rgba(239, 108, 26, 0.12)"
+      },
+      "data-series": {
+        "role": "secondary",
+        "displayName": "Data Orange",
+        "canonical": "#D25A0E",
+        "tonalRamp": [
+          "#250000",
+          "#540000",
+          "#800000",
+          "#a52f00",
+          "#cb5328",
+          "#ec7a52",
+          "#fdaf93",
+          "#ffe9e1"
+        ],
+        "note": "CSS --serie. The one measured series in charts and drawings; same value on every ground."
+      },
+      "soil-1": {
+        "role": "tertiary",
+        "displayName": "Sand",
+        "canonical": "#ECE3D2",
+        "tonalRamp": [
+          "#0e0b06",
+          "#29231a",
+          "#463f33",
+          "#645d50",
+          "#847c70",
+          "#a59d91",
+          "#c9c3bc",
+          "#f0eeed"
+        ],
+        "note": "CSS --solo-1.",
+        "dark": "#3A352C"
+      },
+      "soil-2": {
+        "role": "tertiary",
+        "displayName": "Deep Sand",
+        "canonical": "#DDD0B6",
+        "tonalRamp": [
+          "#0f0a04",
+          "#2b2314",
+          "#493e2c",
+          "#685c49",
+          "#887c68",
+          "#a99d8a",
+          "#cbc3b6",
+          "#f0eeeb"
+        ],
+        "note": "CSS --solo-2.",
+        "dark": "#2F2A22"
+      },
+      "water": {
+        "role": "tertiary",
+        "displayName": "Water Blue",
+        "canonical": "#2F6FB0",
+        "tonalRamp": [
+          "#000a23",
+          "#00234f",
+          "#004078",
+          "#1e5f9a",
+          "#4180be",
+          "#67a3dd",
+          "#a1c8f0",
+          "#e4f0fd"
+        ],
+        "note": "CSS --agua. Water table only.",
+        "dark": "#6AA5E0"
+      },
+      "graphite": {
+        "role": "neutral",
+        "displayName": "Graphite",
+        "canonical": "#22252A",
+        "tonalRamp": [
+          "#0a0b0d",
+          "#222428",
+          "#3d4045",
+          "#5a5e64",
+          "#7a7d84",
+          "#9b9fa5",
+          "#c2c4c9",
+          "#eeeef1"
+        ],
+        "note": "CSS --color-graphite; also the light --ink. Band fill."
+      },
+      "graphite-raised": {
+        "role": "neutral",
+        "displayName": "Raised Graphite",
+        "canonical": "#2B2F36",
+        "tonalRamp": [
+          "#090b0e",
+          "#212429",
+          "#3c4047",
+          "#595e65",
+          "#797d86",
+          "#9a9fa7",
+          "#c1c4ca",
+          "#edeef1"
+        ],
+        "note": "Card inside .on-graphite."
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "canonical": "#FAFAF8",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#242423",
+          "#40403f",
+          "#5e5e5d",
+          "#7d7d7c",
+          "#9e9e9e",
+          "#c4c4c4",
+          "#eeeeef"
+        ],
+        "note": "CSS --color-paper; light --canvas; ink on graphite.",
+        "dark": "#22252A (band canvas) / #16181C (dark-theme canvas)"
+      },
+      "canvas-sunk": {
+        "role": "neutral",
+        "displayName": "Sunk Paper",
+        "canonical": "#F1F0EC",
+        "tonalRamp": [
+          "#0b0b0a",
+          "#252422",
+          "#40403d",
+          "#5e5e5b",
+          "#7e7d7b",
+          "#9f9e9c",
+          "#c5c4c3",
+          "#eeeeef"
+        ],
+        "note": "CSS --canvas-sunk (context token).",
+        "dark": "#1B1E22 (band) / #0F1114 (dark theme)"
+      },
+      "card": {
+        "role": "neutral",
+        "displayName": "White Card",
+        "canonical": "#FFFFFF",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#242424",
+          "#404040",
+          "#5d5d5e",
+          "#7d7d7e",
+          "#9e9e9f",
+          "#c4c4c5",
+          "#eeeef0"
+        ],
+        "note": "CSS --card (context token).",
+        "dark": "#2B2F36 (band) / #1E2125 (dark theme)"
+      },
+      "ink-2": {
+        "role": "neutral",
+        "displayName": "Slate",
+        "canonical": "#555B66",
+        "tonalRamp": [
+          "#090b0f",
+          "#20242c",
+          "#3a404a",
+          "#585e68",
+          "#777e89",
+          "#989faa",
+          "#c0c4cc",
+          "#edeef2"
+        ],
+        "note": "CSS --ink-2 (context token).",
+        "dark": "#A8ADB6"
+      },
+      "ink-3": {
+        "role": "neutral",
+        "displayName": "Steel",
+        "canonical": "#696F7A",
+        "tonalRamp": [
+          "#090b0f",
+          "#20242b",
+          "#3a4049",
+          "#585e68",
+          "#777d88",
+          "#999fa9",
+          "#c0c4cc",
+          "#edeef2"
+        ],
+        "note": "CSS --ink-3 (context token).",
+        "dark": "#8D939D"
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "rgba(34, 37, 42, 0.12)",
+        "tonalRamp": [
+          "#0a0b0d",
+          "#222428",
+          "#3d4045",
+          "#5a5e64",
+          "#7a7d84",
+          "#9b9fa5",
+          "#c2c4c9",
+          "#eeeef1"
+        ],
+        "dark": "rgba(250, 250, 248, 0.14) band / 0.12 dark theme"
+      },
+      "rule-strong": {
+        "role": "neutral",
+        "displayName": "Strong Hairline",
+        "canonical": "rgba(34, 37, 42, 0.26)",
+        "tonalRamp": [
+          "#0a0b0d",
+          "#222428",
+          "#3d4045",
+          "#5a5e64",
+          "#7a7d84",
+          "#9b9fa5",
+          "#c2c4c9",
+          "#eeeef1"
+        ],
+        "dark": "rgba(250, 250, 248, 0.3) band / 0.26 dark theme"
+      },
+      "error": {
+        "role": "neutral",
+        "displayName": "Error Red",
+        "canonical": "#DC2626",
+        "tonalRamp": [
+          "#2c0000",
+          "#610000",
+          "#910000",
+          "#b90018",
+          "#e12c3a",
+          "#ff6060",
+          "#ffa19b",
+          "#ffe5e3"
+        ],
+        "note": "Form validation only (hard-coded in Contact)."
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "The single h1 on hero and cover bands."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section titles under the driven rule; chapter titles one step smaller."
+      },
+      "numeral": {
+        "displayName": "Chapter Numeral",
+        "purpose": "Clause/chapter number beside a headline, Burnt Orange, tabular."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "List-item titles, sub-heads, definition terms, button text."
+      },
+      "lead": {
+        "displayName": "Lead",
+        "purpose": "Paragraph under a section title, 58 to 64ch."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Running text, 62 to 66ch."
+      },
+      "clause-ref": {
+        "displayName": "Clause Reference",
+        "purpose": "Clause numbers in lists and trailing source references, Steel."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Form field labels, contact data terms, footer column titles; uppercase. Never above a headline."
+      }
+    },
+    "contexts": [
+      {
+        "name": ".on-graphite",
+        "purpose": "Dark band: redefines canvas, canvas-sunk, card, ink, ink-2, ink-3, rule, rule-strong, brand-ink, brand-wash, focus-ring and the drawing tokens so the same utilities work inside it."
+      },
+      {
+        "name": ":root[data-theme=\"dark\"]",
+        "purpose": "Optional dark theme from the ThemeToggle, persisted in localStorage; graphite bands stay as they are."
+      }
+    ],
+    "shadows": [
+      {
+        "name": "form-on-band",
+        "value": "0 30px 60px -24px rgba(0,0,0,0.35)",
+        "purpose": "Light form card lifted off the graphite contact band."
+      },
+      {
+        "name": "card-hover",
+        "value": "0 8px 28px -12px rgba(34,37,42,0.22)",
+        "purpose": "Hover response on timeline cards, with border to rule-strong."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-drive",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Site ease (CSS --ease-drive): reveals, section heads, cross-section morphs, menu."
+      },
+      {
+        "name": "ease-pile",
+        "value": "cubic-bezier(0.65, 0, 0.35, 1)",
+        "purpose": "Even curve for anything driven from a baseline: the mark pile, soil-section piles, data bars, schedule bar."
+      },
+      {
+        "name": "geoforte-drive",
+        "value": "geoforte-drive 0.75s cubic-bezier(0.65, 0, 0.35, 1) 0.1s both",
+        "purpose": "CSS keyframe (scaleY 0 to 1) for the pile descending into place."
+      },
+      {
+        "name": "drive-once",
+        "value": "0.7s to 1.5s, stagger 0.07s to 0.2s, viewport once",
+        "purpose": "Data marks scale in from their baseline once on first view."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "MotionConfig reducedMotion=\"user\" plus CSS fallback",
+        "purpose": "All motion respects prefers-reduced-motion."
+      }
+    ],
+    "focus": {
+      "value": "outline: 2px solid var(--focus-ring); outline-offset: 3px",
+      "purpose": "Global focus ring; #B94E0C on paper, #EF6C1A on dark."
+    },
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      },
+      {
+        "name": "xl",
+        "value": "1280px"
+      }
+    ],
+    "containers": [
+      {
+        "name": "site",
+        "value": "72rem"
+      },
+      {
+        "name": "document",
+        "value": "90rem (14rem index + 58rem reading column)"
+      }
+    ],
+    "drawing": {
+      "hatching": "Ink dots r 1 to 1.6 at 0.2 to 0.28 opacity on 14 to 18px tiles; line, cross and diagonal hatches for other strata.",
+      "dimensionText": "Space Grotesk, true minus sign, pt-BR decimals; labels scale up on small screens."
+    }
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The orange action; the only orange block on a screen.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#\">Aceitar proposta</a>",
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;padding:16px 24px;background:var(--color-brand,#ef6c1a);color:#22252a;font-family:var(--font-display,\"Space Grotesk\",system-ui,sans-serif);font-size:15px;font-weight:700;text-decoration:none;border:0;border-radius:0;transition:background-color .15s}.ds-btn-primary:hover{background:var(--color-brand-deep,#d25a0e)}.ds-btn-primary:focus-visible{outline:2px solid var(--focus-ring,#b94e0c);outline-offset:3px}"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Outlined companion action (download, talk to engineering).",
+      "html": "<a class=\"ds-btn-secondary\" href=\"#\"><svg width=\"17\" height=\"17\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\"/><path d=\"M7 10l5 5 5-5\"/><path d=\"M12 15V3\"/></svg>Baixar PDF completo</a>",
+      "css": ".ds-btn-secondary{display:inline-flex;align-items:center;gap:8px;padding:16px 20px;background:transparent;color:var(--ink,#22252a);border:1px solid var(--rule-strong,rgba(34,37,42,.26));border-radius:0;font-family:var(--font-display,\"Space Grotesk\",system-ui,sans-serif);font-size:15px;font-weight:600;text-decoration:none;transition:border-color .15s}.ds-btn-secondary:hover{border-color:var(--ink,#22252a)}.ds-btn-secondary:focus-visible{outline:2px solid var(--focus-ring,#b94e0c);outline-offset:3px}"
+    },
+    {
+      "name": "Segmented Option",
+      "kind": "chip",
+      "refersTo": "segmented-option",
+      "description": "Square option chips; selected inverts to graphite.",
+      "html": "<div class=\"ds-seg\"><button class=\"ds-seg-opt is-on\" aria-pressed=\"true\"><span class=\"ds-seg-n\">1</span>Escavação</button><button class=\"ds-seg-opt\" aria-pressed=\"false\"><span class=\"ds-seg-n\">2</span>Escora</button><button class=\"ds-seg-opt\" aria-pressed=\"false\"><span class=\"ds-seg-n\">3</span>Fundo</button></div>",
+      "css": ".ds-seg{display:flex;flex-wrap:wrap;gap:8px}.ds-seg-opt{padding:10px 16px;background:transparent;color:var(--ink-2,#555b66);border:1px solid var(--rule-strong,rgba(34,37,42,.26));border-radius:0;font-family:var(--font-display,\"Space Grotesk\",system-ui,sans-serif);font-size:14px;font-weight:500;cursor:pointer;transition:color .15s,border-color .15s,background-color .15s}.ds-seg-opt:hover{color:var(--ink,#22252a);border-color:var(--ink,#22252a)}.ds-seg-opt.is-on{background:var(--ink,#22252a);color:var(--canvas,#fafaf8);border-color:var(--ink,#22252a)}.ds-seg-opt:focus-visible{outline:2px solid var(--focus-ring,#b94e0c);outline-offset:3px}.ds-seg-n{font-variant-numeric:tabular-nums;margin-right:6px}"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "Sunk field with a strong hairline; border turns orange on focus.",
+      "html": "<label class=\"ds-field\"><span class=\"ds-label\">E-mail</span><input class=\"ds-input\" placeholder=\"voce@empresa.com.br\"></label>",
+      "css": ".ds-field{display:block;max-width:360px}.ds-label{display:block;margin-bottom:8px;font-family:var(--font-display,\"Space Grotesk\",system-ui,sans-serif);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3,#696f7a)}.ds-input{width:100%;padding:14px 16px;background:var(--canvas-sunk,#f1f0ec);color:var(--ink,#22252a);border:1px solid var(--rule-strong,rgba(34,37,42,.26));border-radius:0;font-family:var(--font-body,Manrope,system-ui,sans-serif);font-size:15px;caret-color:#ef6c1a;outline:none;transition:border-color .15s,background-color .15s}.ds-input::placeholder{color:var(--ink-3,#696f7a)}.ds-input:focus{border-color:var(--color-brand,#ef6c1a);background:var(--canvas,#fafaf8)}"
+    },
+    {
+      "name": "Top Bar",
+      "kind": "nav",
+      "refersTo": null,
+      "description": "Fixed paper bar with blur, hairline, orange action and the 2px scroll-progress bar.",
+      "html": "<header class=\"ds-bar\"><svg width=\"22\" height=\"31\" viewBox=\"0 0 100 141\" aria-hidden=\"true\"><path fill=\"#ef6c1a\" d=\"M96.81 32.43A50 50 0 1 0 96.81 67.57L79.71 56.885A30.5 30.5 0 1 1 79.71 43.115Z\"/><rect fill=\"#ef6c1a\" x=\"46\" y=\"40.25\" width=\"44.3\" height=\"19.5\"/><path fill=\"#22252a\" d=\"M42.4 91H57.6V126L50 141L42.4 126Z\"/></svg><span class=\"ds-bar-sep\"></span><span class=\"ds-bar-t\"><b>Proposta GEO 2701A/25</b> · válida por 30 dias</span><nav class=\"ds-bar-links\"><a href=\"#\">Escopo</a><a href=\"#\">Prazos</a></nav><a class=\"ds-bar-cta\" href=\"#\">Aceitar proposta</a><span class=\"ds-bar-prog\"></span></header>",
+      "css": ".ds-bar{position:relative;display:flex;align-items:center;gap:16px;height:64px;padding:0 20px;background:color-mix(in srgb,var(--canvas,#fafaf8) 95%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule,rgba(34,37,42,.12))}.ds-bar-sep{width:1px;height:24px;background:var(--rule-strong,rgba(34,37,42,.26))}.ds-bar-t{font-family:var(--font-display,\"Space Grotesk\",system-ui,sans-serif);font-size:14px;font-weight:500;color:var(--ink-2,#555b66)}.ds-bar-t b{color:var(--ink,#22252a)}.ds-bar-links{margin-left:auto;display:flex;gap:28px}.ds-bar-links a{position:relative;padding:4px 0;font-family:var(--font-display,\"Space Grotesk\",system-ui,sans-serif);font-size:13.5px;font-weight:500;color:var(--ink-2,#555b66);text-decoration:none;transition:color .15s}.ds-bar-links a::after{content:\"\";position:absolute;left:0;bottom:-2px;height:2px;width:0;background:#ef6c1a;transition:width .3s}.ds-bar-links a:hover{color:var(--ink,#22252a)}.ds-bar-links a:hover::after{width:100%}.ds-bar-links a:focus-visible{outline:2px solid var(--focus-ring,#b94e0c);outline-offset:3px}.ds-bar-cta{padding:10px 16px;background:#ef6c1a;color:#22252a;font-family:var(--font-display,\"Space Grotesk\",system-ui,sans-serif);font-size:14px;font-weight:700;text-decoration:none;transition:background-color .15s}.ds-bar-cta:hover{background:#d25a0e}.ds-bar-prog{position:absolute;left:0;bottom:-1px;height:2px;width:38%;background:#ef6c1a}"
+    },
+    {
+      "name": "Driven Rule Section Head",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Section opener: 2px rule, 56px orange into hairline, headline 28px below. Replaces any label above a title.",
+      "html": "<div class=\"ds-head\"><div class=\"ds-rule\"></div><h2 class=\"ds-h2\">Escopo e quantitativos</h2><p class=\"ds-lead\">Seis contenções em estacas justapostas, do projeto executivo à execução.</p></div>",
+      "css": ".ds-head{max-width:640px}.ds-rule{height:2px;max-width:16rem;background-image:linear-gradient(to right,#ef6c1a 0,#ef6c1a 56px,var(--rule,rgba(34,37,42,.12)) 56px,var(--rule,rgba(34,37,42,.12)) 100%)}.ds-h2{margin:28px 0 0;font-family:var(--font-display,\"Space Grotesk\",system-ui,sans-serif);font-size:clamp(2rem,4.2vw,3.25rem);font-weight:700;line-height:1.04;letter-spacing:-.03em;color:var(--ink,#22252a)}.ds-lead{margin:16px 0 0;max-width:58ch;font-family:var(--font-body,Manrope,system-ui,sans-serif);font-size:17px;line-height:1.625;color:var(--ink-2,#555b66)}"
+    },
+    {
+      "name": "Clause List",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Hairline rows: clause number in a 3rem column, clause text beside it.",
+      "html": "<ol class=\"ds-clauses\"><li><span class=\"ds-cn\">2.1</span><span>Elaboração do projeto executivo geotécnico das contenções.</span></li><li><span class=\"ds-cn\">2.2</span><span>Mobilização de equipe própria e perfuratrizes.</span></li><li><span class=\"ds-cn\">2.3</span><span>Fornecimento de concreto e aço conforme o memorial.</span></li></ol>",
+      "css": ".ds-clauses{list-style:none;margin:0;padding:0;max-width:640px}.ds-clauses li{display:grid;grid-template-columns:3rem minmax(0,1fr);column-gap:8px;padding:12px 0;border-top:1px solid var(--rule,rgba(34,37,42,.12));font-family:var(--font-body,Manrope,system-ui,sans-serif);font-size:15px;line-height:1.625;color:var(--ink,#22252a)}.ds-cn{padding-top:1px;font-family:var(--font-display,\"Space Grotesk\",system-ui,sans-serif);font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink-3,#696f7a)}"
+    },
+    {
+      "name": "Data Bars",
+      "kind": "custom",
+      "refersTo": "data-bar",
+      "description": "One series in Data Orange, 4px cap, value at the tip; driven from the baseline once.",
+      "html": "<ul class=\"ds-bars\"><li><span class=\"ds-bl\"><span class=\"ds-cn\">1.3.1</span>Módulo A</span><span class=\"ds-track\"><span class=\"ds-bar-f\" style=\"width:90%\"></span><b>000,0 m²</b></span></li><li><span class=\"ds-bl\"><span class=\"ds-cn\">1.3.2</span>Módulo B</span><span class=\"ds-track\"><span class=\"ds-bar-f\" style=\"width:62%\"></span><b>000,0 m²</b></span></li><li><span class=\"ds-bl\"><span class=\"ds-cn\">1.3.3</span>Módulo C</span><span class=\"ds-track\"><span class=\"ds-bar-f\" style=\"width:30%\"></span><b>000,0 m²</b></span></li></ul>",
+      "css": ".ds-bars{list-style:none;margin:0;padding:0;display:grid;gap:14px;max-width:640px}.ds-bars li{display:grid;grid-template-columns:12rem minmax(0,1fr);align-items:center;column-gap:16px}.ds-bl{font-family:var(--font-body,Manrope,system-ui,sans-serif);font-size:15px;color:var(--ink,#22252a)}.ds-cn{margin-right:8px;font-family:var(--font-display,\"Space Grotesk\",system-ui,sans-serif);font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink-3,#696f7a)}.ds-track{display:flex;align-items:center}.ds-bar-f{display:block;height:18px;max-width:calc(100% - 7rem);background:var(--serie,#d25a0e);border-radius:0 4px 4px 0;transform-origin:left;animation:ds-drive .75s cubic-bezier(.65,0,.35,1) both;transition:opacity .15s}.ds-bars:hover .ds-bar-f{opacity:.35}.ds-bars li:hover .ds-bar-f{opacity:1}.ds-track b{margin-left:12px;font-family:var(--font-display,\"Space Grotesk\",system-ui,sans-serif);font-size:15px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink,#22252a)}@keyframes ds-drive{from{transform:scaleX(0)}to{transform:scaleX(1)}}@media (prefers-reduced-motion:reduce){.ds-bar-f{animation:none}}"
+    },
+    {
+      "name": "Missing Figure",
+      "kind": "custom",
+      "refersTo": "missing-figure",
+      "description": "A figure absent from the source, shown as a visible bracketed placeholder.",
+      "html": "<div class=\"ds-missing\"><p class=\"ds-missing-t\">[Preço global: inserir a Tabela 01 antes do envio]</p><p class=\"ds-missing-s\">A tabela não consta no arquivo original da proposta.</p></div>",
+      "css": ".ds-missing{max-width:640px;padding:32px 24px;text-align:center;background:var(--brand-wash,#fbf0e8);border:2px dashed var(--brand-ink,#b94e0c)}.ds-missing-t{margin:0;font-family:var(--font-display,\"Space Grotesk\",system-ui,sans-serif);font-size:18px;font-weight:700;color:var(--brand-ink,#b94e0c)}.ds-missing-s{margin:8px 0 0;font-family:var(--font-body,Manrope,system-ui,sans-serif);font-size:14px;color:var(--ink-2,#555b66)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Driven Pile",
+    "overview": "Everything in this system descends from the mark: a geometric \"G\" whose stem keeps going into the ground as a driven pile. The site reads like an engineer's sheet set on good paper. Graphite type on a warm off-white ground, hairline rules doing the structural work, square corners everywhere, and a single orange that marks where force enters: the action, the opening stroke of a section, the pile in a drawing. Density is moderate and editorial; content is organised by rules and numerals rather than boxes and badges.\n\nDepth comes from tone, not from lift. Dark graphite bands (hero, integrated solution, contact, footer, proposal cover and closing) redefine the surface tokens in place, so the same ink, rule and card roles keep working inside them. Motion is mechanical and singular: things are driven in once from their baseline, like a pile, and then stay put.\n\nThe technical drawing is a first-class citizen of the world, not an illustration bolted on. Soil sections, cross-sections and data charts are drawn in the system's own tokens (ink-dot hatching, hairline grids, Space Grotesk dimension text, the data orange for the measured series) and stay legible on paper, on graphite and in the dark theme.",
+    "keyCharacteristics": [
+      "Paper ground, graphite ink, graphite bands; orange is scarce and always means action or force.",
+      "The driven rule (2px, orange for 56px, then hairline) opens sections instead of any label above the title.",
+      "Square corners; the only radius is the 4px cap at the end of a data bar.",
+      "Numerals in Space Grotesk, tabular, used as structure (clause numbers, chapter numbers, dimensions).",
+      "Flat surfaces; depth by tonal bands, not shadows.",
+      "One motion idea: drive in once from the baseline, then rest."
+    ],
+    "rules": [
+      {
+        "name": "The Scarce Orange Rule",
+        "body": "Orange marks action and force, never ambience: buttons, the head of the driven rule, the pile, the progress bar. A section is never filled with brand orange.",
+        "section": "colors"
+      },
+      {
+        "name": "The Small-Text Burn Rule",
+        "body": "Orange text below roughly 18px on paper uses Burnt Orange, never Geoforte Orange.",
+        "section": "colors"
+      },
+      {
+        "name": "The Context Token Rule",
+        "body": "Never hard-code a light-surface color inside a component that may sit in a graphite band. Use the context roles (canvas, card, ink, ink-2, ink-3, rule, brand-ink) so `.on-graphite` and the dark theme can redefine them.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Series Rule",
+        "body": "A chart carries one measured series in Data Orange; a second part is graphite ink, and identity comes from the in-bar label, not from a second hue.",
+        "section": "colors"
+      },
+      {
+        "name": "The Numeral Is Structure Rule",
+        "body": "Numbers are set in Space Grotesk with tabular figures. Where a document has numbered clauses, the number is the section marker, set large in Burnt Orange beside the title, and every number matches its source document.",
+        "section": "typography"
+      },
+      {
+        "name": "The No Kicker Rule",
+        "body": "A section opens with the driven rule and the title. No eyebrow, tagline or category label above a headline.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat-By-Default Rule",
+        "body": "Surfaces are flat at rest. Separate with a hairline or a tonal band before reaching for a shadow; a shadow only answers hover or a card lifted off a dark band.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do open every section with the driven rule (2px, 56px of Geoforte Orange into Hairline) and the headline 28px below it.",
+      "Do keep orange for the action, the rule head, the pile and the progress bar; use Burnt Orange for small orange text on paper.",
+      "Do build dark sections as graphite bands that redefine the context tokens, and write components only against those tokens.",
+      "Do set every number in Space Grotesk with tabular figures, and use clause or chapter numerals as the structural marker where the source is numbered.",
+      "Do separate content with hairline rows and close totals with a 2px ink rule.",
+      "Do draw charts and sections in the system tokens: Data Orange for the one measured series, Sand strata with ink-dot hatching, Water Blue only for water.",
+      "Do drive data marks in once from their baseline on the pile curve, and respect reduced motion.",
+      "Do show a missing figure as a visible bracketed placeholder on Orange Wash."
+    ],
+    "donts": [
+      "Don't place an eyebrow, kicker or tagline above a headline; the driven rule is the opener.",
+      "Don't round corners on buttons, inputs, cards or images; the 4px data-bar cap is the only radius.",
+      "Don't use Geoforte Orange for small text on paper.",
+      "Don't use the brand orange as a chart color or add a second chart hue; charts use Data Orange and ink.",
+      "Don't add shadows to resting surfaces on the same ground; use a tonal band or a hairline. The one resting shadow is a light card lifted off a graphite band.",
+      "Don't hard-code light-surface colors inside components that can sit on a graphite band or in the dark theme.",
+      "Don't recolor, rotate, distort or retype the mark; the pile is always vertical.",
+      "Don't loop or repeat driven animations; a mark is driven once."
+    ]
+  }
+}

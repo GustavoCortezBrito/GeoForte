@@ -30,8 +30,8 @@ export const htmlCapa = () =>
     <p class="capa-sub">Projeto executivo geotécnico e execução global</p>
     <div class="capa-fio" aria-hidden="true"></div>
     <div class="capa-obra">
-      <b>Expansão Grand Palladium Resort &amp; Spa</b>
-      <span>Rodovia BA-099, Km 65, S/N · Imbassaí, Mata de São João – BA</span>
+      <b>${esc(proposta.obra)}</b>
+      <span>${esc(proposta.localObra)}</span>
     </div>
 
     <div class="capa-fatos">
@@ -43,9 +43,9 @@ export const htmlCapa = () =>
   </div>
 
   <div class="capa-pe">
-    <div><b>Para</b><strong>Grand Palladium</strong><br />At.: Sr. Saulo Cotrim</div>
+    <div><b>Para</b><strong>${esc(proposta.cliente)}</strong><br />At.: ${esc(proposta.atencao)}</div>
     <div><b>Emissão</b><strong>${esc(proposta.cidadeData.replace(/\.$/, ""))}</strong></div>
-    <div><b>Validade</b><strong>30 dias</strong></div>
+    <div><b>Validade</b><strong>${esc(proposta.validade)}</strong></div>
   </div>
 </section>`,
   );

@@ -41,3 +41,8 @@ yarn-error.log*
 next-env.d.ts
 
 !.env.example
+
+# Impeccable: estado do servidor de decisão e capturas de revisão (temporários)
+.impeccable/questions/
+.impeccable/review/
+.impeccable/config.local.json
