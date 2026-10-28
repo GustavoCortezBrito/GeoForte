@@ -1,13 +1,21 @@
 /**
- * Anexo B — Obras executadas.
- *   B.1: abertura em página inteira (grafite, como a capa, sem moldura);
- *   B.2: comparativo das obras com o Grand Palladium, etapas registradas e números da Geoforte;
- *   B.3–B.6: uma página por obra, na área útil da moldura (174 × 234 mm).
+ * Anexo — Obras executadas (a letra vem do pacote: "B" na contenção, "A" na fundação).
+ *   x.1: abertura em página inteira (grafite, como a capa, sem moldura);
+ *   contenção: x.2 comparativo das obras com o Grand Palladium, etapas registradas e números da
+ *     Geoforte; depois uma página por obra, com mosaico de fotos, etapas e ficha;
+ *   fundação: uma página por obra, com a foto enviada pela equipe, na área útil da moldura
+ *     (174 × 234 mm).
  */
-import { proposta, numerosGeoforte } from "../dados/empresa.mjs";
-import { abertura, obras, placeholders, etapas, grandPalladium } from "../dados/obras.mjs";
-import { secoes } from "../dados/proposta.mjs";
+import { proposta, numerosGeoforte, secoes, anexo } from "./pacote.mjs";
 import { asset, esc } from "./util.mjs";
+
+const { abertura, obras, letra } = anexo;
+const { placeholders, etapas, grandPalladium } = anexo;
+const fundacao = anexo.tipo === "fundacao";
+/** Número da página (x.n) da primeira obra: a contenção tem o comparativo antes dela. */
+const primeira = fundacao ? 2 : 3;
+/** Páginas do anexo sem a abertura (o gerador confere esta contagem). */
+export const nPaginasAnexo = fundacao ? obras.length : obras.length + 1;
 import { estiloAnexo, estiloAnexoAbertura } from "./estilos.mjs";
 
 /** Valor preenchido ou placeholder destacado (campo ainda sem dado). */
@@ -18,19 +26,26 @@ const doc = (titulo, css, corpo) => `<!doctype html>
 <style>${css}</style></head>
 <body>${corpo}</body></html>`;
 
+/** Foto principal da obra: a 1ª do álbum (contenção) ou a única enviada (fundação). */
+const principal = (o) => (fundacao ? o.foto : { ...o.fotos[0], arquivo: "fotos/" + o.fotos[0].arquivo });
+/** Recorte da foto no cartão da abertura (mais largo que alto): `focoCartao`, senão o `foco` da página. */
+const focoCartao = (o) => principal(o).focoCartao ?? principal(o).foco;
+/** Linha de crédito da obra: construtora (contenção) ou parceiro/cliente (fundação). */
+const quem = (o) => (fundacao ? `${o.papel}: ${o.parceiro}` : o.construtora);
+
 export const htmlAnexoAbertura = () =>
   doc(
-    "Anexo B",
+    `Anexo ${letra}`,
     estiloAnexoAbertura(),
     `<section class="capa ab">
   <div class="capa-malha" aria-hidden="true"></div>
   <div class="capa-topo">
     <img class="capa-logo" src="${asset("logos/geoforte-logo-invertido.svg")}" alt="Geoforte Fundações" />
-    <div class="capa-cod">${esc(proposta.codigo)}<span>Anexo B</span></div>
+    <div class="capa-cod">${esc(proposta.codigo)}<span>Anexo ${esc(letra)}</span></div>
   </div>
 
   <div class="ab-cab">
-    <h1 class="ab-titulo"><span class="ab-letra">B</span>${esc(abertura.titulo)}</h1>
+    <h1 class="ab-titulo"><span class="ab-letra">${esc(letra)}</span>${esc(abertura.titulo)}</h1>
     <p class="ab-sub">${esc(abertura.subtitulo)}</p>
     <div class="capa-fio" aria-hidden="true"></div>
     <p class="ab-intro">${esc(abertura.texto)}</p>
@@ -40,18 +55,18 @@ export const htmlAnexoAbertura = () =>
     ${obras
       .map(
         (o, i) => `<article class="ab-card">
-      <div class="ab-foto"><img src="${asset("fotos/" + o.fotos[0].arquivo)}" alt="${esc(o.nome)}"${o.fotos[0].foco ? ` style="object-position:${o.fotos[0].foco}"` : ""} /></div>
+      <div class="ab-foto"><img src="${asset(principal(o).arquivo)}" alt="${esc(o.nome)}"${focoCartao(o) ? ` style="object-position:${focoCartao(o)}"` : ""} /></div>
       <div class="ab-txt">
         <span class="ab-num">${esc(o.numero)}</span>
-        <div><h2 class="ab-nome">${esc(o.nome)}</h2><p class="ab-constr">${esc(o.construtora)}</p></div>
-        <span class="ab-pag">B.${i + 3}</span>
+        <div><h2 class="ab-nome">${esc(o.nome)}</h2><p class="ab-constr">${esc(quem(o))}</p></div>
+        <span class="ab-pag">${esc(letra)}.${i + primeira}</span>
       </div>
     </article>`,
       )
       .join("")}
   </div>
 
-  <footer class="ab-pe"><span>${esc(proposta.cabecalho.join(" · "))}</span><b>B.1</b></footer>
+  <footer class="ab-pe"><span>${esc(proposta.cabecalho.join(" · "))}</span><b>${esc(letra)}.1</b></footer>
 </section>`,
   );
 
@@ -130,7 +145,7 @@ const paginaComparativo = () => {
   return `
 <section class="pag">
   <header class="ob-topo">
-    <h1 class="ob-tit"><span class="ob-num">B</span><span class="ob-nome">As obras e o Grand Palladium</span></h1>
+    <h1 class="ob-tit"><span class="ob-num">${esc(letra)}</span><span class="ob-nome">As obras e o Grand Palladium</span></h1>
     <p class="ob-linha">O que cada obra tem em comum com a expansão do resort, e o que as fotos registram.</p>
   </header>
 
@@ -162,4 +177,28 @@ const paginaComparativo = () => {
 </section>`;
 };
 
-export const htmlAnexo = () => doc("Anexo B", estiloAnexo(), paginaComparativo() + obras.map(paginaObra).join(""));
+/* Fundação — uma foto por obra, enviada pela equipe. Só entra o que é registro: nome, parceiro ou
+   cliente (como no Word da proposta) e uma legenda que descreve o que se vê. `ficha` é opcional:
+   se a equipe passar dados da obra (local, ano, estacas…), eles aparecem na régua abaixo da foto. */
+const paginaObraFoto = (o) => `
+<section class="pag">
+  <header class="ob-topo">
+    <h1 class="ob-tit"><span class="ob-num">${esc(o.numero)}</span><span class="ob-nome">${esc(o.nome)}</span></h1>
+    <p class="ob-linha">${esc(o.papel)}: <span class="ob-constr">${esc(o.parceiro)}</span></p>
+  </header>
+
+  <figure class="ob-foto of-foto"><img src="${asset(o.foto.arquivo)}" alt="${esc(o.foto.legenda)}"${o.foto.foco ? ` style="object-position:${o.foto.foco}"` : ""} /></figure>
+  <p class="of-leg">${esc(o.foto.legenda)}</p>
+  ${
+    o.ficha
+      ? `<dl class="ob-fatos of-ficha" style="grid-template-columns:repeat(${o.ficha.length},1fr)">${o.ficha.map(([k, v]) => fato(k, esc(v))).join("")}</dl>`
+      : ""
+  }
+</section>`;
+
+export const htmlAnexo = () =>
+  doc(
+    `Anexo ${letra}`,
+    estiloAnexo(),
+    fundacao ? obras.map(paginaObraFoto).join("") : paginaComparativo() + obras.map(paginaObra).join(""),
+  );

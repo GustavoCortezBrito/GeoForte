@@ -10,7 +10,7 @@
  * Área útil do conteúdo: margens de 32 mm (topo), 31 mm (base) e 18 mm (laterais)
  * → 174 × 234 mm. Essas medidas casam com @page em estilos.mjs.
  */
-import { proposta, empresa } from "../dados/empresa.mjs";
+import { proposta, empresa } from "./pacote.mjs";
 import { asset, esc } from "./util.mjs";
 import { fontes, tokens } from "./estilos.mjs";
 

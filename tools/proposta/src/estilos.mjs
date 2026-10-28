@@ -396,8 +396,130 @@ const anexo = `
 .ob-dest p + p{margin-top:2mm;font-size:10.6pt;line-height:1.5;color:var(--g)}
 `;
 
+/* ─── Proposta de fundações: planilhas de preço, memorial em texto, equações e tabelas ──────────── */
+const sumarioDenso = `
+/* sumário com mais de 22 entradas (memorial de fundações): linhas e tipos um pouco mais justos */
+.denso .sum-lead{max-width:158mm;margin-top:3mm}
+.denso .sum-lista{margin-top:5mm}
+.denso .sum-lista li{padding:1.05mm 0}
+.denso .sum-t{font-size:10.4pt}
+.denso .sum-n,.denso .sum-p{font-size:9.6pt}
+.denso .sum-lista li.n2{padding:.5mm 0 .5mm 15mm}
+.denso .sum-lista li.n2 .sum-t{font-size:9.4pt}
+.denso .sum-lista li.grupo{margin-top:2.6mm}
+`;
+
+const fundacaoCorpo = `
+.nd{color:var(--g4)}
+.com-marcas .mf-h{position:relative}
+
+/* 1.3: módulos × tipos de estaca */
+.t-mod td.area{width:44mm}
+.t-mod thead th{font-size:8pt;line-height:1.25}
+.t-mod td.nd{font-weight:500}
+
+/* Tabelas 01 a 03: planilha de preços */
+.planilha{margin:5mm 0 2mm}
+.planilha figcaption{font-family:var(--mono);font-weight:700;font-size:9.6pt;margin-bottom:2mm;break-after:avoid}
+.t-plan{font-size:8.2pt;line-height:1.25}
+.t-plan thead th{font-size:7.6pt;padding:1.4mm 2mm}
+.t-plan th.r{text-align:right}
+.t-plan tbody td{padding:.85mm 2mm;border-bottom:.2mm solid var(--fio)}
+.t-plan td.r{text-align:right;white-space:nowrap}
+.t-plan .p-n{font-family:var(--mono);font-weight:600;color:var(--g3);white-space:nowrap}
+.t-plan .p-v{font-weight:700}
+.t-plan tr.p-n0 td{background:var(--painel);border-top:.45mm solid var(--g);font-family:var(--mono);font-weight:700;padding:1.2mm 2mm}
+.t-plan tr.p-n0 td.p-n{color:var(--oi)}
+.t-plan tr.p-n1 td{background:var(--zebra);font-weight:700}
+.t-plan tr.p-item td:nth-child(2){padding-left:5mm}
+.t-plan tr.p-total td{background:var(--g);color:#fff;font-family:var(--mono);font-weight:700;padding:2mm;border:0}
+.t-plan tr.p-total td.r{font-size:11pt}
+
+/* Memorial (11): seções, texto, listas e legendas */
+.mf{margin-top:8mm}
+.sec-h + .mf{margin-top:6mm}
+.mf-quebra{break-before:page;margin-top:0}
+.mf-h{display:flex;align-items:baseline;gap:3mm;font-family:var(--mono);font-weight:700;font-size:13pt;letter-spacing:-.015em;line-height:1.2;
+  padding-bottom:2mm;border-bottom:.3mm solid var(--fio);break-after:avoid}
+.mf-h span{color:var(--o);font-variant-numeric:tabular-nums;min-width:11mm}
+.mf-h + *{margin-top:3.2mm}
+.mf-p{margin-top:3.2mm;font-size:9.4pt;line-height:1.58}
+.mf-lista{font-size:9.4pt;line-height:1.5}
+.mf-lista li{break-inside:avoid}
+.mf-obs{margin-top:3mm;font-size:8.6pt;line-height:1.5;color:var(--g2)}
+.mf-obs b{font-family:var(--mono);color:var(--g)}
+.mf h4.m-h{margin-top:6mm}
+.mf h4.m-h.mf-quebra{margin-top:0}
+
+.mf-fig{margin-top:4mm;text-align:center;break-inside:avoid}
+.mf-fig img{display:inline-block;width:var(--w,100%);max-width:100%;height:auto;border:.25mm solid var(--fio)}
+.mf-fig figcaption,.mf-tab figcaption{font-size:8.4pt;line-height:1.35;color:var(--g2)}
+.mf-fig figcaption{margin-top:2mm}
+.mf-fig figcaption b,.mf-tab figcaption b{font-family:var(--mono);font-weight:700;color:var(--g)}
+.mf-fig-t{margin-bottom:3mm;text-align:left;font-size:9.6pt}
+.mf-fig-pag{break-before:page;break-after:page;margin-top:0}
+.mf-fig-pag:not([style]) img{width:auto;max-height:212mm}
+
+.mf-tab{margin-top:4mm;break-inside:avoid}
+.mf-tab figcaption{margin-bottom:2mm;text-align:left;break-after:avoid}
+.memorial .t.t-mf{font-size:8.5pt;line-height:1.3}
+.memorial .t.t-mf thead th{text-align:center;font-size:7.6pt;line-height:1.2;vertical-align:middle}
+.memorial .t.t-mf thead tr + tr th{background:#3a3e45}
+.memorial .t.t-mf tbody td{text-align:center;padding:1.4mm 2.2mm;border-bottom:.2mm solid var(--fio)}
+.memorial .t.t-mf td.nome{text-align:left;font-weight:700}
+.memorial .t.t-mf td.simb{font-style:italic}
+.memorial .t.t-mf td.nota{font-family:var(--mono);font-weight:700;background:var(--painel);color:var(--g2)}
+.memorial .t.t-mf td.tot{font-family:var(--mono);font-weight:700;white-space:nowrap}
+.memorial .t.t-mf td.dest{background:var(--painel);font-weight:700}
+.memorial .t.t-mf th.dest{background:var(--oi)}
+.mf-estreita{max-width:84mm}
+.memorial .mf-quant .t.t-mf tbody td{border-bottom:.2mm solid var(--fio2);padding:.55mm 2mm}
+
+/* estaqueamento por módulo (Tabelas 6 a 10): uma linha por pilar, cabeçalho repetido em cada página */
+.mf-tab.mf-est{break-inside:auto}
+.memorial .t.t-est2{table-layout:fixed;font-size:7.9pt;line-height:1.2}
+.memorial .t.t-est2 thead th{font-size:6.8pt;line-height:1.15;text-align:center;vertical-align:middle;padding:1.1mm .8mm}
+.memorial .t.t-est2 thead th.pil{text-align:left;padding-left:2mm}
+.memorial .t.t-est2 thead tr + tr th{background:#3a3e45}
+.memorial .t.t-est2 tbody td{padding:.42mm 1.6mm;text-align:right;border-bottom:.2mm solid var(--fio)}
+.memorial .t.t-est2 td.pil{font-family:var(--mono);font-weight:700;text-align:left;padding-left:2mm}
+.memorial .t.t-est2 td.ct{text-align:center}
+.memorial .t.t-est2 td.cg{font-weight:700;background:var(--painel)}
+.memorial .t.t-est2 tbody tr:nth-child(even):not(.grp) td:not(.cg){background:var(--zebra)}
+.memorial .t.t-est2 tbody tr.grp td{background:var(--g);color:#fff;font-family:var(--mono);font-weight:700;font-size:7.4pt;letter-spacing:.14em;padding:.9mm 2mm;text-align:left;border:0}
+
+/* equações (MathML: o Chrome desenha, sem biblioteca) */
+math{font-family:"Cambria Math","STIX Two Math","Latin Modern Math","Noto Sans Math",serif;font-size:11pt;color:inherit}
+.mf-eq{margin-top:4mm;padding:3.4mm 4mm;background:var(--painel);text-align:center;break-inside:avoid}
+.mf-eq math{font-size:14pt}
+.mf-ieq math{font-size:11.5pt;math-style:normal}
+.mf-onde{margin-top:3.4mm;font-size:9.4pt;break-inside:avoid}
+.mf-onde-t{font-family:var(--mono);font-weight:700;font-size:9pt;color:var(--g3);margin-bottom:1mm}
+.mf-onde div{display:grid;grid-template-columns:24mm 1fr;align-items:baseline;padding:.7mm 0;border-bottom:.2mm solid var(--fio)}
+.mf-onde div dt{text-align:right;padding-right:2.4mm}
+.mf-calc{margin-top:4mm;border:.25mm solid var(--fio2);break-inside:avoid}
+.mf-calc-t{padding:2mm 4mm;background:var(--painel);font-family:var(--mono);font-weight:700;font-size:9.6pt;border-bottom:.25mm solid var(--fio2)}
+.mf-calc-eqs{display:grid;grid-template-columns:1fr 1fr;gap:1.2mm 6mm;padding:3mm 4mm;font-size:11pt}
+.mf-calc-eqs span{display:flex;align-items:center;gap:3mm}
+.mf-calc-eqs small{font-size:8.4pt;color:var(--g3)}
+.mf-calc-res{padding:2.8mm 4mm;background:var(--g);color:#fff}
+.mf-calc-res math{font-size:15pt}
+
+.mf-fecho{margin-top:12mm;padding-top:5mm;border-top:.3mm solid var(--fio2);break-inside:avoid}
+.mf-fecho p{font-size:9.6pt;color:var(--g2)}
+.mf-fecho ul{list-style:none;margin-top:5mm;display:grid;grid-template-columns:repeat(3,1fr);gap:6mm}
+.mf-fecho li{padding-top:2mm;border-top:.3mm solid var(--g);font-family:var(--mono);font-weight:600;font-size:9.4pt;line-height:1.35}
+`;
+
+/* Anexo da fundação: uma foto por obra, em página inteira */
+const anexoFoto = `
+.of-foto{margin-top:5mm;flex:1;min-height:0}
+.of-leg{flex-shrink:0;margin-top:3mm;padding-top:2.2mm;border-top:.5mm solid var(--g);font-size:9pt;line-height:1.35;color:var(--g2)}
+.of-ficha{margin-top:4mm}
+`;
+
 export const estiloCapa = () => fontes() + tokens + base + capa;
-export const estiloSumario = () => fontes() + tokens + paginaComMoldura + base + sumario;
-export const estiloCorpo = () => fontes() + tokens + paginaComMoldura + base + corpo + memorial;
+export const estiloSumario = () => fontes() + tokens + paginaComMoldura + base + sumario + sumarioDenso;
+export const estiloCorpo = () => fontes() + tokens + paginaComMoldura + base + corpo + memorial + fundacaoCorpo;
 export const estiloAnexoAbertura = () => fontes() + tokens + base + capa + abertura;
-export const estiloAnexo = () => fontes() + tokens + paginaComMoldura + base + anexo;
+export const estiloAnexo = () => fontes() + tokens + paginaComMoldura + base + anexo + anexoFoto;

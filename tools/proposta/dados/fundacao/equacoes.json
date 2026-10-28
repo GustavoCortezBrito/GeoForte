@@ -1,0 +1,176 @@
+[
+ {
+  "texto": "Qadm=Ab∙α∙C∙N4+U∙ΔL∙ β∙N3+β1,3",
+  "bloco": true,
+  "mathml": "<math display=\"block\"><msub><mrow><mi>Q</mi></mrow><mrow><mi mathvariant=\"normal\">adm</mi></mrow></msub><mo>=</mo><mfrac><mrow><msub><mrow><mi>A</mi></mrow><mrow><mi>b</mi></mrow></msub><mo>∙</mo><mi>α</mi><mo>∙</mo><mi>C</mi><mo>∙</mo><mi>N</mi></mrow><mrow><mn>4</mn></mrow></mfrac><mo>+</mo><mfrac><mrow><mi>U</mi><mo>∙</mo><mi mathvariant=\"normal\">ΔL</mi><mo>∙</mo><mrow><mo>∑</mo><mrow><mrow><mo>(</mo><mrow><mi>β</mi><mo>∙</mo><mfrac><mrow><mover accent=\"true\"><mrow><mi>N</mi></mrow><mo>¯</mo></mover></mrow><mrow><mn>3</mn></mrow></mfrac><mo>+</mo><mi>β</mi></mrow><mo>)</mo></mrow></mrow></mrow></mrow><mrow><mn>1,3</mn></mrow></mfrac></math>",
+  "omml": "<m:oMath><m:sSub><m:sSubPr><m:ctrlPr><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:i/><w:color w:val=\"002060\"/></w:rPr></m:ctrlPr></m:sSubPr><m:e><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:color w:val=\"002060\"/></w:rPr><m:t>Q</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:color w:val=\"002060\"/></w:rPr><m:t>adm</m:t></m:r></m:sub></m:sSub><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:color w:val=\"002060\"/></w:rPr><m:t>=</m:t></m:r><m:f><m:fPr><m:ctrlPr><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:i/><w:color w:val=\"002060\"/></w:rPr></m:ctrlPr></m:fPr><m:num><m:sSub><m:sSubPr><m:ctrlPr><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:color w:val=\"002060\"/></w:rPr></m:ctrlPr></m:sSubPr><m:e><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:color w:val=\"002060\"/></w:rPr><m:t>A</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:color w:val=\"002060\"/></w:rPr><m:t>b</m:t></m:r></m:sub></m:sSub><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:color w:val=\"002060\"/></w:rPr><m:t>∙</m:t></m:r><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/></w:rPr><m:t>α</m:t></m:r><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:color w:val=\"002060\"/></w:rPr><m:t>∙C∙N</m:t></m:r></m:num><m:den><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:color w:val=\"002060\"/></w:rPr><m:t>4</m:t></m:r></m:den></m:f><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:color w:val=\"002060\"/></w:rPr><m:t>+</m:t></m:r><m:f><m:fPr><m:ctrlPr><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:i/><w:color w:val=\"002060\"/></w:rPr></m:ctrlPr></m:fPr><m:num><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:color w:val=\"002060\"/></w:rPr><m:t>U∙ΔL∙</m:t></m:r><m:nary><m:naryPr><m:chr m:val=\"∑\"/><m:limLoc m:val=\"undOvr\"/><m:subHide m:val=\"1\"/><m:supHide m:val=\"1\"/><m:ctrlPr><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:i/><w:color w:val=\"002060\"/></w:rPr></m:ctrlPr></m:naryPr><m:sub/><m:sup/><m:e><m:d><m:dPr><m:ctrlPr><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:i/><w:color w:val=\"002060\"/></w:rPr></m:ctrlPr></m:dPr><m:e><m:r><m:rPr><m:sty m:val=\"p\"/></m:rPr><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/></w:rPr><m:t xml:space=\"preserve\"> </m:t></m:r><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/></w:rPr><m:t>β</m:t></m:r><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:color w:val=\"002060\"/></w:rPr><m:t>∙</m:t></m:r><m:f><m:fPr><m:ctrlPr><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:i/><w:color w:val=\"002060\"/></w:rPr></m:ctrlPr></m:fPr><m:num><m:acc><m:accPr><m:chr m:val=\"̅\"/><m:ctrlPr><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:i/><w:color w:val=\"002060\"/></w:rPr></m:ctrlPr></m:accPr><m:e><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:color w:val=\"002060\"/></w:rPr><m:t>N</m:t></m:r></m:e></m:acc></m:num><m:den><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:color w:val=\"002060\"/></w:rPr><m:t>3</m:t></m:r></m:den></m:f><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:color w:val=\"002060\"/></w:rPr><m:t>+</m:t></m:r><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/></w:rPr><m:t>β</m:t></m:r></m:e></m:d></m:e></m:nary></m:num><m:den><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:color w:val=\"002060\"/></w:rPr><m:t>1,3</m:t></m:r></m:den></m:f></m:oMath>"
+ },
+ {
+  "texto": "Ab",
+  "bloco": false,
+  "mathml": "<math><msub><mrow><mi>A</mi></mrow><mrow><mi>b</mi></mrow></msub></math>",
+  "omml": "<m:oMath><m:sSub><m:sSubPr><m:ctrlPr><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/></w:rPr></m:ctrlPr></m:sSubPr><m:e><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/></w:rPr><m:t>A</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/></w:rPr><m:t>b</m:t></m:r></m:sub></m:sSub></m:oMath>"
+ },
+ {
+  "texto": "α, β",
+  "bloco": false,
+  "mathml": "<math><mi>α</mi><mo>,</mo><mi>β</mi></math>",
+  "omml": "<m:oMath><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/></w:rPr><m:t>α</m:t></m:r><m:r><m:rPr><m:sty m:val=\"p\"/></m:rPr><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/></w:rPr><m:t xml:space=\"preserve\">,  </m:t></m:r><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/></w:rPr><m:t>β</m:t></m:r></m:oMath>"
+ },
+ {
+  "texto": "C",
+  "bloco": false,
+  "mathml": "<math><mi>C</mi></math>",
+  "omml": "<m:oMath><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:color w:val=\"002060\"/></w:rPr><m:t>C</m:t></m:r></m:oMath>"
+ },
+ {
+  "texto": "N",
+  "bloco": false,
+  "mathml": "<math><mi>N</mi></math>",
+  "omml": "<m:oMath><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/></w:rPr><m:t>N</m:t></m:r></m:oMath>"
+ },
+ {
+  "texto": "U",
+  "bloco": false,
+  "mathml": "<math><mi>U</mi></math>",
+  "omml": "<m:oMath><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/></w:rPr><m:t>U</m:t></m:r></m:oMath>"
+ },
+ {
+  "texto": "N",
+  "bloco": false,
+  "mathml": "<math><mover accent=\"true\"><mrow><mi>N</mi></mrow><mo>¯</mo></mover></math>",
+  "omml": "<m:oMath><m:acc><m:accPr><m:chr m:val=\"̅\"/><m:ctrlPr><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/></w:rPr></m:ctrlPr></m:accPr><m:e><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/></w:rPr><m:t>N</m:t></m:r></m:e></m:acc></m:oMath>"
+ },
+ {
+  "texto": "Qadm, est=0,85∙fcd∙Ac+As∙fyd1,4",
+  "bloco": true,
+  "mathml": "<math display=\"block\"><msub><mrow><mi>Q</mi></mrow><mrow><mi mathvariant=\"normal\">adm</mi><mo>,</mo><mi mathvariant=\"normal\">est</mi></mrow></msub><mo>=</mo><mfrac><mrow><mn>0,85</mn><mo>∙</mo><mi mathvariant=\"normal\">fcd</mi><mo>∙</mo><msub><mrow><mi>A</mi></mrow><mrow><mi>c</mi></mrow></msub><mo>+</mo><msub><mrow><mi>A</mi></mrow><mrow><mi>s</mi></mrow></msub><mo>∙</mo><mi mathvariant=\"normal\">fyd</mi></mrow><mrow><mn>1,4</mn></mrow></mfrac></math>",
+  "omml": "<m:oMath><m:sSub><m:sSubPr><m:ctrlPr><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:i/><w:color w:val=\"002060\"/><w:sz w:val=\"22\"/><w:szCs w:val=\"22\"/></w:rPr></m:ctrlPr></m:sSubPr><m:e><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:color w:val=\"002060\"/><w:sz w:val=\"22\"/><w:szCs w:val=\"22\"/></w:rPr><m:t>Q</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:color w:val=\"002060\"/><w:sz w:val=\"22\"/><w:szCs w:val=\"22\"/></w:rPr><m:t>adm,   est</m:t></m:r></m:sub></m:sSub><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:color w:val=\"002060\"/><w:sz w:val=\"22\"/><w:szCs w:val=\"22\"/></w:rPr><m:t>=</m:t></m:r><m:f><m:fPr><m:ctrlPr><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:i/><w:color w:val=\"002060\"/><w:sz w:val=\"22\"/><w:szCs w:val=\"22\"/></w:rPr></m:ctrlPr></m:fPr><m:num><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:color w:val=\"002060\"/><w:sz w:val=\"22\"/><w:szCs w:val=\"22\"/></w:rPr><m:t>0,85∙fcd∙</m:t></m:r><m:sSub><m:sSubPr><m:ctrlPr><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/><w:sz w:val=\"22\"/><w:szCs w:val=\"22\"/></w:rPr></m:ctrlPr></m:sSubPr><m:e><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/><w:sz w:val=\"22\"/><w:szCs w:val=\"22\"/></w:rPr><m:t>A</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/><w:sz w:val=\"22\"/><w:szCs w:val=\"22\"/></w:rPr><m:t>c</m:t></m:r></m:sub></m:sSub><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:color w:val=\"002060\"/><w:sz w:val=\"22\"/><w:szCs w:val=\"22\"/></w:rPr><m:t>+</m:t></m:r><m:sSub><m:sSubPr><m:ctrlPr><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/><w:sz w:val=\"22\"/><w:szCs w:val=\"22\"/></w:rPr></m:ctrlPr></m:sSubPr><m:e><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/><w:sz w:val=\"22\"/><w:szCs w:val=\"22\"/></w:rPr><m:t>A</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/><w:sz w:val=\"22\"/><w:szCs w:val=\"22\"/></w:rPr><m:t>s</m:t></m:r></m:sub></m:sSub><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:color w:val=\"002060\"/><w:sz w:val=\"22\"/><w:szCs w:val=\"22\"/></w:rPr><m:t>∙fyd</m:t></m:r></m:num><m:den><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:color w:val=\"002060\"/><w:sz w:val=\"22\"/><w:szCs w:val=\"22\"/></w:rPr><m:t>1,4</m:t></m:r></m:den></m:f></m:oMath>"
+ },
+ {
+  "texto": "fcd=fckγc",
+  "bloco": false,
+  "mathml": "<math><mi mathvariant=\"normal\">fcd</mi><mo>=</mo><mfrac><mrow><mi mathvariant=\"normal\">fck</mi></mrow><mrow><msub><mrow><mi>γ</mi></mrow><mrow><mi>c</mi></mrow></msub></mrow></mfrac></math>",
+  "omml": "<m:oMath><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:color w:val=\"002060\"/></w:rPr><m:t>fcd=</m:t></m:r><m:f><m:fPr><m:ctrlPr><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:i/><w:color w:val=\"002060\"/></w:rPr></m:ctrlPr></m:fPr><m:num><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:color w:val=\"002060\"/></w:rPr><m:t>fck</m:t></m:r></m:num><m:den><m:sSub><m:sSubPr><m:ctrlPr><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/></w:rPr></m:ctrlPr></m:sSubPr><m:e><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/></w:rPr><m:t>γ</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/></w:rPr><m:t>c</m:t></m:r></m:sub></m:sSub></m:den></m:f></m:oMath>"
+ },
+ {
+  "texto": "fyd=fykγs",
+  "bloco": false,
+  "mathml": "<math><mi mathvariant=\"normal\">fyd</mi><mo>=</mo><mfrac><mrow><mi mathvariant=\"normal\">fyk</mi></mrow><mrow><msub><mrow><mi>γ</mi></mrow><mrow><mi>s</mi></mrow></msub></mrow></mfrac></math>",
+  "omml": "<m:oMath><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:color w:val=\"002060\"/></w:rPr><m:t>fyd=</m:t></m:r><m:f><m:fPr><m:ctrlPr><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:i/><w:color w:val=\"002060\"/></w:rPr></m:ctrlPr></m:fPr><m:num><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:color w:val=\"002060\"/></w:rPr><m:t>fyk</m:t></m:r></m:num><m:den><m:sSub><m:sSubPr><m:ctrlPr><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/></w:rPr></m:ctrlPr></m:sSubPr><m:e><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/></w:rPr><m:t>γ</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/></w:rPr><m:t>s</m:t></m:r></m:sub></m:sSub></m:den></m:f></m:oMath>"
+ },
+ {
+  "texto": "Ac",
+  "bloco": false,
+  "mathml": "<math><msub><mrow><mi>A</mi></mrow><mrow><mi>c</mi></mrow></msub></math>",
+  "omml": "<m:oMath><m:sSub><m:sSubPr><m:ctrlPr><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/></w:rPr></m:ctrlPr></m:sSubPr><m:e><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/></w:rPr><m:t>A</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/></w:rPr><m:t>c</m:t></m:r></m:sub></m:sSub></m:oMath>"
+ },
+ {
+  "texto": "fck",
+  "bloco": false,
+  "mathml": "<math><mi mathvariant=\"normal\">fck</mi></math>",
+  "omml": "<m:oMath><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:color w:val=\"002060\"/></w:rPr><m:t>fck</m:t></m:r></m:oMath>"
+ },
+ {
+  "texto": "Ac",
+  "bloco": false,
+  "mathml": "<math><msub><mrow><mi>A</mi></mrow><mrow><mi>c</mi></mrow></msub></math>",
+  "omml": "<m:oMath><m:sSub><m:sSubPr><m:ctrlPr><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/></w:rPr></m:ctrlPr></m:sSubPr><m:e><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/></w:rPr><m:t>A</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/></w:rPr><m:t>c</m:t></m:r></m:sub></m:sSub></m:oMath>"
+ },
+ {
+  "texto": "fyk",
+  "bloco": false,
+  "mathml": "<math><mi mathvariant=\"normal\">fyk</mi></math>",
+  "omml": "<m:oMath><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:color w:val=\"002060\"/></w:rPr><m:t>fyk</m:t></m:r></m:oMath>"
+ },
+ {
+  "texto": "γc",
+  "bloco": false,
+  "mathml": "<math><msub><mrow><mi>γ</mi></mrow><mrow><mi>c</mi></mrow></msub></math>",
+  "omml": "<m:oMath><m:sSub><m:sSubPr><m:ctrlPr><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/></w:rPr></m:ctrlPr></m:sSubPr><m:e><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/></w:rPr><m:t>γ</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/></w:rPr><m:t>c</m:t></m:r></m:sub></m:sSub></m:oMath>"
+ },
+ {
+  "texto": "γs",
+  "bloco": false,
+  "mathml": "<math><msub><mrow><mi>γ</mi></mrow><mrow><mi>s</mi></mrow></msub></math>",
+  "omml": "<m:oMath><m:sSub><m:sSubPr><m:ctrlPr><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/></w:rPr></m:ctrlPr></m:sSubPr><m:e><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/></w:rPr><m:t>γ</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/></w:rPr><m:t>s</m:t></m:r></m:sub></m:sSub></m:oMath>"
+ },
+ {
+  "texto": "γc",
+  "bloco": false,
+  "mathml": "<math><msub><mrow><mi>γ</mi></mrow><mrow><mi>c</mi></mrow></msub></math>",
+  "omml": "<m:oMath><m:sSub><m:sSubPr><m:ctrlPr><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/></w:rPr></m:ctrlPr></m:sSubPr><m:e><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/></w:rPr><m:t>γ</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/></w:rPr><m:t>c</m:t></m:r></m:sub></m:sSub></m:oMath>"
+ },
+ {
+  "texto": "fyk",
+  "bloco": false,
+  "mathml": "<math><mi mathvariant=\"normal\">fyk</mi></math>",
+  "omml": "<m:oMath><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:color w:val=\"002060\"/></w:rPr><m:t>fyk</m:t></m:r></m:oMath>"
+ },
+ {
+  "texto": "γs",
+  "bloco": false,
+  "mathml": "<math><msub><mrow><mi>γ</mi></mrow><mrow><mi>s</mi></mrow></msub></math>",
+  "omml": "<m:oMath><m:sSub><m:sSubPr><m:ctrlPr><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/></w:rPr></m:ctrlPr></m:sSubPr><m:e><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/></w:rPr><m:t>γ</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/></w:rPr><m:t>s</m:t></m:r></m:sub></m:sSub></m:oMath>"
+ },
+ {
+  "texto": "Ac=1256,64 cm²",
+  "bloco": true,
+  "mathml": "<math display=\"block\"><msub><mrow><mi>A</mi></mrow><mrow><mi>c</mi></mrow></msub><mo>=</mo><mn>1256,64</mn><mspace width=\"0.3em\"></mspace><mi mathvariant=\"normal\">cm</mi><mo>²</mo></math>",
+  "omml": "<m:oMath><m:sSub><m:sSubPr><m:ctrlPr><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/><w:sz w:val=\"22\"/><w:szCs w:val=\"22\"/></w:rPr></m:ctrlPr></m:sSubPr><m:e><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/><w:sz w:val=\"22\"/><w:szCs w:val=\"22\"/></w:rPr><m:t>A</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/><w:sz w:val=\"22\"/><w:szCs w:val=\"22\"/></w:rPr><m:t>c</m:t></m:r></m:sub></m:sSub><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/><w:sz w:val=\"22\"/><w:szCs w:val=\"22\"/></w:rPr><m:t>=1256,64 cm²</m:t></m:r></m:oMath>"
+ },
+ {
+  "texto": "As=5,027 cm²",
+  "bloco": false,
+  "mathml": "<math><msub><mrow><mi>A</mi></mrow><mrow><mi>s</mi></mrow></msub><mo>=</mo><mn>5,027</mn><mspace width=\"0.3em\"></mspace><mi mathvariant=\"normal\">cm</mi><mo>²</mo></math>",
+  "omml": "<m:oMath><m:sSub><m:sSubPr><m:ctrlPr><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/><w:sz w:val=\"22\"/><w:szCs w:val=\"22\"/></w:rPr></m:ctrlPr></m:sSubPr><m:e><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/><w:sz w:val=\"22\"/><w:szCs w:val=\"22\"/></w:rPr><m:t>A</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/><w:sz w:val=\"22\"/><w:szCs w:val=\"22\"/></w:rPr><m:t>s</m:t></m:r></m:sub></m:sSub><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/><w:sz w:val=\"22\"/><w:szCs w:val=\"22\"/></w:rPr><m:t>=5,027 cm²</m:t></m:r></m:oMath>"
+ },
+ {
+  "texto": "fcd=0,944 KN/cm²",
+  "bloco": true,
+  "mathml": "<math display=\"block\"><mi mathvariant=\"normal\">fcd</mi><mo>=</mo><mn>0,944</mn><mspace width=\"0.3em\"></mspace><mi mathvariant=\"normal\">KN</mi><mo lspace=\"0em\" rspace=\"0em\">/</mo><mi mathvariant=\"normal\">cm</mi><mo>²</mo></math>",
+  "omml": "<m:oMath><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:color w:val=\"002060\"/></w:rPr><m:t>fcd=0,944 KN/cm²</m:t></m:r></m:oMath>"
+ },
+ {
+  "texto": "fyd=43,478 KN/cm²",
+  "bloco": true,
+  "mathml": "<math display=\"block\"><mi mathvariant=\"normal\">fyd</mi><mo>=</mo><mn>43,478</mn><mspace width=\"0.3em\"></mspace><mi mathvariant=\"normal\">KN</mi><mo lspace=\"0em\" rspace=\"0em\">/</mo><mi mathvariant=\"normal\">cm</mi><mo>²</mo></math>",
+  "omml": "<m:oMath><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:color w:val=\"002060\"/></w:rPr><m:t>fyd=43,478 KN/cm²</m:t></m:r></m:oMath>"
+ },
+ {
+  "texto": "Qadm, est (400mm)=86,5 tf",
+  "bloco": true,
+  "mathml": "<math display=\"block\"><msub><mrow><mi>Q</mi></mrow><mrow><mi mathvariant=\"normal\">adm</mi><mo>,</mo><mi mathvariant=\"normal\">est</mi><mo>(</mo><mn>400</mn><mi mathvariant=\"normal\">mm</mi><mo>)</mo></mrow></msub><mo>=</mo><mn>86,5</mn><mspace width=\"0.3em\"></mspace><mi mathvariant=\"normal\">tf</mi></math>",
+  "omml": "<m:oMath><m:sSub><m:sSubPr><m:ctrlPr><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:i/><w:color w:val=\"002060\"/><w:sz w:val=\"22\"/><w:szCs w:val=\"22\"/></w:rPr></m:ctrlPr></m:sSubPr><m:e><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:color w:val=\"002060\"/><w:sz w:val=\"22\"/><w:szCs w:val=\"22\"/></w:rPr><m:t>Q</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:color w:val=\"002060\"/><w:sz w:val=\"22\"/><w:szCs w:val=\"22\"/></w:rPr><m:t>adm,   est (400mm)</m:t></m:r></m:sub></m:sSub><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:color w:val=\"002060\"/><w:sz w:val=\"22\"/><w:szCs w:val=\"22\"/></w:rPr><m:t>=86,5 tf</m:t></m:r></m:oMath>"
+ },
+ {
+  "texto": "Ac=706,86 cm²",
+  "bloco": true,
+  "mathml": "<math display=\"block\"><msub><mrow><mi>A</mi></mrow><mrow><mi>c</mi></mrow></msub><mo>=</mo><mn>706,86</mn><mspace width=\"0.3em\"></mspace><mi mathvariant=\"normal\">cm</mi><mo>²</mo></math>",
+  "omml": "<m:oMath><m:sSub><m:sSubPr><m:ctrlPr><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/><w:sz w:val=\"22\"/><w:szCs w:val=\"22\"/></w:rPr></m:ctrlPr></m:sSubPr><m:e><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/><w:sz w:val=\"22\"/><w:szCs w:val=\"22\"/></w:rPr><m:t>A</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/><w:sz w:val=\"22\"/><w:szCs w:val=\"22\"/></w:rPr><m:t>c</m:t></m:r></m:sub></m:sSub><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/><w:sz w:val=\"22\"/><w:szCs w:val=\"22\"/></w:rPr><m:t>=706,86 cm²</m:t></m:r></m:oMath>"
+ },
+ {
+  "texto": "As=2,827 cm²",
+  "bloco": false,
+  "mathml": "<math><msub><mrow><mi>A</mi></mrow><mrow><mi>s</mi></mrow></msub><mo>=</mo><mn>2,827</mn><mspace width=\"0.3em\"></mspace><mi mathvariant=\"normal\">cm</mi><mo>²</mo></math>",
+  "omml": "<m:oMath><m:sSub><m:sSubPr><m:ctrlPr><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/><w:sz w:val=\"22\"/><w:szCs w:val=\"22\"/></w:rPr></m:ctrlPr></m:sSubPr><m:e><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/><w:sz w:val=\"22\"/><w:szCs w:val=\"22\"/></w:rPr><m:t>A</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/><w:sz w:val=\"22\"/><w:szCs w:val=\"22\"/></w:rPr><m:t>s</m:t></m:r></m:sub></m:sSub><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\" w:cs=\"Calibri\"/><w:color w:val=\"002060\"/><w:sz w:val=\"22\"/><w:szCs w:val=\"22\"/></w:rPr><m:t>=2,827 cm²</m:t></m:r></m:oMath>"
+ },
+ {
+  "texto": "fcd=0,944 KN/cm²",
+  "bloco": true,
+  "mathml": "<math display=\"block\"><mi mathvariant=\"normal\">fcd</mi><mo>=</mo><mn>0,944</mn><mspace width=\"0.3em\"></mspace><mi mathvariant=\"normal\">KN</mi><mo lspace=\"0em\" rspace=\"0em\">/</mo><mi mathvariant=\"normal\">cm</mi><mo>²</mo></math>",
+  "omml": "<m:oMath><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:color w:val=\"002060\"/></w:rPr><m:t>fcd=0,944 KN/cm²</m:t></m:r></m:oMath>"
+ },
+ {
+  "texto": "fyd=43,478 KN/cm²",
+  "bloco": true,
+  "mathml": "<math display=\"block\"><mi mathvariant=\"normal\">fyd</mi><mo>=</mo><mn>43,478</mn><mspace width=\"0.3em\"></mspace><mi mathvariant=\"normal\">KN</mi><mo lspace=\"0em\" rspace=\"0em\">/</mo><mi mathvariant=\"normal\">cm</mi><mo>²</mo></math>",
+  "omml": "<m:oMath><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:color w:val=\"002060\"/></w:rPr><m:t>fyd=43,478 KN/cm²</m:t></m:r></m:oMath>"
+ },
+ {
+  "texto": "Qadm, est (300mm)=48,7 tf",
+  "bloco": true,
+  "mathml": "<math display=\"block\"><msub><mrow><mi>Q</mi></mrow><mrow><mi mathvariant=\"normal\">adm</mi><mo>,</mo><mi mathvariant=\"normal\">est</mi><mo>(</mo><mn>300</mn><mi mathvariant=\"normal\">mm</mi><mo>)</mo></mrow></msub><mo>=</mo><mn>48,7</mn><mspace width=\"0.3em\"></mspace><mi mathvariant=\"normal\">tf</mi></math>",
+  "omml": "<m:oMath><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:color w:val=\"002060\"/><w:sz w:val=\"22\"/><w:szCs w:val=\"22\"/></w:rPr><m:t xml:space=\"preserve\"> </m:t></m:r><m:sSub><m:sSubPr><m:ctrlPr><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:i/><w:color w:val=\"002060\"/><w:sz w:val=\"22\"/><w:szCs w:val=\"22\"/></w:rPr></m:ctrlPr></m:sSubPr><m:e><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:color w:val=\"002060\"/><w:sz w:val=\"22\"/><w:szCs w:val=\"22\"/></w:rPr><m:t>Q</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:color w:val=\"002060\"/><w:sz w:val=\"22\"/><w:szCs w:val=\"22\"/></w:rPr><m:t>adm,   est (300mm)</m:t></m:r></m:sub></m:sSub><m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:hAnsi=\"Cambria Math\"/><w:color w:val=\"002060\"/><w:sz w:val=\"22\"/><w:szCs w:val=\"22\"/></w:rPr><m:t>=48,7 tf</m:t></m:r></m:oMath>"
+ }
+]

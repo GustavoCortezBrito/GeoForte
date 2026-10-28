@@ -2,14 +2,21 @@
   "name": "geoforte-proposta",
   "private": true,
   "type": "module",
-  "description": "Gera a proposta GEO 2701A/25 (Grand Palladium) completa em PDF, na identidade visual do site.",
+  "description": "Gera as propostas da Expansão Grand Palladium (contenção GEO 2701A/25 e fundação GEO 2993A/26) em PDF e em Word editável, na identidade visual do site.",
   "scripts": {
     "gerar": "node gerar.mjs",
-    "verificar": "node verificar.mjs"
+    "gerar:fundacao": "node gerar.mjs --proposta=fundacao",
+    "docx": "node exportar-docx.mjs",
+    "docx:fundacao": "node exportar-docx.mjs --proposta=fundacao",
+    "verificar": "node verificar.mjs",
+    "verificar:fundacao": "node verificar.mjs --proposta=fundacao",
+    "importar:fundacao": "node importar/tabelas.mjs \"../../documento/fundacao/Proposta GEO 2993A-26 - FUND - Hélice e Metálica - GRAND PALLADIUM - 28.10.26 (Em Rev).docx\" && node importar/figuras.mjs \"../../documento/fundacao/Proposta GEO 2993A-26 - FUND - Hélice e Metálica - GRAND PALLADIUM - 28.10.26 (Em Rev).docx\""
   },
   "dependencies": {
+    "docx": "^9.15.0",
+    "jszip": "^3.10.2",
+    "mupdf": "^1.28.1",
     "pdf-lib": "^1.17.1",
-    "puppeteer-core": "^24.0.0",
-    "mupdf": "^1.28.1"
+    "puppeteer-core": "^24.0.0"
   }
 }

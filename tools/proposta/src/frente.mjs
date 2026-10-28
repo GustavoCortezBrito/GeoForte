@@ -1,12 +1,12 @@
 /**
  * Capa e sumário. Todos os números da capa vêm do texto da proposta
- * (cláusulas 1.3, 1.4, 2.22 e 8.3) — nada calculado nem inventado.
+ * (ver `capa` no pacote de dados) — nada calculado nem inventado.
  */
-import { proposta, config } from "../dados/empresa.mjs";
-import { secoes } from "../dados/proposta.mjs";
-import { memorial } from "../dados/memorial.mjs";
+import { pacote, proposta, config, secoes, memorial, anexo, capa } from "./pacote.mjs";
 import { asset, esc } from "./util.mjs";
 import { estiloCapa, estiloSumario } from "./estilos.mjs";
+
+const { entradasMemorial } = await import(`./memorial-${memorial.tipo}.mjs`);
 
 const doc = (titulo, css, corpo) => `<!doctype html>
 <html lang="pt-BR"><head><meta charset="utf-8" /><title>${esc(titulo)}</title><style>${css}</style></head>
@@ -21,13 +21,13 @@ export const htmlCapa = () =>
   <img class="capa-simbolo" src="${asset("logos/geoforte-simbolo.svg")}" alt="" aria-hidden="true" />
   <div class="capa-topo">
     <img class="capa-logo" src="${asset("logos/geoforte-logo-invertido.svg")}" alt="Geoforte Fundações" />
-    <div class="capa-cod">${esc(proposta.codigo)}<span>23 · 10 · 2026</span></div>
+    <div class="capa-cod">${esc(proposta.codigo)}<span>${esc(capa.data)}</span></div>
   </div>
 
   <div class="capa-meio">
     <p class="capa-tipo">Proposta técnica e comercial</p>
-    <h1 class="capa-titulo">Contenções em estacas justapostas</h1>
-    <p class="capa-sub">Projeto executivo geotécnico e execução global</p>
+    <h1 class="capa-titulo">${esc(capa.titulo)}</h1>
+    <p class="capa-sub">${esc(capa.subtitulo)}</p>
     <div class="capa-fio" aria-hidden="true"></div>
     <div class="capa-obra">
       <b>${esc(proposta.obra)}</b>
@@ -35,10 +35,7 @@ export const htmlCapa = () =>
     </div>
 
     <div class="capa-fatos">
-      <div class="capa-fato"><b>7.468,0 m²</b><span>de contenção no projeto global</span></div>
-      <div class="capa-fato"><b>6</b><span>contenções: 5 subsolos e 1 doca</span></div>
-      <div class="capa-fato"><b>88 dias</b><span>úteis de execução estimada, com 2 equipamentos</span></div>
-      <div class="capa-fato"><b>3</b><span>equipamentos: 2 perfuratrizes HCM e 1 bate-estacas</span></div>
+      ${capa.fatos.map((f) => `<div class="capa-fato"><b>${esc(f.valor)}</b><span>${esc(f.rotulo)}</span></div>`).join("\n      ")}
     </div>
   </div>
 
@@ -56,21 +53,22 @@ export const entradasSumario = () => [
   ...secoes.map((s) => ({ id: `s${s.n}`, n: s.n, titulo: s.titulo })),
   { id: "assinaturas", n: "", titulo: "Assinaturas" },
   { id: `s${memorial.n}`, n: memorial.n, titulo: memorial.titulo, grupo: true },
-  ...memorial.contencoes.map((c) => ({ id: `s${c.n}`, n: c.n, titulo: c.titulo, nivel: 2 })),
-  { id: "anexo", n: "B", titulo: "Anexo B · Obras executadas", pagina: "B.1", grupo: true },
+  ...entradasMemorial(memorial),
+  { id: "anexo", n: anexo.letra, titulo: `Anexo ${anexo.letra} · ${anexo.abertura.titulo}`, pagina: `${anexo.letra}.1`, grupo: true },
   { id: "certificado", n: "", titulo: "Certificado GeoSelos", pagina: "Final" },
 ];
 
 /** @param {Record<string,number>} paginas  id → número da página (Pág. n) */
-export const htmlSumario = (paginas) =>
-  doc(
+export const htmlSumario = (paginas) => {
+  const entradas = entradasSumario();
+  return doc(
     `Sumário · ${proposta.codigo}`,
     estiloSumario(),
-    `<main>
+    `<main${entradas.length > 22 ? ` class="denso"` : ""}>
   <h1 class="sum-h">Sumário</h1>
-  <p class="sum-lead">Proposta técnica e comercial para o projeto e a execução global das contenções em estacas justapostas da Expansão Grand Palladium Resort &amp; Spa.</p>
+  <p class="sum-lead">${esc(pacote.sumario.lead)}</p>
   <ol class="sum-lista">
-    ${entradasSumario()
+    ${entradas
       .map((e) => {
         const p = e.pagina ?? paginas[e.id] ?? "—";
         const cls = [e.nivel === 2 ? "n2" : "", e.grupo ? "grupo" : ""].filter(Boolean).join(" ");
@@ -85,3 +83,4 @@ export const htmlSumario = (paginas) =>
   }
 </main>`,
   );
+};
