@@ -1,2 +1,6 @@
 Manrope e Space Grotesk: SIL Open Font License 1.1 (https://openfontlicense.org).
 Baixadas do Google Fonts (variáveis; subconjuntos latin e latin-ext).
+
+assets/fonts/word/: Manrope e Space Grotesk em TrueType estático (pesos 400 e 700), geradas
+com fontTools (varLib.instancer) a partir das fontes variáveis do Google Fonts, para o Word
+embutir no .docx. Mesma licença (OFL 1.1).

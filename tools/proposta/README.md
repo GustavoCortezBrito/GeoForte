@@ -19,8 +19,8 @@ para `PONTOS_DE_ATENCAO`).
     npm install                  (uma vez)
     npm run gerar                → PDF da contenção
     npm run gerar:fundacao       → PDF da fundação
-    npm run docx                 → Word editável da contenção
-    npm run docx:fundacao        → Word editável da fundação
+    npm run docx                 → Word editável da contenção (depois do gerar)
+    npm run docx:fundacao        → Word editável da fundação (depois do gerar:fundacao)
     npm run verificar            → compara o PDF da contenção com o original
     npm run verificar:fundacao   → compara o PDF da fundação com o Word original
 
@@ -53,7 +53,9 @@ foto por obra).
 | `dados/contencao.mjs` | monta o pacote da contenção a partir dos arquivos acima (a proposta web importa os mesmos arquivos) |
 | `dados/fundacao/` | fundação: `proposta.mjs` (carta, cláusulas, correções, pontos de atenção), `memorial.mjs`, `obras.mjs`, `index.mjs`; `tabelas.json` e `equacoes.json` são gerados pelos importadores |
 | `importar/` | importadores do Word da fundação (ver abaixo) |
-| `src/` | HTML e estilos de cada parte (capa, corpo, anexo, moldura) e o gerador do Word (`word.mjs`) |
+| `src/` | HTML e estilos de cada parte (capa, corpo, anexo, moldura) |
+| `src/word/` | o Word no desenho do PDF (medidas do HTML, moldura, capa, corpo, memorial, anexo) |
+| `assets/fonts/word/` | Manrope e Space Grotesk em TrueType (normal e negrito), embutidas no Word |
 | `assets/certificado-geoselos.pdf` | última página, anexada sem alteração |
 
 ## Fundação: do Word ao PDF
@@ -77,13 +79,20 @@ fórmulas como equações. Nada disso foi digitado de novo:
 O texto das cláusulas e do memorial, o anexo e a capa são escritos à mão em
 `dados/fundacao/*.mjs`, com as correções registradas.
 
-## Word editável
+## Word editável (mesmo desenho do PDF)
 
-`npm run docx` e `npm run docx:fundacao` geram, em `saida/`, o "texto para
-revisão": carta, cláusulas com a numeração do PDF, tabelas do Word (nada de
-imagem), as equações do memorial como equações do Word, as obras do anexo, os
-pontos de atenção (com coluna de decisão) e as correções já aplicadas. Trechos
-amarelos são as cláusulas revisadas.
+`npm run docx` e `npm run docx:fundacao` geram, em `saida/`, o Word da proposta no
+mesmo desenho do PDF: capa grafite, sumário, moldura (cabeçalho, fio laranja,
+rodapé com selos e número da página), títulos com número laranja, cláusulas,
+tabelas, cartões, memorial (com as equações como equações do Word) e o anexo de
+obras com as mesmas fotos e recortes, mais o certificado no fim. As fontes da
+marca (Manrope e Space Grotesk) vão embutidas no arquivo. Ao lado sai
+`<proposta> - pontos de atenção.docx`, com a lista de decisões e as correções.
+
+Rode depois do PDF: o Word lê o HTML que o gerador imprimiu (`saida/html/<proposta>/`)
+para medir posições, tamanhos de foto e colunas de tabela, e reproduz tudo no
+Word (`src/word/`). Os números do sumário são campos de página com o valor do PDF;
+se o texto mudar de página no Word, selecione tudo e aperte F9.
 
 Para trazer as edições de volta ao PDF: peça o arquivo editado, compare com o
 original (`node importar/docx.mjs <arquivo>` imprime o texto, um bloco por linha;

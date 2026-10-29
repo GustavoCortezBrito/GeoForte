@@ -145,6 +145,8 @@ const web = pacote.saida.copiaWeb;
 const pastaWeb = web && join(raiz, "..", "..", "public", "propostas", web.pasta);
 if (pastaWeb && existsSync(pastaWeb)) copyFileSync(ARQUIVO_FINAL, join(pastaWeb, web.arquivo));
 
+// O Word editável (exportar-docx.mjs) usa as mesmas páginas no sumário.
+writeFileSync(join(pastaHtml, "paginas.json"), JSON.stringify({ paginas, nCorpo }, null, 1));
 console.log("Páginas das seções (Pág. n):", JSON.stringify(paginas));
 console.log(`Corpo: ${nCorpo} páginas · Total: ${final.getPageCount()} páginas`);
 console.log("PDF:", ARQUIVO_FINAL);
