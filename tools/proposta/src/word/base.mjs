@@ -8,6 +8,7 @@
  */
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
+import { deflateSync } from "node:zlib";
 import {
   AlignmentType,
   BorderStyle,
@@ -70,6 +71,9 @@ export const COR = {
 
 export const TEXTO = "Manrope";
 export const MONO = "Space Grotesk";
+/** Space Grotesk peso 500 (no PDF: sumário, subtítulos da capa e da abertura do anexo). */
+export const MONO_MEDIO = "Space Grotesk Medium";
+const familia = (fonte) => (fonte === "mono" ? MONO : fonte === "medio" ? MONO_MEDIO : TEXTO);
 
 /** Fontes embutidas no .docx (TrueType estáticas geradas das variáveis do Google Fonts, OFL). */
 export const fontesEmbutidas = () => {
@@ -77,6 +81,7 @@ export const fontesEmbutidas = () => {
   return [
     { name: TEXTO, data: f("Manrope-Regular.ttf"), bold: f("Manrope-Bold.ttf") },
     { name: MONO, data: f("SpaceGrotesk-Regular.ttf"), bold: f("SpaceGrotesk-Bold.ttf") },
+    { name: MONO_MEDIO, data: f("SpaceGrotesk-Medium.ttf") },
   ];
 };
 
@@ -94,7 +99,7 @@ export function txt(t, o = {}) {
   const base = (texto, forte) =>
     new TextRun({
       children: filhos(texto),
-      font: o.fonte === "mono" ? MONO : TEXTO,
+      font: familia(o.fonte),
       size: pt(tam),
       bold: forte || o.negrito || undefined,
       italics: o.italico || undefined,
@@ -102,12 +107,13 @@ export function txt(t, o = {}) {
       allCaps: o.caixaAlta || undefined,
       characterSpacing: espaco,
       highlight: o.realce,
+      kern: 2, // kerning ligado, como no PDF (sem ele o texto sai mais largo e quebra mais linhas)
     });
   // sem quebra entre "R$" e o valor
   const limpo = String(t).replace(/R\$ (?=\d)/g, "R$\u00a0");
   // "\n" no texto = quebra de linha do Word (no w:t ele viraria espaço)
   return limpo.split("\n").flatMap((linha, i) => [
-    ...(i ? [new TextRun({ break: 1, font: o.fonte === "mono" ? MONO : TEXTO, size: pt(tam) })] : []),
+    ...(i ? [new TextRun({ break: 1, font: familia(o.fonte), size: pt(tam) })] : []),
     ...linha
       .split(/(\*\*[^*]+\*\*)/)
       .filter(Boolean)
@@ -116,7 +122,7 @@ export function txt(t, o = {}) {
 }
 
 /** Várias linhas com quebra manual (as mesmas quebras do PDF). */
-export const linhasTxt = (linhas, o) => linhas.flatMap((l, i) => [...(i ? [new TextRun({ break: 1, font: o.fonte === "mono" ? MONO : TEXTO, size: pt(o.tam ?? 9.6) })] : []), ...txt(l, o)]);
+export const linhasTxt = (linhas, o) => linhas.flatMap((l, i) => [...(i ? [new TextRun({ break: 1, font: familia(o.fonte), size: pt(o.tam ?? 9.6) })] : []), ...txt(l, o)]);
 
 /** Espaçamento de linha "pelo menos" (como o line-height do CSS, que é tamanho × fator). */
 export const linha = (tam, fator) => ({ line: Math.round(tam * fator * 20), lineRule: LineRuleType.AT_LEAST });
@@ -139,7 +145,9 @@ export function par(filhos, o = {}) {
   }
   return new Paragraph({
     children,
-    spacing: { before: mm(o.antes ?? 0), after: mm(o.depois ?? 0), ...(o.exata ? linhaExata(tam, o.fator ?? 1.52) : linha(tam, o.fator ?? 1.52)) },
+    // entrelinha menor que a altura natural da fonte (1,37 em na Manrope, 1,44 em na Space Grotesk)
+    // só sai igual ao PDF como "exatamente": no "pelo menos" o Word usa a altura natural
+    spacing: { before: mm(o.antes ?? 0), after: mm(o.depois ?? 0), ...(o.exata || (o.fator ?? 1.52) < 1.45 ? linhaExata(tam, o.fator ?? 1.52) : linha(tam, o.fator ?? 1.52)) },
     alignment: o.alinhar,
     indent: o.recuo ? { left: mm(o.recuo.esq ?? 0), hanging: o.recuo.pend ? mm(o.recuo.pend) : undefined, right: o.recuo.dir ? mm(o.recuo.dir) : undefined } : undefined,
     tabStops: o.tabs?.map((t) => ({ type: t.tipo, position: mm(t.mm), leader: t.guia })),
@@ -152,9 +160,13 @@ export function par(filhos, o = {}) {
   });
 }
 
-/** Parágrafo vazio com altura exata (espaçador). */
-export const espaco = (alturaMm) =>
-  new Paragraph({ children: [], spacing: { before: 0, after: 0, line: Math.max(20, mm(alturaMm)), lineRule: LineRuleType.EXACT } });
+/** Parágrafo vazio com altura exata (espaçador). manter = fica com o bloco seguinte (entre título e conteúdo). */
+export const espaco = (alturaMm, { manter = false } = {}) =>
+  new Paragraph({
+    children: [],
+    keepNext: manter || undefined,
+    spacing: { before: 0, after: 0, line: Math.max(20, mm(alturaMm)), lineRule: LineRuleType.EXACT },
+  });
 
 // ─── Tabelas ──────────────────────────────────────────────────────────────────────────────────
 const NADA = { style: BorderStyle.NONE, size: 0, color: "FFFFFF" };
@@ -168,23 +180,31 @@ export const cel = (filhos, o = {}) => ({ filhos: Array.isArray(filhos) ? filhos
 
 /**
  * Tabela. larguras (mm) das colunas; linhas: [{ celulas: [cel], cabecalho, altura (mm), exata,
- * semQuebra }]; recuo (mm) à esquerda.
+ * semQuebra }]; recuo (mm) à esquerda. junto = a tabela não se divide entre páginas (como
+ * break-inside: avoid no PDF): todas as linhas, menos a última, ficam "com a próxima".
  */
-export function tabela({ larguras, linhas, recuo = 0, semQuebra = true }) {
+export function tabela({ larguras, linhas, recuo = 0, semQuebra = true, junto = false, juntoFim = 0 }) {
   const L = larguras.map(mm);
   const ocupado = [];
   const rows = linhas.map((l, r) => {
     const tomadas = (ocupado[r] ??= new Set());
     let col = 0;
     const cells = [];
+    // Respiro vertical diferente entre células da mesma linha: o LibreOffice usa o mesmo em todas.
+    // Nesse caso o respiro vira um espaçador dentro da célula (igual no Word e no LibreOffice).
+    const tops = l.celulas.map((c) => c.margem?.t ?? 0);
+    const bots = l.celulas.map((c) => c.margem?.b ?? 0);
+    const misto = new Set(tops).size > 1 || new Set(bots).size > 1;
     for (const c of l.celulas) {
       while (tomadas.has(col)) col++;
       const cs = c.cs ?? 1;
       const largura = L.slice(col, col + cs).reduce((a, b) => a + b, 0);
-      const m = c.margem ?? {};
+      const m = misto ? { ...(c.margem ?? {}), t: 0, b: 0 } : (c.margem ?? {});
+      const filhos = c.filhos.length ? c.filhos : [new Paragraph({ children: [] })];
+      const conteudo = misto ? [...((c.margem?.t ?? 0) > 0 ? [espaco(c.margem.t)] : []), ...filhos, ...((c.margem?.b ?? 0) > 0 ? [espaco(c.margem.b)] : [])] : filhos;
       cells.push(
         new TableCell({
-          children: c.filhos.length ? c.filhos : [new Paragraph({ children: [] })],
+          children: conteudo,
           width: { size: largura, type: WidthType.DXA },
           columnSpan: cs > 1 ? cs : undefined,
           rowSpan: c.rs > 1 ? c.rs : undefined,
@@ -204,6 +224,8 @@ export function tabela({ larguras, linhas, recuo = 0, semQuebra = true }) {
     }
     return new TableRow({
       children: cells,
+      // junto: a tabela inteira; juntoFim: as últimas n linhas ficam com a última (sem total sozinho)
+      keepNext: (junto || r >= linhas.length - 1 - juntoFim) && r < linhas.length - 1 ? true : undefined,
       tableHeader: l.cabecalho || undefined,
       cantSplit: l.semQuebra ?? semQuebra,
       height: l.altura != null ? { value: mm(l.altura), rule: l.exata ? HeightRule.EXACT : HeightRule.ATLEAST } : undefined,
@@ -278,6 +300,57 @@ export function imagem(dados, { larg, alt, foco, nome, flutuante } = {}) {
   });
 }
 
+// ─── Fio de duas cores (laranja + cinza) como imagem: um parágrafo, que fica preso ao texto ────
+const crc32 = (buf) => {
+  let c = ~0;
+  for (const b of buf) {
+    c ^= b;
+    for (let k = 0; k < 8; k++) c = (c >>> 1) ^ (0xedb88320 & -(c & 1));
+  }
+  return ~c >>> 0;
+};
+/** PNG de faixas horizontais de cor sólida. partes = [{ mm, cor: "RRGGBB" }] */
+function pngFaixa(partes, alturaMm) {
+  const k = 10; // px por mm
+  const w = Math.max(1, Math.round(partes.reduce((a, p) => a + p.mm, 0) * k));
+  const h = Math.max(2, Math.round(alturaMm * k));
+  const linhaPx = Buffer.alloc(1 + w * 3);
+  let x = 0;
+  for (const p of partes) {
+    const fim = Math.min(w, x + Math.round(p.mm * k));
+    const [r, g, b] = [0, 2, 4].map((i) => Number.parseInt(p.cor.slice(i, i + 2), 16));
+    for (; x < fim; x++) linhaPx.set([r, g, b], 1 + x * 3);
+  }
+  const bruto = Buffer.concat(Array.from({ length: h }, () => linhaPx));
+  const bloco = (tipo, dados) => {
+    const t = Buffer.from(tipo);
+    const len = Buffer.alloc(4);
+    len.writeUInt32BE(dados.length);
+    const crc = Buffer.alloc(4);
+    crc.writeUInt32BE(crc32(Buffer.concat([t, dados])));
+    return Buffer.concat([len, t, dados, crc]);
+  };
+  const ihdr = Buffer.alloc(13);
+  ihdr.writeUInt32BE(w, 0);
+  ihdr.writeUInt32BE(h, 4);
+  ihdr.set([8, 2, 0, 0, 0], 8);
+  return Buffer.concat([Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]), bloco("IHDR", ihdr), bloco("IDAT", deflateSync(bruto)), bloco("IEND", Buffer.alloc(0))]);
+}
+/** Parágrafo com o fio (manter = fica com o próximo bloco). */
+export const fio = (partes, alturaMm, { manter = true, antes = 0 } = {}) =>
+  new Paragraph({
+    children: [
+      new ImageRun({
+        type: "png",
+        data: pngFaixa(partes, alturaMm),
+        transformation: { width: px(partes.reduce((a, p) => a + p.mm, 0)), height: Math.max(1, px(alturaMm)) },
+        altText: { title: "fio", description: "fio", name: "fio" },
+      }),
+    ],
+    keepNext: manter || undefined,
+    spacing: { before: mm(antes), after: 0, line: 20, lineRule: LineRuleType.AT_LEAST },
+  });
+
 /** Parágrafo só com a imagem (alinhada). */
 export const parImagem = (img, o = {}) =>
   new Paragraph({
@@ -291,8 +364,8 @@ export const parImagem = (img, o = {}) =>
 // ─── Marcas que viram XML depois (equações, campos de página, marcadores) ──────────────────────
 const extras = [];
 /** Equação do Word (OMML). bloco = parágrafo de equação centrado. */
-export const equacao = (omml, { bloco = false, cor } = {}) => {
-  extras.push({ tipo: "eq", omml: recolorir(omml, cor), bloco });
+export const equacao = (omml, { bloco = false, cor, tam } = {}) => {
+  extras.push({ tipo: "eq", omml: formatarEq(omml, cor ?? COR.g, tam), bloco });
   return new TextRun({ text: `§X:${extras.length - 1}§`, font: TEXTO, size: pt(9.6) });
 };
 /** Marcador (destino do número de página no sumário). */
@@ -303,13 +376,28 @@ export const marcador = (nome) => {
 /** Número da página de um marcador (campo PAGEREF), já com o valor calculado no PDF. */
 export const paginaDe = (nome, valor, o = {}) => {
   extras.push({ tipo: "pg", nome, valor: String(valor), o });
-  return new TextRun({ text: `§X:${extras.length - 1}§`, font: MONO, size: pt(o.tam ?? 10) });
+  return new TextRun({ text: `§X:${extras.length - 1}§`, font: MONO, size: pt(o.tam ?? 10), bold: o.negrito || undefined, color: o.cor });
 };
 
-/** Troca a cor das equações (o Word original usa azul; o PDF usa a cor do texto). */
-function recolorir(omml, cor) {
-  // só troca o valor: a ordem dos elementos dentro de w:rPr é rígida no Word
-  return omml.replace(/(<w:color w:val=")[^"]*(")/g, `$1${cor ?? COR.g}$2`);
+/**
+ * Cor e tamanho em todos os trechos da equação (o Word original usa azul e tamanhos variados).
+ * Dentro de w:rPr a ordem dos elementos é fixa: cor e tamanho entram antes de highlight/u/lang….
+ */
+const DEPOIS_DO_TAMANHO = /<w:(highlight|u|effect|bdr|shd|fitText|vertAlign|rtl|cs|em|lang|eastAsianLayout|specVanish|oMath)\b/;
+function formatarEq(omml, cor, tam) {
+  const props = `<w:color w:val="${cor}"/>${tam ? `<w:sz w:val="${pt(tam)}"/><w:szCs w:val="${pt(tam)}"/>` : ""}`;
+  const rPr = (dentro) => {
+    let limpo = dentro.replace(/<w:(color|spacing|w|kern|position)\b[^>]*\/>/g, "");
+    if (tam) limpo = limpo.replace(/<w:sz(?:Cs)? [^>]*\/>/g, "");
+    const i = limpo.search(DEPOIS_DO_TAMANHO);
+    return `<w:rPr>${i < 0 ? limpo + props : limpo.slice(0, i) + props + limpo.slice(i)}</w:rPr>`;
+  };
+  return (
+    omml
+      .replace(/<w:rPr>((?:(?!<\/w:rPr>)[\s\S])*?)<\/w:rPr>/g, (_, dentro) => rPr(dentro))
+      // trechos de equação sem w:rPr: ganham um (depois do m:rPr, se houver)
+      .replace(/<m:r>((?:<m:rPr>(?:(?!<\/m:rPr>)[\s\S])*?<\/m:rPr>)?)(?!<w:rPr>)/g, (_, mpr) => `<m:r>${mpr}${rPr("")}`)
+  );
 }
 
 const nomeMarcador = (n) => `s_${n.replace(/[^\w]/g, "_")}`;
@@ -338,6 +426,8 @@ export async function posProcessar(buffer) {
     );
   });
   if (/§X:\d+§/.test(xml)) throw new Error("Sobrou marca §X§ no document.xml (equação/campo dividido entre trechos?)");
+  // algarismos tabulares na Space Grotesk (font-variant-numeric: tabular-nums no PDF): o "1" com base
+  xml = xml.replace(/(<w:rPr>(?:(?!<\/w:rPr>)[\s\S])*?w:ascii="Space Grotesk(?: Medium)?"(?:(?!<\/w:rPr>)[\s\S])*?)<\/w:rPr>/g, '$1<w14:numSpacing w14:val="tabular"/></w:rPr>');
   zip.file("word/document.xml", xml);
   extras.length = 0;
   return zip.generateAsync({ type: "nodebuffer", compression: "DEFLATE" });

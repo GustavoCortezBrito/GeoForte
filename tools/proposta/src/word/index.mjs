@@ -7,7 +7,7 @@
  * Fontes da marca embutidas no arquivo; equações como equações do Word; números do sumário como
  * campos de página (Word: selecionar tudo e F9 atualiza, se o texto mudar de página).
  */
-import { Document, Footer, Header, Packer, Paragraph } from "docx";
+import { Document, Footer, Header, Packer, Paragraph, Table } from "docx";
 import { entradasSumario } from "../frente.mjs";
 import { COR, UTIL, borda, cel, fontesEmbutidas, imagem, mm, par, posProcessar, tabela, txt } from "./base.mjs";
 import { cabecalho, rodape } from "./moldura.mjs";
@@ -17,6 +17,10 @@ import { memorialWord } from "./memorial.mjs";
 import { aberturaWord, paginasAnexoWord } from "./anexo.mjs";
 
 const A4 = { width: mm(210), height: mm(297) };
+
+/** Duas tabelas encostadas viram uma só no Word: entre elas vai um parágrafo de 1 pt. */
+const separarTabelas = (lista) =>
+  lista.flatMap((x, i) => (x instanceof Table && lista[i + 1] instanceof Table ? [x, new Paragraph({ children: [], spacing: { before: 0, after: 0, line: 20, lineRule: "exact" } })] : [x]));
 /** Cabeçalho/rodapé vazios das páginas de sangria: um parágrafo de 1 pt, que não empurra o texto. */
 const minimo = () => new Paragraph({ children: [], spacing: { before: 0, after: 0, line: 20, lineRule: "exact" } });
 const vazio = () => ({ default: new Header({ children: [minimo()] }) });
@@ -28,7 +32,8 @@ const sangria = { top: 0, bottom: 0, left: mm(18), right: mm(18), header: 0, foo
 
 const estilos = {
   default: {
-    document: { run: { font: "Manrope", size: 19, color: COR.g }, paragraph: { spacing: { before: 0, after: 0 } } },
+    // corpo 1 pt: os parágrafos vazios (fim de seção, células) não ocupam espaço; todo texto tem tamanho próprio
+    document: { run: { font: "Manrope", size: 2, color: COR.g }, paragraph: { spacing: { before: 0, after: 0 } } },
   },
 };
 
@@ -55,7 +60,7 @@ export async function montarWord(pacote, m) {
     styles: estilos,
     numbering: { config: numeracaoListas },
     sections: [
-      { properties: { page: { size: A4, margin: sangria } }, headers: vazio(), footers: vazioRod(), children: capaWord(pacote, m) },
+      { properties: { page: { size: A4, margin: sangria } }, headers: vazio(), footers: vazioRod(), children: separarTabelas(capaWord(pacote, m)) },
       {
         properties: { page: { size: A4, margin: comMoldura } },
         headers: cab,
@@ -66,14 +71,14 @@ export async function montarWord(pacote, m) {
         properties: { page: { size: A4, margin: comMoldura, pageNumbers: { start: 1 } } },
         headers: cab,
         footers: { default: rodape(empresa, "pagina") },
-        children: corpo,
+        children: separarTabelas(corpo),
       },
-      { properties: { page: { size: A4, margin: sangria } }, headers: vazio(), footers: vazioRod(), children: aberturaWord(pacote, m) },
+      { properties: { page: { size: A4, margin: sangria } }, headers: vazio(), footers: vazioRod(), children: separarTabelas(aberturaWord(pacote, m)) },
       {
         properties: { page: { size: A4, margin: comMoldura, pageNumbers: { start: 2 } } },
         headers: cab,
         footers: { default: rodape(empresa, { prefixo: `${anexo.letra}.` }) },
-        children: paginasAnexoWord(pacote, m),
+        children: separarTabelas(paginasAnexoWord(pacote, m)),
       },
       {
         properties: { page: { size: A4, margin: { top: 0, bottom: 0, left: 0, right: 0, header: 0, footer: 0 } } },

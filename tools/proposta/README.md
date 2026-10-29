@@ -55,7 +55,7 @@ foto por obra).
 | `importar/` | importadores do Word da fundação (ver abaixo) |
 | `src/` | HTML e estilos de cada parte (capa, corpo, anexo, moldura) |
 | `src/word/` | o Word no desenho do PDF (medidas do HTML, moldura, capa, corpo, memorial, anexo) |
-| `assets/fonts/word/` | Manrope e Space Grotesk em TrueType (normal e negrito), embutidas no Word |
+| `assets/fonts/word/` | Manrope e Space Grotesk em TrueType (normal, médio e negrito), embutidas no Word |
 | `assets/certificado-geoselos.pdf` | última página, anexada sem alteração |
 
 ## Fundação: do Word ao PDF
@@ -93,6 +93,12 @@ Rode depois do PDF: o Word lê o HTML que o gerador imprimiu (`saida/html/<propo
 para medir posições, tamanhos de foto e colunas de tabela, e reproduz tudo no
 Word (`src/word/`). Os números do sumário são campos de página com o valor do PDF;
 se o texto mudar de página no Word, selecione tudo e aperte F9.
+
+Para conferir o Word contra o PDF sem ter o Word: converta o .docx em PDF com o
+LibreOffice (`soffice --headless --convert-to pdf <arquivo>.docx`) e compare página a
+página. Em 29/10/2026 as duas propostas saíram com o mesmo número de páginas do PDF
+(contenção 33, fundação 49). O LibreOffice ignora cor e tamanho das equações e os
+algarismos tabulares; o Word respeita.
 
 Para trazer as edições de volta ao PDF: peça o arquivo editado, compare com o
 original (`node importar/docx.mjs <arquivo>` imprime o texto, um bloco por linha;

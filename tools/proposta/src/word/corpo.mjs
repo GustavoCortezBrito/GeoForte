@@ -4,7 +4,7 @@
  * cabeçalho grafite, caixa de total, cartões, observações e o bloco de assinaturas.
  */
 import { AlignmentType, LevelFormat, Paragraph } from "docx";
-import { COR, UTIL, borda, cel, espaco, marcador, par, tabela, txt } from "./base.mjs";
+import { COR, UTIL, borda, cel, espaco, fio, marcador, par, tabela, txt } from "./base.mjs";
 
 export const COL = 11.5; // coluna do número das cláusulas
 const LT = UTIL - COL; // largura do texto da cláusula
@@ -53,43 +53,45 @@ export const quebra = () => new Paragraph({ children: [], pageBreakBefore: true,
  * resto. `id` vira marcador para o número de página do sumário.
  */
 export function tituloSecao(n, titulo, { id, tam = 14, antes = 10 } = {}) {
+  // parágrafos (não tabela): assim o título fica preso ao texto seguinte em qualquer programa
   return [
-    espaco(antes),
-    tabela({
-      larguras: [12.5, UTIL - 12.5],
-      linhas: [
-        {
-          celulas: [
-            cel([par(txt(n, { fonte: "mono", negrito: true, tam, cor: COR.o }), { tam, fator: 1.15, manter: true })], {
-              bordas: { base: borda(COR.o, 0.55) },
-              margem: { b: 2.6 },
-            }),
-            cel([par([...(id ? [marcador(id)] : []), ...txt(titulo, { fonte: "mono", negrito: true, tam, espaco: -0.015 })], { tam, fator: 1.15, manter: true })], {
-              bordas: { base: borda(COR.fio, 0.55) },
-              margem: { b: 2.6 },
-            }),
-          ],
-        },
+    par(
+      [
+        ...(id ? [marcador(id)] : []),
+        ...txt(n, { fonte: "mono", negrito: true, tam, cor: COR.o }),
+        ...txt("\t", { tam }),
+        ...txt(titulo, { fonte: "mono", negrito: true, tam, espaco: -0.015 }),
       ],
-    }),
+      { tam, fator: 1.15, antes, depois: 2.6, manter: true, junto: true, tabs: [{ tipo: "left", mm: 12.5 }], recuo: { esq: 12.5, pend: 12.5 } },
+    ),
+    fio(
+      [
+        { mm: 14, cor: COR.o },
+        { mm: UTIL - 14, cor: COR.fio },
+      ],
+      0.55,
+    ),
   ];
 }
 
 /** Cláusula: número cinza na coluna de 11,5 mm, texto ao lado (recuo pendente). */
-export const clausula = (n, texto, { antes = 3, realce } = {}) =>
+export const clausula = (n, texto, { antes = 3, realce, manter = false } = {}) =>
   par([...txt(n, { fonte: "mono", negrito: true, tam: 9.4, cor: COR.g3 }), ...txt("\t"), ...txt(texto, { realce })], {
     antes,
+    junto: true,
+    manter,
     recuo: { esq: COL, pend: COL },
     tabs: [{ tipo: "left", mm: COL }],
   });
 
 /** Tabela no estilo .t: cabeçalho grafite (texto branco) e linhas com fio cinza embaixo. */
-export function tabelaT({ larguras, cabecalho, linhas, recuo = 0, tam = 9.2, tamCab = 8.4, pad = [1.9, 2.6], alinhar = [], zebra = false }) {
+export function tabelaT({ larguras, cabecalho, linhas, recuo = 0, tam = 9.2, tamCab = 8.4, pad = [1.9, 2.6], alinhar = [], zebra = false, junto = false }) {
   const [pv, ph] = pad;
   const alinh = (i) => ({ r: AlignmentType.RIGHT, c: AlignmentType.CENTER }[alinhar[i]] ?? AlignmentType.LEFT);
   return tabela({
     larguras,
     recuo,
+    junto,
     linhas: [
       ...(cabecalho
         ? [
@@ -214,6 +216,7 @@ function planilhaWord(b, cols) {
     par(txt(b.legenda, { fonte: "mono", negrito: true }), { antes: 5, depois: 2, manter: true }),
     tabela({
       larguras: L,
+      juntoFim: 2,
       linhas: [
         {
           cabecalho: true,
@@ -256,7 +259,7 @@ function planilhaWord(b, cols) {
  * @param m medidas do HTML (colunas das tabelas, largura do valor do total)
  * @param cont contadores por classe de tabela (para pegar as colunas certas do HTML)
  */
-export function blocoWord(b, secao, m, cont) {
+export function blocoWord(b, secao, m, cont, primeiro = false) {
   const prox = (classe) => {
     const i = (cont[classe] = (cont[classe] ?? -1) + 1);
     return m.corpo.tabelas[classe]?.[i]?.cols;
@@ -282,12 +285,13 @@ export function blocoWord(b, secao, m, cont) {
             ]);
       return [
         par(txt(b.titulo, { fonte: "mono", negrito: true }), { antes: 4, depois: 2, recuo: { esq: COL }, manter: true }),
-        tabelaT({ larguras: cols, cabecalho: cab, linhas, recuo: COL, alinhar: b.tipo === "contencoes" ? [0, 0, 0, "r"] : [0, 0, "r", "r"] }),
+        tabelaT({ larguras: cols, cabecalho: cab, linhas, recuo: COL, junto: true, alinhar: b.tipo === "contencoes" ? [0, 0, 0, "r"] : [0, 0, "r", "r"] }),
       ];
     }
     case "total": {
       const wv = Math.min(80, (m.corpo.totais[cont.total = (cont.total ?? -1) + 1]?.w ?? 50) + 1);
       return [
+        espaco(3),
         tabela({
           larguras: [COL, 5 + wv + 6, LT - (5 + wv + 6)],
           linhas: [
@@ -372,6 +376,7 @@ export function blocoWord(b, secao, m, cont) {
         tabela({
           larguras: [15, LT - 15],
           recuo: COL,
+          junto: true,
           linhas: b.itens.map((t, i) => ({
             celulas: [
               cel([par(txt(`Obs.: ${i + 1}.`, { fonte: "mono", negrito: true, tam: 9.2 }), { tam: 9.2, fator: 1.5 })], {
@@ -390,11 +395,14 @@ export function blocoWord(b, secao, m, cont) {
       return [par(txt(b.t, { tam: 9.8 }), { tam: 9.8, fator: 1.6, antes: 3.4 })];
     default: {
       const compacto = secao.compacto;
-      const out = [clausula(b.n, b.t, { antes: compacto ? 1.5 : 3, realce })];
+      const temMais = Boolean(b.sub?.length || b.insumos || b.lista);
+      const out = [clausula(b.n, b.t, { antes: primeiro ? 3.6 : compacto ? 1.5 : 3, realce, manter: temMais })];
       for (const s of b.sub ?? [])
         out.push(
           par([...txt(s.n, { fonte: "mono", negrito: true, cor: COR.oi }), ...txt("\t"), ...txt(s.t)], {
             antes: s === b.sub[0] ? 2.2 : 1.6,
+            junto: true,
+            manter: s !== b.sub[b.sub.length - 1] || Boolean(b.insumos || b.lista),
             recuo: { esq: COL + 6, pend: 6 },
             tabs: [{ tipo: "left", mm: COL + 6 }],
           }),
@@ -405,6 +413,7 @@ export function blocoWord(b, secao, m, cont) {
           tabela({
             larguras: [LT - 70, 70],
             recuo: COL,
+            junto: true,
             linhas: b.insumos.map(([a, v], i) => ({
               celulas: [
                 cel([par(txt(a), {})], { bordas: { base: borda(COR.fio, 0.25), topo: i === 0 ? borda(COR.g, 0.5) : undefined }, margem: { t: 1.8, b: 1.8, e: 2.6, d: 2.6 } }),
@@ -433,8 +442,9 @@ export function secaoWord(s, m, cont) {
   const out = [];
   if (s.quebraAntes) out.push(quebra());
   out.push(...tituloSecao(s.n, s.titulo, { id: `s${s.n}`, antes: s.quebraAntes ? 0 : 10 }));
-  if (s.intro) out.push(par(txt(s.intro, { tam: 9.8 }), { tam: 9.8, fator: 1.58, antes: 3.5 }));
-  for (const b of s.itens) out.push(...blocoWord(b, s, m, cont));
+  // a introdução não se separa do título nem do que vem depois (como no PDF)
+  if (s.intro) out.push(par(txt(s.intro, { tam: 9.8 }), { tam: 9.8, fator: 1.58, antes: 3.5, junto: true }));
+  s.itens.forEach((b, i) => out.push(...blocoWord(b, s, m, cont, i === 0)));
   return out;
 }
 

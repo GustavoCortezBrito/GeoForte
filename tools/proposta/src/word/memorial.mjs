@@ -86,18 +86,18 @@ function contencaoWord(c, m, cont, primeira) {
       linhas: [
         {
           celulas: [
-            cel([mh("Normas e materiais"), espaco(2.6), spec(c.normas, meia), new Paragraph({ children: [] })]),
+            cel([mh("Normas e materiais"), espaco(2.6, { manter: true }), spec(c.normas, meia), new Paragraph({ children: [] })]),
             cel([]),
-            cel([mh("Ações"), espaco(2.6), spec(c.acoes, meia), mh("Dados gerais"), espaco(2.6), spec(c.dadosGerais, meia), new Paragraph({ children: [] })]),
+            cel([mh("Ações"), espaco(2.6, { manter: true }), spec(c.acoes, meia), mh("Dados gerais"), espaco(2.6, { manter: true }), spec(c.dadosGerais, meia), new Paragraph({ children: [] })]),
           ],
         },
       ],
     }),
     mh("Descrição do terreno"),
-    espaco(2.6),
+    espaco(2.6, { manter: true }),
     spec(c.terreno, UTIL),
     mh("Estratos"),
-    espaco(2.6),
+    espaco(2.6, { manter: true }),
     tabM({
       larguras: prox("t-estr") ?? [34, 26, 64, 50],
       cabecalho: ["Referências", "Cota superior", "Descrição", "Coeficientes de empuxo"],
@@ -118,9 +118,9 @@ function contencaoWord(c, m, cont, primeira) {
       linhas: [
         {
           celulas: [
-            cel([mh("Seção vertical do terreno"), espaco(2.6), parImagem(imagem(c.secao, { larg: sec?.w ?? 44, nome: `Seção vertical do terreno, ${c.titulo}` }))]),
+            cel([mh("Seção vertical do terreno"), espaco(2.6, { manter: true }), parImagem(imagem(c.secao, { larg: sec?.w ?? 44, nome: `Seção vertical do terreno, ${c.titulo}` }))]),
             cel([]),
-            cel([mh("Geometria"), espaco(2.6), spec(c.geometria, UTIL - 74), new Paragraph({ children: [] })]),
+            cel([mh("Geometria"), espaco(2.6, { manter: true }), spec(c.geometria, UTIL - 74), new Paragraph({ children: [] })]),
           ],
         },
       ],
@@ -155,14 +155,14 @@ function contencaoWord(c, m, cont, primeira) {
     out.push(
       mh("Cargas"),
       msub(c.cargas.titulo),
-      espaco(2.6),
+      espaco(2.6, { manter: true }),
       tabM({ larguras: prox("t") ?? [25, 30, 40, 40, 39], cabecalho: ["Tipo", "Cota", "Dados", "Fase inicial", "Fase final"], linhas: c.cargas.linhas }),
     );
   if (c.escoras)
     out.push(
       mh("Elementos de apoio"),
       msub("Escoras"),
-      espaco(2.6),
+      espaco(2.6, { manter: true }),
       tabM({
         larguras: prox("t") ?? [74, 50, 50],
         cabecalho: ["Descrição", "Fase inicial", "Fase final"],
@@ -175,7 +175,7 @@ function contencaoWord(c, m, cont, primeira) {
     out.push(
       mh("Resultados para os elementos de apoio"),
       msub(c.apoio.titulo),
-      espaco(2.6),
+      espaco(2.6, { manter: true }),
       tabela({
         larguras: prox("t") ?? [87, 87],
         linhas: [
@@ -196,11 +196,12 @@ function contencaoWord(c, m, cont, primeira) {
   const arm = prox("t-arm");
   out.push(
     mh("Descrição da armadura"),
-    espaco(2.6),
-    tabM({ larguras: arm ?? [55, 55], cabecalho: ["Armadura vertical", "Armadura horizontal"], linhas: [[{ t: c.armadura.vertical, mono: true, negrito: true }, { t: c.armadura.horizontal, mono: true, negrito: true }]] }),
+    espaco(2.6, { manter: true }),
+    tabM({ junto: true, larguras: arm ?? [55, 55], cabecalho: ["Armadura vertical", "Armadura horizontal"], linhas: [[{ t: c.armadura.vertical, mono: true, negrito: true }, { t: c.armadura.horizontal, mono: true, negrito: true }]] }),
     mh("Verificações geométricas e de resistência"),
     refLinha(c.referencia),
     tabM({
+      junto: true,
       larguras: prox("t-ver") ?? [100, 54, 20],
       cabecalho: ["Verificação", "Valores", "Estado"],
       linhas: c.verificacoes.map((v) => [
@@ -218,7 +219,7 @@ function contencaoWord(c, m, cont, primeira) {
     refLinha(c.quantitativos.referencia),
     quantitativosWord(c.quantitativos, prox("t-quant")),
     mh("Resumo de medição (incluídas perdas de aço)"),
-    espaco(2.6),
+    espaco(2.6, { manter: true }),
     resumoWord(c.resumo, prox("t-resumo")),
   );
   return out;
@@ -257,6 +258,7 @@ function resultadosWord(r, cols) {
   return [
     par([...txt(`${r.fase} `, { fonte: "mono", negrito: true }), ...txt("· Básica", { fonte: "mono", cor: COR.g3 })], { antes: 6, depois: 1.8, manter: true }),
     tabela({
+      junto: true,
       larguras: L,
       linhas: [
         { cabecalho: true, celulas: COLS_RES.map(cabCel) },
@@ -297,7 +299,7 @@ function estabilidadeWord(ref, b, titulo, cols) {
       }),
     ],
   });
-  return [msub(`${b.letra}. ${titulo}`), refLinha(`Verificações de estabilidade (${titulo}): ${ref}`, 1), tabela({ larguras: L, linhas })];
+  return [msub(`${b.letra}. ${titulo}`), refLinha(`Verificações de estabilidade (${titulo}): ${ref}`, 1), tabela({ larguras: L, linhas, junto: true })];
 }
 
 function quantitativosWord(q, cols) {
@@ -319,6 +321,7 @@ function quantitativosWord(q, cols) {
     });
   const fino = borda(COR.fio2, 0.25);
   return tabela({
+    junto: true,
     larguras: L,
     linhas: [
       { cabecalho: true, celulas: [h("Nome da armadura", { cs: 2, rs: 2, esq: true }), h("CA-50", { cs: 2 }), h("Total", { rs: 2 })] },
@@ -343,6 +346,7 @@ function resumoWord(r, cols) {
     });
   const ult = r.linhas.length - 1;
   return tabela({
+    junto: true,
     larguras: L,
     linhas: [
       { cabecalho: true, celulas: [h("Elemento", { rs: 2, esq: true }), h("CA-50 (kg)", { cs: 3 }), h("Concreto (m³)")] },
@@ -364,7 +368,9 @@ function resumoWord(r, cols) {
 async function mapaOmml() {
   const { equacoes, eq } = await import("../../dados/fundacao/dados.mjs");
   const mapa = new Map();
-  equacoes.forEach((e, n) => mapa.set(eq(n), e.omml.replaceAll(">KN<", ">kN<")));
+  // unidade escrita "KN" no Word original → "kN" (no OMML ela vem no meio do texto: "0,944 KN/cm²")
+  const kN = (omml) => omml.replace(/(<m:t(?: [^>]*)?>)([^<]*)(<\/m:t>)/g, (_, a, t, b) => a + t.replace(/\bKN\b/g, "kN") + b);
+  equacoes.forEach((e, n) => mapa.set(eq(n), kN(e.omml)));
   mapa.set(
     "<math><msub><mrow><mi>A</mi></mrow><mrow><mi>s</mi></mrow></msub></math>",
     '<m:oMath><m:sSub><m:e><m:r><w:rPr><w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math"/><w:color w:val="22252A"/></w:rPr><m:t>A</m:t></m:r></m:e><m:sub><m:r><w:rPr><w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math"/><w:color w:val="22252A"/></w:rPr><m:t>s</m:t></m:r></m:sub></m:sSub></m:oMath>',
@@ -372,25 +378,35 @@ async function mapaOmml() {
   return mapa;
 }
 
-/** Ajusta o tamanho das equações (w:sz em meios-pontos) para o do PDF. */
-const tamanhoEq = (omml, tam) =>
-  omml
-    .replace(/(<w:sz(?:Cs)? w:val=")\d+(")/g, `$1${pt(tam)}$2`)
-    // trechos sem tamanho próprio: põe o tamanho logo depois da cor (a ordem dentro de w:rPr é fixa)
-    .replace(/<w:rPr>((?:(?!<\/w:rPr>)[\s\S])*?)<\/w:rPr>/g, (bloco, dentro) =>
-      /<w:sz /.test(dentro) ? bloco : `<w:rPr>${dentro.replace(/(<w:color [^>]*\/>)/, `$1<w:sz w:val="${pt(tam)}"/><w:szCs w:val="${pt(tam)}"/>`)}</w:rPr>`,
-    );
+/**
+ * "Qadm, est (400mm) = 86,5 tf" em texto: base em itálico, índice subscrito, branco sobre o grafite.
+ * Lê o MathML da equação (msub + resto), então o valor continua vindo do Word original.
+ */
+function resultadoTexto(mathml) {
+  const texto = (x) =>
+    x
+      .replace(/<[^>]+>/g, " ")
+      .replace(/\s+/g, " ")
+      .replace(/\s*([,=()])\s*/g, (_, c) => (c === "," ? ", " : c === "=" ? " = " : c === "(" ? " (" : ")"))
+      .replace(/(\d), (\d)/g, "$1,$2") // vírgula decimal sem espaço
+      .replace(/(\d) (mm|tf)/g, "$1 $2")
+      .trim();
+  const m = /^<math[^>]*><msub><mrow>([\s\S]*?)<\/mrow><mrow>([\s\S]*?)<\/mrow><\/msub>([\s\S]*)<\/math>$/.exec(mathml);
+  if (!m) throw new Error("Resultado sem o formato esperado: " + mathml.slice(0, 80));
+  const run = (t, o = {}) => new TextRun({ text: t, font: "Cambria Math", size: pt(15), color: COR.branco, ...o });
+  return [run(texto(m[1]), { italics: true }), run(texto(m[2]).replace(/\s*\(\s*/, " (").replace(/(\d)\s*mm/, "$1 mm"), { subScript: true }), run(" " + texto(m[3]))];
+}
 
 function fundacaoBloco(b, omml, m, cont) {
   const eqx = (mathml, { bloco = false, tam = 11.5, cor } = {}) => {
     const o = omml.get(mathml);
     if (!o) throw new Error("Equação sem OMML: " + mathml.slice(0, 80));
-    return equacao(tamanhoEq(o, tam), { bloco, cor });
+    return equacao(o, { bloco, cor, tam });
   };
-  const legenda = (leg, alinhar = AlignmentType.CENTER) => {
+  const legenda = (leg, alinhar = AlignmentType.CENTER, manter = false) => {
     const i = leg.indexOf(" – ");
     const filhos = i < 0 ? txt(leg, { tam: 8.4, cor: COR.g2 }) : [...txt(leg.slice(0, i), { fonte: "mono", negrito: true, tam: 8.4 }), ...txt(` – ${leg.slice(i + 3)}`, { tam: 8.4, cor: COR.g2 })];
-    return par(filhos, { tam: 8.4, fator: 1.35, alinhar });
+    return par(filhos, { tam: 8.4, fator: 1.35, alinhar, manter, depois: manter ? 2 : 0 });
   };
   switch (b.tipo) {
     case "lista":
@@ -426,6 +442,7 @@ function fundacaoBloco(b, omml, m, cont) {
         par(txt("Onde:", { fonte: "mono", negrito: true, tam: 9, cor: COR.g3 }), { tam: 9, antes: 3.4, depois: 1, manter: true }),
         tabela({
           larguras: [24, UTIL - 24],
+          junto: true,
           linhas: b.itens.map(([mm_, t]) => ({
             celulas: [
               cel([new Paragraph({ alignment: AlignmentType.RIGHT, children: [eqx(mm_, { tam: 11 })] })], { bordas: { base: borda(COR.fio, 0.2) }, margem: { t: 0.7, b: 0.7, d: 2.4 }, vAlign: "meio" }),
@@ -447,6 +464,7 @@ function fundacaoBloco(b, omml, m, cont) {
         espaco(4),
         tabela({
           larguras: [4, meia, 6, meia, 4],
+          junto: true,
           linhas: [
             { celulas: [cel([par(txt(b.titulo, { fonte: "mono", negrito: true }), {})], { cs: 5, fundo: COR.painel, margem: { t: 2, b: 2, e: 4 }, bordas: { topo: fio, base: fio, esq: fio, dir: fio } })] },
             ...linhasEq.map((l, k) => ({
@@ -457,16 +475,16 @@ function fundacaoBloco(b, omml, m, cont) {
               })),
             })),
             {
-              celulas: [cel([par([eqx(b.resultado, { tam: 15, cor: COR.branco })], { tam: 15 })], { cs: 5, fundo: COR.g, margem: { t: 2.8, b: 2.8, e: 4, d: 4 }, bordas: { esq: fio, dir: fio, base: fio } })],
+              celulas: [cel([par(resultadoTexto(b.resultado), { tam: 15 })], { cs: 5, fundo: COR.g, margem: { t: 2.8, b: 2.8, e: 4, d: 4 }, bordas: { esq: fio, dir: fio, base: fio } })],
             },
           ],
         }),
       ];
     }
     case "tabela":
-      return [legenda(b.legenda ?? "", AlignmentType.LEFT), espaco(2), tabelaMf(b, m, cont)];
+      return [legenda(b.legenda ?? "", AlignmentType.LEFT, true), tabelaMf(b, m, cont)];
     case "estaqueamento":
-      return [legenda(b.legenda, AlignmentType.LEFT), espaco(2), estaqueamentoWord(b)];
+      return [legenda(b.legenda, AlignmentType.LEFT, true), estaqueamentoWord(b)];
     default:
       throw new Error(`Word: bloco de memorial "${b.tipo}" desconhecido.`);
   }
@@ -511,13 +529,14 @@ function tabelaMf(b, m, cont) {
         rs: o.rs,
         fundo: cls.includes("dest") || cls.includes("nota") ? COR.painel : undefined,
         bordas: { base: borda(b.classe === "mf-quant" ? COR.fio2 : COR.fio, 0.2) },
-        margem: b.classe === "mf-quant" ? { t: 0.55, b: 0.55, e: 2, d: 2 } : { t: 1.4, b: 1.4, e: 2.2, d: 2.2 },
+        margem: b.classe === "mf-quant" ? { t: 0.55, b: 0.55, e: 1.2, d: 1.2 } : { t: 1.4, b: 1.4, e: 2.2, d: 2.2 },
         vAlign: "meio",
       },
     );
   };
   return tabela({
     larguras: L,
+    junto: true,
     linhas: [
       ...b.cabecalho.map((l, k) => ({ cabecalho: true, celulas: l.map((c) => celula(c, true, k)) })),
       ...b.linhas.map((l) => ({ celulas: l.map((c) => celula(c, false)) })),
@@ -614,10 +633,15 @@ export async function memorialWord(memorial, m, cont) {
     return out;
   }
   const omml = await mapaOmml();
+  // figura de página inteira (perfis de sondagem, armações): no PDF ela tem quebra antes e depois
+  let depoisDaFigura = false;
+  const comecaPagina = (b) => (b.tipo === "figura" && b.pagina) || (b.tipo === "sub" && b.quebra);
   memorial.secoes.forEach((s, i) => {
-    if (s.quebra) out.push(quebra());
+    const quebrou = s.quebra || depoisDaFigura;
+    if (quebrou) out.push(quebra());
+    depoisDaFigura = false;
     out.push(
-      espaco(s.quebra ? 0 : i === 0 ? 6 : 8),
+      espaco(quebrou ? 0 : i === 0 ? 6 : 8),
       par([marcador(`s${s.n}`), ...txt(`${s.n}`, { fonte: "mono", negrito: true, tam: 13, cor: COR.o }), ...txt("\t"), ...txt(s.titulo, { fonte: "mono", negrito: true, tam: 13, espaco: -0.015 })], {
         tam: 13,
         fator: 1.2,
@@ -627,7 +651,11 @@ export async function memorialWord(memorial, m, cont) {
         depois: 0,
       }),
     );
-    for (const b of s.blocos) out.push(...fundacaoBloco(b, omml, m, cont));
+    for (const b of s.blocos) {
+      if (depoisDaFigura && !comecaPagina(b)) out.push(quebra());
+      out.push(...fundacaoBloco(b, omml, m, cont));
+      depoisDaFigura = b.tipo === "figura" && Boolean(b.pagina);
+    }
   });
   out.push(...fechoWord(memorial.fecho));
   return out;

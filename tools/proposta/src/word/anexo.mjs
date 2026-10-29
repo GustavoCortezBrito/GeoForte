@@ -38,7 +38,7 @@ export function aberturaWord(pacote, m) {
         fator: 0.98,
         exata: true,
       }),
-      par(linhasTxt(a.linhasSub ?? [anexo.abertura.subtitulo], { fonte: "mono", tam: 15, cor: COR.cinzaClaro }), { tam: 15, fator: 1.25, antes: 4 }),
+      par(linhasTxt(a.linhasSub ?? [anexo.abertura.subtitulo], { fonte: "medio", tam: 15, cor: COR.cinzaClaro }), { tam: 15, fator: 1.25, antes: 4 }),
       espaco(8),
       faixa(0.7, [
         { mm: 24, cor: COR.o },
@@ -165,19 +165,22 @@ function mosaico(fotos, nomes) {
   return tabela({ larguras, linhas });
 }
 
-function paginaFundacao(o, med) {
-  const f = med.fotos[0];
+/** Folga (mm) tirada da foto ou do mosaico: no PDF a página enche os 234 mm; no Word sobra margem para os parágrafos espaçadores. */
+const FOLGA = 4;
+
+function paginaFundacao(o, med, inicio) {
+  const f = { ...med.fotos[0], h: med.fotos[0].h - FOLGA };
   const topo = topoObra(o.numero, o.nome, [[...txt(`${o.papel}: `, { tam: 10, cor: COR.g2 }), ...txt(o.parceiro, { tam: 10, negrito: true, cor: COR.oi })]], med.topo.h);
   const leg = linhaExata(med.legenda.h, [UTIL], [cel([par(txt(o.foto.legenda, { tam: 9, cor: COR.g2 }), { tam: 9, fator: 1.35 })], { bordas: { topo: borda(COR.g, 0.5) }, margem: { t: 2.2 } })]);
   const blocos = [
     { y: med.topo.y, h: med.topo.h, conteudo: topo },
     { y: f.y, h: f.h, conteudo: linhaExata(f.h, [UTIL], [cel([fotoPar(f, o.foto.legenda)])]) },
-    { y: med.legenda.y, h: med.legenda.h, conteudo: leg },
+    { y: med.legenda.y - FOLGA, h: med.legenda.h, conteudo: leg },
   ];
   if (o.ficha && med.fatos) {
     const w = UTIL / o.ficha.length;
     blocos.push({
-      y: med.fatos.y,
+      y: med.fatos.y - FOLGA,
       h: med.fatos.h,
       conteudo: linhaExata(
         med.fatos.h,
@@ -191,7 +194,7 @@ function paginaFundacao(o, med) {
       ),
     });
   }
-  return empilhar(blocos);
+  return empilhar(blocos, { inicio });
 }
 
 // contenção: comparativo e obras
@@ -217,7 +220,7 @@ function etapasCelulas(o, etapas) {
   });
 }
 
-function paginaContencao(o, med, pacote) {
+function paginaContencao(o, med, pacote, inicio) {
   const { placeholders, etapas } = pacote.anexo;
   const v = (val, p) => (val == null || val === "" ? [ph(p, 9.6)] : txt(val, { fonte: "mono", negrito: true, tam: 12.5 }));
   const linha = [
@@ -232,7 +235,8 @@ function paginaContencao(o, med, pacote) {
   const fotos = med.fotos;
   const yMos = Math.min(...fotos.map((f) => f.y));
   const fim = Math.max(...fotos.map((f) => f.y + f.h));
-  const rel = fotos.map((f) => ({ ...f, y: f.y - yMos }));
+  const k = (fim - yMos - FOLGA) / (fim - yMos); // o mosaico encolhe FOLGA mm, por igual
+  const rel = fotos.map((f) => ({ ...f, y: (f.y - yMos) * k, h: f.h * k }));
   const legendaItens = o.pdf.flatMap((i, k) => [...txt(`${k + 1}`, { fonte: "mono", negrito: true, tam: 9, cor: COR.oi }), ...txt(` ${o.fotos[i].legenda}`, { tam: 9, cor: COR.g2 }), ...txt(k < o.pdf.length - 1 ? "      " : "", { tam: 9 })]);
   const f = o.ficha;
   const fato = (rot, filhos, i) =>
@@ -246,12 +250,12 @@ function paginaContencao(o, med, pacote) {
   const blocos = [
     { y: med.topo.y, h: med.topo.h, conteudo: topoObra(o.numero, o.nome, linhas, med.topo.h) },
     { y: topoY + 3, h: Math.max(4, yMos - topoY - 3 - 0.5), conteudo: linhaExata(Math.max(4, yMos - topoY - 3 - 0.5), [UTIL], [cel([par(txt(o.cenario, { tam: 10, cor: COR.g2 }), { tam: 10 })])]) },
-    { y: yMos, h: fim - yMos, conteudo: mosaico(rel, o.pdf.map((i) => o.fotos[i].legenda)) },
-    { y: med.legenda.y, h: med.legenda.h, conteudo: linhaExata(med.legenda.h, [UTIL], [cel([par(legendaItens, { tam: 9, fator: 1.35 })], { bordas: { topo: borda(COR.g, 0.5) }, margem: { t: 2.2 } })]) },
-    { y: med.etapas.y, h: med.etapas.h, conteudo: etapasCelulas(o, etapas) },
-    { y: med.fatos.y, h: 0.7, conteudo: faixa(0.7, [{ mm: 24, cor: COR.o }, { mm: UTIL - 24, cor: COR.g }]) },
+    { y: yMos, h: fim - yMos - FOLGA, conteudo: mosaico(rel, o.pdf.map((i) => o.fotos[i].legenda)) },
+    { y: med.legenda.y - FOLGA, h: med.legenda.h, conteudo: linhaExata(med.legenda.h, [UTIL], [cel([par(legendaItens, { tam: 9, fator: 1.35 })], { bordas: { topo: borda(COR.g, 0.5) }, margem: { t: 2.2 } })]) },
+    { y: med.etapas.y - FOLGA, h: med.etapas.h, conteudo: etapasCelulas(o, etapas) },
+    { y: med.fatos.y - FOLGA, h: 0.7, conteudo: faixa(0.7, [{ mm: 24, cor: COR.o }, { mm: UTIL - 24, cor: COR.g }]) },
     {
-      y: med.fatos.y + 0.7,
+      y: med.fatos.y + 0.7 - FOLGA,
       h: med.fatos.h - 0.7,
       conteudo: linhaExata(med.fatos.h - 0.7, wf, [
         fato("Área de contenção", v(f.areaContencao, placeholders.areaContencao), 0),
@@ -261,7 +265,7 @@ function paginaContencao(o, med, pacote) {
       ]),
     },
     {
-      y: med.base.y,
+      y: med.base.y - FOLGA,
       h: med.base.h,
       conteudo: linhaExata(med.base.h, [wb, 6, wb], [
         cel([
@@ -281,10 +285,10 @@ function paginaContencao(o, med, pacote) {
       ]),
     },
   ];
-  return empilhar(blocos);
+  return empilhar(blocos, { inicio });
 }
 
-function paginaComparativo(pacote, med, m) {
+function paginaComparativo(pacote, med, m, inicio) {
   const { anexo, secoes, numerosGeoforte, proposta } = pacote;
   const { obras, etapas, grandPalladium } = anexo;
   const totalGP = secoes.flatMap((x) => x.itens).find((b) => b.tipo === "total");
@@ -329,7 +333,7 @@ function paginaComparativo(pacote, med, m) {
   });
   const mana = obras[0];
   const porEtapa = etapas.map((e) => ({ e, ft: mana.fotos.find((f) => f.etapa === e.id) })).filter((x) => x.ft);
-  const fotos = med.fotos; // as 4 fotos de etapa
+  const fotos = med.fotos.map((f) => ({ ...f, h: f.h - FOLGA })); // as 4 fotos de etapa
   const wF = fotos[0]?.w ?? (UTIL - 9) / 4;
   const gapF = fotos[1] ? fotos[1].x - (fotos[0].x + fotos[0].w) : 3;
   const fotosTab = tabela({
@@ -366,7 +370,7 @@ function paginaComparativo(pacote, med, m) {
     },
     { y: med.cmpFotos.y, h: med.cmpFotos.h, conteudo: fotosTab },
     {
-      y: med.frase.y,
+      y: med.frase.y - FOLGA,
       h: med.frase.h,
       conteudo: linhaExata(med.frase.h, [UTIL], [
         cel(
@@ -384,7 +388,7 @@ function paginaComparativo(pacote, med, m) {
       ]),
     },
   ];
-  return empilhar(blocos);
+  return empilhar(blocos, { inicio });
 }
 
 /** Páginas x.2 em diante: cada página começa numa página nova do Word. */
@@ -398,12 +402,14 @@ export function paginasAnexoWord(pacote, m) {
     out.push(...conteudo);
   };
   if (anexo.tipo !== "fundacao") {
-    novaPagina(paginaComparativo(pacote, pags[0], m), true);
+    novaPagina(paginaComparativo(pacote, pags[0], m, 0), true);
     i = 1;
   }
   anexo.obras.forEach((o, k) => {
     const med = pags[i + k];
-    const conteudo = anexo.tipo === "fundacao" ? paginaFundacao(o, med) : paginaContencao(o, med, pacote);
+    // a partir da 2ª página o parágrafo da quebra (1 pt) já ocupa o topo
+    const inicio = i + k === 0 ? 0 : 0.36;
+    const conteudo = anexo.tipo === "fundacao" ? paginaFundacao(o, med, inicio) : paginaContencao(o, med, pacote, inicio);
     novaPagina(conteudo, i + k === 0);
   });
   return out;

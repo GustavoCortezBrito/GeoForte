@@ -7,14 +7,23 @@ import { AlignmentType, Paragraph, TabStopType } from "docx";
 import { COR, UTIL, borda, cel, espaco, imagem, linhasTxt, paginaDe, par, tabela, txt } from "./base.mjs";
 import { faixa } from "./moldura.mjs";
 
-/** Empilha blocos em posições absolutas (mm a partir do topo da área de texto). */
-export function empilhar(blocos) {
+/**
+ * Empilha blocos em posições absolutas (mm a partir do topo da área de texto). Entre dois blocos vai
+ * sempre um parágrafo espaçador (o Word junta tabelas encostadas), com a altura descontada da
+ * distância medida no PDF. inicio = altura já ocupada no topo (ex.: o parágrafo da quebra de página).
+ */
+const MIN = 0.36; // menor parágrafo possível: 1 pt
+export function empilhar(blocos, { inicio = 0 } = {}) {
   const out = [];
-  let y = 0;
+  let y = inicio;
   for (const b of blocos) {
-    if (b.y > y + 0.05) out.push(espaco(b.y - y));
+    const gap = b.y - y;
+    if (out.length || gap > 0.05) {
+      out.push(espaco(Math.max(gap, MIN)));
+      y += Math.max(gap, MIN);
+    }
     out.push(b.conteudo);
-    y = Math.max(y, b.y) + b.h;
+    y += b.h;
   }
   return out;
 }
@@ -83,7 +92,7 @@ export function capaWord(pacote, m) {
     {
       y: c.sub.y,
       h: c.sub.h,
-      conteudo: linhaExata(c.sub.h, [UTIL], [cel([par(linhasTxt(c.linhasSub ?? [capa.subtitulo], { fonte: "mono", tam: 16, cor: COR.cinzaClaro }), { tam: 16, fator: 1.25 })])]),
+      conteudo: linhaExata(c.sub.h, [UTIL], [cel([par(linhasTxt(c.linhasSub ?? [capa.subtitulo], { fonte: "medio", tam: 16, cor: COR.cinzaClaro }), { tam: 16, fator: 1.25 })])]),
     },
     {
       y: c.fio.y,
@@ -132,14 +141,14 @@ export function sumarioWord(pacote, entradas, paginas) {
     const pad = n2 ? (denso ? 0.5 : 1.25) : denso ? 1.05 : 2.05;
     const numero = par(txt(e.n, { fonte: "mono", negrito: !n2, tam: tamN, cor: n2 ? COR.g3 : COR.o }), { tam: tamN, fator: 1.52 });
     // o título leva um tab com pontilhado até a coluna da página
-    const tituloComGuia = par([...txt(e.titulo, { fonte: "mono", tam: tamT, cor: n2 ? COR.g2 : COR.g }), ...txt("\t", { tam: tamT, cor: COR.fio2 })], {
+    const tituloComGuia = par([...txt(e.titulo, { fonte: "medio", tam: tamT, cor: n2 ? COR.g2 : COR.g }), ...txt("\t", { tam: tamT, cor: COR.fio2 })], {
       tam: tamT,
       fator: 1.52,
       tabs: [{ tipo: TabStopType.RIGHT, mm: (n2 ? L[4] : L[2] + L[3] + L[4]) - 2, guia: "dot" }],
     });
     const pagina = e.pagina
       ? par(txt(e.pagina, { fonte: "mono", negrito: !n2, tam: tamN, cor: n2 ? COR.g2 : COR.g }), { tam: tamN, alinhar: AlignmentType.RIGHT })
-      : par([paginaDe(e.id, paginas[e.id] ?? "—", { tam: tamN })], { tam: tamN, alinhar: AlignmentType.RIGHT });
+      : par([paginaDe(e.id, paginas[e.id] ?? "—", { tam: tamN, negrito: !n2, cor: n2 ? COR.g2 : COR.g })], { tam: tamN, alinhar: AlignmentType.RIGHT });
     const base = borda(COR.fio, 0.25);
     const topo = e.grupo ? borda(COR.g, 0.6) : i === 0 ? borda(COR.g, 0.6) : undefined;
     const m = { t: pad, b: pad };
