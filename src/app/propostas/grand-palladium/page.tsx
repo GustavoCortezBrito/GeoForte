@@ -160,8 +160,6 @@ function RegrasTitulo({
 }
 
 export default function PropostaGrandPalladium() {
-  const precoGlobalPendente = !precos.tabela01.linhas;
-
   return (
     <>
       <BarraProposta codigo={cabecalho.codigo} validade={cabecalho.validade} pdf={PDF_URL} aceite={aceite} />
@@ -216,14 +214,10 @@ export default function PropostaGrandPalladium() {
                 },
                 {
                   dt: "Quanto",
-                  dd: precoGlobalPendente ? (
+                  dd: (
                     <>
-                      <span className="bg-brand-wash px-1.5 font-semibold text-brand-ink">[preço global: inserir a Tabela 01]</span>{" "}
-                      Sinal de <span className="whitespace-nowrap">{precos.sinal.valor}</span> na assinatura e medições quinzenais.
-                    </>
-                  ) : (
-                    <>
-                      Sinal de <span className="whitespace-nowrap">{precos.sinal.valor}</span> na assinatura e medições quinzenais.
+                      <span className="whitespace-nowrap font-semibold">R$ {precos.totalGlobal}</span> no total dos serviços. Sinal de{" "}
+                      <span className="whitespace-nowrap">{precos.sinal.valor}</span> na assinatura e medições quinzenais.
                     </>
                   ),
                   href: "#preco",
@@ -348,28 +342,49 @@ export default function PropostaGrandPalladium() {
             </Capitulo>
 
             <Capitulo id="preco" n="5·6" titulo="Preço e pagamento" lead={precos.intro}>
-              {precoGlobalPendente ? (
-                <div className="border-2 border-dashed border-brand-ink bg-brand-wash px-6 py-8 text-center">
-                  <p className="font-display text-[18px] font-bold text-brand-ink">[Preço global: inserir a Tabela 01 antes do envio]</p>
-                  <p className="mt-2 text-[14px] text-ink-2">{precos.tabela01.legenda} A tabela não consta no arquivo original da proposta.</p>
-                </div>
-              ) : (
-                <table className="w-full text-[15px]">
+              <div className="overflow-x-auto">
+                <table className="w-full min-w-[640px] text-[14px] tabular-nums">
                   <caption className="mb-3 text-left font-display text-[15px] font-bold text-ink">{precos.tabela01.legenda}</caption>
+                  <thead>
+                    <tr className="bg-ink text-left font-display text-[12px] font-bold text-canvas">
+                      <th className="px-3 py-2">Item</th>
+                      <th className="px-3 py-2">Descrição</th>
+                      <th className="px-3 py-2 text-right">Quant.</th>
+                      <th className="px-3 py-2">Un.</th>
+                      <th className="px-3 py-2 text-right">Preço unit. (R$)</th>
+                      <th className="px-3 py-2 text-right">Total (R$)</th>
+                    </tr>
+                  </thead>
                   <tbody>
-                    {precos.tabela01.linhas!.map(([a, v]) => (
-                      <tr key={a} className="border-t border-rule">
-                        <td className="py-3 pr-4 text-ink">
-                          <Rico t={a} />
-                        </td>
-                        <td className="py-3 text-right font-display font-bold text-ink tabular-nums">
-                          <Rico t={v} />
-                        </td>
-                      </tr>
-                    ))}
+                    {precos.tabela01.linhas.map((l, i) =>
+                      l.tipo === "total" ? (
+                        <tr key={i} className="bg-ink font-display font-bold text-canvas">
+                          <td className="px-3 py-3" colSpan={5}>
+                            {l.desc}
+                          </td>
+                          <td className="px-3 py-3 text-right text-[16px] whitespace-nowrap">{l.total}</td>
+                        </tr>
+                      ) : l.tipo === "titulo" ? (
+                        <tr key={i} className="border-t-2 border-ink bg-canvas-sunk font-display font-bold">
+                          <td className="px-3 py-2 text-brand-ink">{l.item}</td>
+                          <td className="px-3 py-2" colSpan={5}>
+                            {l.desc}
+                          </td>
+                        </tr>
+                      ) : (
+                        <tr key={i} className={`border-t border-rule ${l.tipo === "grupo" ? "bg-canvas-sunk font-bold" : ""}`}>
+                          <td className="px-3 py-2 font-display text-ink-3 whitespace-nowrap">{l.item}</td>
+                          <td className={`px-3 py-2 ${l.tipo === "item" ? "pl-6" : ""}`}>{l.desc}</td>
+                          <td className="px-3 py-2 text-right whitespace-nowrap">{l.qtd}</td>
+                          <td className="px-3 py-2">{l.un}</td>
+                          <td className="px-3 py-2 text-right whitespace-nowrap">{l.unit}</td>
+                          <td className="px-3 py-2 text-right font-bold whitespace-nowrap">{l.total}</td>
+                        </tr>
+                      ),
+                    )}
                   </tbody>
                 </table>
-              )}
+              </div>
 
               <div className="mt-14 max-w-[46rem] space-y-12">
                 <div>

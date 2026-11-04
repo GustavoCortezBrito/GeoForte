@@ -109,9 +109,9 @@ use `git diff --no-index a.txt b.txt` nas duas saídas) e passe as mudanças par
 
 Contenção:
 
-- **Tabela 01 (preço global):** não existe no PDF original, só a legenda. O
-  PDF mostra um aviso tracejado no lugar. Preencha `linhas` no bloco
-  `tabela-precos` de `dados/proposta.mjs`.
+- **Tabela 01 (preço global):** veio da equipe em imagem (04/11/2026) e está no bloco
+  `planilha` de `dados/proposta.mjs`, no PDF, no Word e na proposta web. Ver o ponto de
+  atenção sobre 509,9 × 509,85 m² e 1.055,3 × 1.055,25 m².
 - **Anexo B:** campos `null` em `dados/obras.mjs` aparecem como placeholder
   laranja (bairro, ano, área, altura, estacas, execução e destaque de cada
   obra). Troque o `null` pelo dado e gere de novo. Nas obras 03 e 04, depois de

@@ -46,7 +46,7 @@ What a proposal page must prove (confirmed):
 - Proposal GEO 2701A/25 (Expansão Grand Palladium Imbassaí): clauses, scope areas, phases and calculation results in `tools/proposta/dados/`.
 - 20 real photos of 4 executed works in `tools/proposta/assets/fotos/` (originals sent by the Geoforte team on 26/10/2026, up to 1600 px; origin embedded in each file), ABEF and GeoSelos logos, GeoSelos certificate. The three Riserva Vita photos arrived in the Nouvelle Blues album and still need the team's confirmation.
 - Company stats in `src/lib/data.ts`.
-- Absent, do not fabricate: the proposal's global price table (Tabela 01 is missing in the original), the works' technical sheets (area, height, piles, dates, neighborhood, year), testimonials.
+- Absent, do not fabricate: the works' technical sheets (area, height, piles, dates, neighborhood, year), testimonials.
 
 ## Product Principles
 

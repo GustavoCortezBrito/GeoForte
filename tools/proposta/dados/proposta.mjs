@@ -25,6 +25,7 @@ export const CORRECOES = [
   { onde: "3.2", original: "equipamentos e ferramentas necessárias da atividade", corrigido: "equipamentos e ferramentas necessários à atividade" },
   { onde: "4.3", original: "estacas Hélice Contínua", corrigido: "estacas hélice contínua (como em 2.15 e 2.17)" },
   { onde: "5 (Tabela 01)", original: "Preços Global", corrigido: "Preço Global" },
+  { onde: "Tabela 01 (item 4)", original: "Epi's", corrigido: "EPIs" },
   { onde: "6 (Obs. 1)", original: "possa gerar a GEOFOR se reserva ao direito de renegociá-lo e em caso de impasse rescindi-lo", corrigido: "possa gerar, a GEOFOR se reserva o direito de renegociá-lo e, em caso de impasse, rescindi-lo" },
   { onde: "6 (Obs. 2)", original: "e na eventualidade de inadimplência incidirá … 2 % + juros de 0,10 %", corrigido: "e, na eventualidade de inadimplência, incidirá … 2% + juros de 0,10%" },
   { onde: "7.1", original: "dias úteis de Segunda a Sexta", corrigido: "dias úteis, de segunda a sexta-feira," },
@@ -36,7 +37,7 @@ export const CORRECOES = [
 
 /** Trechos mantidos como estão, mas que merecem revisão da equipe Geoforte. */
 export const PONTOS_DE_ATENCAO = [
-  "5 — A “Tabela 01: Preços Global das Cortinas de Contenções (GEOFOR)” não existe no PDF original: há só a legenda. A proposta está sem o preço global.",
+  "Tabela 01 — Enviada à parte (imagem da planilha). Os valores de 1.1.1 (Doca) e 1.1.5 (H03) foram calculados com 509,85 m² e 1.055,25 m² (374.739,75 = 509,85 × 735,00 e 775.608,75 = 1.055,25 × 735,00), mas a coluna de quantidade mostra 509,9 e 1.055,3. Com 509,9 e 1.055,3 o total seria R$ 5.579.200,50. Conferir qual vale.",
   "1.4 — A soma das seis áreas da cláusula 1.3 dá 7.468,3 m², mas o texto diz 7.468,0 m² (sete mil quatrocentos e sessenta e oito).",
   "3.9 — “preços unitários dos na composição” parece ter uma palavra faltando (dos materiais?).",
   "11.2 — As tabelas de verificação da contenção Recepção e Túnel trazem a referência “CONTENCAO GRAND PALLADIUM DOCA”.",
@@ -192,9 +193,30 @@ export const secoes = [
     intro:
       "É o seguinte nosso preço para execução do estaqueamento nas condições acima, nele incluídas todas as despesas com nossa mão de obra, equipamentos, ferramentas, assessoria técnica e impostos ICMS, IPI, PIS, COFINS, ISS, IRPJ, CSLL (empresa optante pelo Simples Nacional, alíquota de recolhimento varia mensalmente conforme faturamento no período anterior).",
     itens: [
-      // A tabela não existe no PDF original (só a legenda). Quando ela vier,
-      // troque `linhas: null` pelas linhas [descrição, valor] e o placeholder some.
-      { tipo: "tabela-precos", legenda: "Tabela 01: Preço Global das Cortinas de Contenções (GEOFOR).", linhas: null },
+      // Tabela 01: enviada pela equipe Geoforte em 04/11/2026 (imagem da planilha; o Word original só tinha
+      // a legenda). Mesmo bloco da fundação: tipo "titulo" | "grupo" | "item" | "total".
+      // Conferido: itens × preço unitário e subtotais fecham no total de R$ 5.579.127,00.
+      {
+        tipo: "planilha",
+        inteira: true, // cabe numa página: não começa no pé de uma e continua na outra
+        legenda: "Tabela 01: Preço Global das Cortinas de Contenções (GEOFOR).",
+        linhas: [
+          { tipo: "titulo", item: "1", desc: "ESTACAS JUSTAPOSTAS", qtd: null, un: null, unit: null, total: null },
+          { tipo: "grupo", item: "1.1", desc: "Execução de Estacas Justapostas", qtd: null, un: null, unit: null, total: "5.489.127,00" },
+          { tipo: "item", item: "1.1.1", desc: "Estacas Justapostas – Doca", qtd: "509,9", un: "m²", unit: "735,00", total: "374.739,75" },
+          { tipo: "item", item: "1.1.2", desc: "Estacas Justapostas – Recepção", qtd: "1.638,0", un: "m²", unit: "735,00", total: "1.203.930,00" },
+          { tipo: "item", item: "1.1.3", desc: "Estacas Justapostas – H01", qtd: "1.442,7", un: "m²", unit: "735,00", total: "1.060.384,50" },
+          { tipo: "item", item: "1.1.4", desc: "Estacas Justapostas – H02", qtd: "1.442,7", un: "m²", unit: "735,00", total: "1.060.384,50" },
+          { tipo: "item", item: "1.1.5", desc: "Estacas Justapostas – H03", qtd: "1.055,3", un: "m²", unit: "735,00", total: "775.608,75" },
+          { tipo: "item", item: "1.1.6", desc: "Estacas Justapostas – Piscina", qtd: "1.379,7", un: "m²", unit: "735,00", total: "1.014.079,50" },
+          { tipo: "grupo", item: "2", desc: "Taxa de mobilização / instalação dos equipamentos", qtd: null, un: null, unit: null, total: "60.000,00" },
+          { tipo: "item", item: "2.1", desc: "Mobilização de Perfuratriz sobre esteira", qtd: "2", un: "vb", unit: "15.000,00", total: "30.000,00" },
+          { tipo: "item", item: "2.2", desc: "Desmobilização de Perfuratriz sobre esteira", qtd: "2", un: "vb", unit: "15.000,00", total: "30.000,00" },
+          { tipo: "grupo", item: "3", desc: "Projeto de Contenções", qtd: "1", un: "vb", unit: "25.000,00", total: "25.000,00" },
+          { tipo: "grupo", item: "4", desc: "ART, PGR, PCMSO, Doc. Funcional, EPIs.", qtd: "1", un: "vb", unit: "5.000,00", total: "5.000,00" },
+          { tipo: "total", item: null, desc: "TOTAL GLOBAL DOS SERVIÇOS (GEOFOR)", qtd: null, un: null, unit: null, total: "5.579.127,00" },
+        ],
+      },
       {
         n: "5.1",
         rev: true,

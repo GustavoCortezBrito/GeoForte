@@ -40,7 +40,7 @@ const planilha = (b) => {
     const nivel = l.tipo === "item" ? "p-item" : l.item.includes(".") ? "p-n1" : "p-n0";
     return `<tr class="${nivel}"><td class="p-n">${esc(l.item)}</td><td>${esc(l.desc)}</td>${qtdUn}<td class="r">${nd(l.unit)}</td><td class="r p-v">${nd(l.total)}</td></tr>`;
   };
-  return `<figure class="planilha">
+  return `<figure class="planilha${b.inteira ? " inteira" : ""}">
   <figcaption>${esc(b.legenda)}</figcaption>
   <table class="t t-plan">
     <colgroup><col style="width:12mm" /><col /><col style="width:17mm" /><col style="width:10mm" /><col style="width:25mm" /><col style="width:27mm" /></colgroup>

@@ -420,6 +420,7 @@ const fundacaoCorpo = `
 
 /* Tabelas 01 a 03: planilha de preços */
 .planilha{margin:5mm 0 2mm}
+.planilha.inteira{break-inside:avoid}
 .planilha figcaption{font-family:var(--mono);font-weight:700;font-size:9.6pt;margin-bottom:2mm;break-after:avoid}
 .t-plan{font-size:8.2pt;line-height:1.25}
 .t-plan thead th{font-size:7.6pt;padding:1.4mm 2mm}

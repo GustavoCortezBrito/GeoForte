@@ -216,6 +216,7 @@ function planilhaWord(b, cols) {
     par(txt(b.legenda, { fonte: "mono", negrito: true }), { antes: 5, depois: 2, manter: true }),
     tabela({
       larguras: L,
+      junto: Boolean(b.inteira),
       juntoFim: 2,
       linhas: [
         {
@@ -347,8 +348,8 @@ export function blocoWord(b, secao, m, cont, primeiro = false) {
     case "cartoes": {
       const w = (LT - 4) / 2;
       return [
-        clausula(b.n, `**${b.rotulo}**`, { antes: secao.compacto ? 1.5 : 3 }),
-        espaco(2.5),
+        clausula(b.n, `**${b.rotulo}**`, { antes: secao.compacto ? 1.5 : 3, manter: true }),
+        espaco(2.5, { manter: true }),
         tabela({
           larguras: [w, 4, w],
           recuo: COL,

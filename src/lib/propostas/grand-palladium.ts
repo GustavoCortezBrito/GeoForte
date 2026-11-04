@@ -46,11 +46,21 @@ export interface Clausula {
   complemento?: string;
   lista?: string[];
 }
+/** Linha da Tabela 01 (preço global): título, subtotal de grupo, item ou total. */
+export interface LinhaPlanilha {
+  tipo: "titulo" | "grupo" | "item" | "total";
+  item: string | null;
+  desc: string;
+  qtd: string | null;
+  un: string | null;
+  unit: string | null;
+  total: string | null;
+}
 type Bloco =
   | Clausula
   | { tipo: "contencoes"; titulo: string; linhas: { n: string; nome: string; solucao: string; area: string }[] }
   | { tipo: "total"; n: string; rotulo: string; valor: string; t: string }
-  | { tipo: "tabela-precos"; legenda: string; linhas: [string, string][] | null }
+  | { tipo: "planilha"; legenda: string; linhas: LinhaPlanilha[] }
   | { tipo: "faturamento"; n: string; rotulo: string; partes: { pct: string; t: string }[] }
   | { tipo: "obs"; itens: string[] }
   | { tipo: "paragrafo"; t: string };
@@ -74,7 +84,7 @@ function clausula(n: string): Clausula {
   if (!c) throw new Error(`Proposta web: cláusula ${n} não encontrada em dados/proposta.mjs`);
   return c;
 }
-type TipoBloco = "contencoes" | "total" | "tabela-precos" | "faturamento" | "obs" | "paragrafo";
+type TipoBloco = "contencoes" | "total" | "planilha" | "faturamento" | "obs" | "paragrafo";
 function bloco<T extends TipoBloco>(n: string, tipo: T) {
   const b = secao(n).itens.find((x) => "tipo" in x && x.tipo === tipo);
   if (!b) throw new Error(`Proposta web: bloco "${tipo}" não encontrado na seção ${n}`);
@@ -173,13 +183,17 @@ export const regras = {
 // ─── 5 e 6. Preços e pagamento ──────────────────────────────────────────────
 
 const c51 = clausula("5.1");
-const tabela01 = bloco("5", "tabela-precos");
+const tabela01 = bloco("5", "planilha");
+const totalGlobal = tabela01.linhas.find((l) => l.tipo === "total")?.total;
+if (!totalGlobal) throw new Error("Proposta web: a Tabela 01 não tem a linha de total");
 const fat = bloco("6", "faturamento");
 
 export const precos = {
   intro: secao("5").intro ?? "",
-  /** Tabela 01 não existe no PDF original: `linhas` null = preço global ainda a inserir. */
+  /** Tabela 01 (preço global): a mesma planilha do PDF. */
   tabela01: { legenda: tabela01.legenda, linhas: tabela01.linhas },
+  /** Total global dos serviços (última linha da Tabela 01), sem o "R$". */
+  totalGlobal,
   unitarios: { ...comTitulo(c51), insumos: c51.insumos ?? [] },
   reajuste: comTitulo(clausula("5.2")),
   sinal: { n: "6.1", texto: clausula("6.1").t, valor: extrair(/(R\$ [\d.,]+)/, clausula("6.1").t, "6.1") },
