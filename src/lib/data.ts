@@ -131,29 +131,89 @@ export const solutionSteps: SolutionStep[] = [
 // ─── Projects Data ───
 export interface Project {
   title: string;
-  location: string;
+  /** Só quando a localização é conhecida: nada é afirmado sem registro. */
+  location?: string;
   type: string;
-  image: string;
+  /**
+   * Foto da obra. Sem foto, a obra fica fora da lista da home (ver Projects)
+   * até que uma chegue — não se usa imagem genérica no lugar.
+   */
+  image?: string;
+  /** Descreve só o que se vê na foto. */
+  alt?: string;
+  /** Ponto da foto que não pode sair do recorte (CSS object-position). */
+  focus?: string;
+  /** Foto de terceiros: autor, licença e link da fonte, exibidos sob a foto. */
+  credit?: { text: string; href: string };
 }
 
+// Obras e fotos são as da proposta GEO 2701A/25 (contenção) e GEO 2993A/26
+// (fundações), enviadas pela equipe. Fotos reais, sem tratamento: só recorte.
+// Localização "Salvador, BA" vale só para as contenções (Anexo B da proposta);
+// nas fundações o local ainda não foi informado.
 export const projects: Project[] = [
+  {
+    title: "Mana Kai",
+    location: "Salvador, BA",
+    type: "Contenção em cortina de estacas justapostas",
+    image: "/images/obras/mana-kai.jpg",
+    alt: "Perfuratriz executando as estacas da cortina, junto à orla marítima",
+    focus: "68% 45%",
+  },
+  {
+    title: "Nouvelle Blues",
+    location: "Salvador, BA",
+    type: "Contenção em cortina de estacas justapostas",
+    image: "/images/obras/nouvelle-blues.jpg",
+    alt: "Execução da cortina de estacas junto a edificações vizinhas",
+    focus: "50% 50%",
+  },
+  {
+    title: "Imbuí Class",
+    location: "Salvador, BA",
+    type: "Contenção em cortina de estacas justapostas",
+    image: "/images/obras/imbui-class.jpg",
+    alt: "Cortina de estacas concluída em planta curva",
+    focus: "50% 40%",
+  },
+  {
+    title: "Villaggio Jardins",
+    type: "Fundações",
+    image: "/images/obras/villaggio-jardins.jpg",
+    alt: "Equipamentos com torre e perfis metálicos cravados na frente de trabalho",
+    focus: "50% 70%",
+  },
+  {
+    title: "Poços Carmópolis",
+    type: "Fundações",
+    image: "/images/obras/pocos-carmopolis.jpg",
+    alt: "Estaca metálica tubular no bate-estacas, com marcações de comprimento ao longo do fuste",
+    focus: "50% 38%",
+  },
+  {
+    title: "Beach Class Jagauribe",
+    type: "Fundações",
+    image: "/images/obras/beach-class-jagauribe.jpg",
+    alt: "Bate-estacas e perfis metálicos na frente de trabalho, com edifícios em construção ao fundo",
+    focus: "50% 65%",
+  },
+  {
+    title: "Adorato Cabula",
+    type: "Fundações",
+    image: "/images/obras/adorato-cabula.jpg",
+    alt: "Perfuratriz com trado helicoidal em operação, junto à contenção em concreto",
+    focus: "50% 60%",
+  },
+  // Sem foto própria ainda: ficam fora da lista até que a equipe mande uma.
   {
     title: "Shopping Conquista",
     location: "Vitória da Conquista, BA",
     type: "Comercial",
-    image: "/images/project-shopping.jpg",
   },
   {
     title: "Centro de Distribuição Correios",
     location: "Simões Filho, BA",
     type: "Industrial / Logístico",
-    image: "/images/project-industrial.jpg",
-  },
-  {
-    title: "Parque Shopping",
-    location: "Salvador, BA",
-    type: "Comercial",
-    image: "/images/project-residential.jpg",
   },
 ];
 

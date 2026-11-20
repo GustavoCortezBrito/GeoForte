@@ -1,10 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { companyInfo } from "@/lib/data";
 import { Check } from "lucide-react";
 import SectionHead from "@/components/ui/SectionHead";
-import Placeholder from "@/components/ui/Placeholder";
 
 export default function About() {
   return (
@@ -17,10 +17,17 @@ export default function About() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="relative lg:sticky lg:top-28"
         >
-          <Placeholder
-            label="Equipe em campo"
-            className="w-full h-[420px] sm:h-[480px] border border-rule"
-          />
+          {/* Foto real da obra Mana Kai (Salvador), sem tratamento: só recorte. */}
+          <div className="relative w-full h-[420px] sm:h-[480px] overflow-hidden bg-canvas border border-rule">
+            <Image
+              src="/images/obras/mana-kai-perfuratriz.jpg"
+              alt="Perfuratriz e escavadeira na frente de trabalho da obra Mana Kai, em Salvador"
+              fill
+              sizes="(min-width: 1024px) 560px, 100vw"
+              className="object-cover"
+              style={{ objectPosition: "50% 60%" }}
+            />
+          </div>
           {/* Placa de obra: tinta sólida, numeral laranja — sempre no
               contraste máximo com a página, claro ou escuro. */}
           <div className="absolute -bottom-6 right-0 sm:right-6 bg-ink px-6 py-5 flex items-baseline gap-3.5">
