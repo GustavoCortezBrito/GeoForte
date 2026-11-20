@@ -204,6 +204,21 @@ export const projects: Project[] = [
     alt: "Perfuratriz com trado helicoidal em operação, junto à contenção em concreto",
     focus: "50% 60%",
   },
+  // Foto de terceiros (Wikimedia Commons, licença livre), não da Geoforte: por isso
+  // o crédito sob a foto. O Parque Shopping Bahia fica em Lauro de Freitas; como o
+  // local "Salvador" do cadastro antigo não bate, o local não é exibido até a equipe
+  // confirmar.
+  {
+    title: "Parque Shopping",
+    type: "Comercial",
+    image: "/images/obras/parque-shopping-bahia.jpg",
+    alt: "Fachada do Parque Shopping Bahia, com o letreiro iluminado, à noite",
+    focus: "50% 30%",
+    credit: {
+      text: "Amancio do Compromisso, CC BY-SA 4.0, via Wikimedia Commons (redimensionada e recortada)",
+      href: "https://commons.wikimedia.org/wiki/File:Parque_Shopping_Bahia_05.jpg",
+    },
+  },
   // Sem foto própria ainda: ficam fora da lista até que a equipe mande uma.
   {
     title: "Shopping Conquista",
