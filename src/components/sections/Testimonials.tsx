@@ -5,7 +5,6 @@ import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import SectionHead from "@/components/ui/SectionHead";
-import Placeholder from "@/components/ui/Placeholder";
 
 const testimonials = [
   {
@@ -80,12 +79,9 @@ export default function Testimonials() {
           <div className="flex">
             {testimonials.map((t) => (
               <figure key={t.name} className="min-w-0 shrink-0 grow-0 basis-full">
-                <div className="grid lg:grid-cols-[19rem_minmax(0,1fr)] gap-x-14 gap-y-8 items-stretch">
-                  <Placeholder
-                    label="Foto do cliente"
-                    className="w-full aspect-[4/3] lg:aspect-auto lg:min-h-[22rem] border border-rule"
-                  />
-
+                {/* Sem foto do cliente: não há retrato real, e imagem
+                    genérica no lugar seria passar por real o que não é. */}
+                <div className="max-w-4xl">
                   <div className="flex flex-col justify-between gap-10">
                     <blockquote className="font-display font-medium text-[clamp(1.4rem,2.7vw,2.15rem)] leading-[1.28] tracking-[-0.015em] text-ink text-balance">
                       <span aria-hidden className="text-brand">

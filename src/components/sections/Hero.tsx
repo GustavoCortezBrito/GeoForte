@@ -83,7 +83,7 @@ function AnimatedStat({
   );
 }
 
-// O vídeo (5,6 MB) só carrega onde compensa: tela de desktop, sem pedido de
+// O vídeo (3,2 MB) só carrega onde compensa: tela de desktop, sem pedido de
 // "reduzir movimento" e sem "economia de dados". No resto, o poster basta.
 // No servidor o valor é falso, então o HTML inicial já traz só o poster.
 const subscribeMotion = (notify: () => void) => {
@@ -118,7 +118,7 @@ export default function Hero() {
           (ver canPlayVideo) e começa no mesmo quadro do poster, sem salto. Se
           o arquivo faltar, o erro dispara no <source>, não no <video>. */}
       <Image
-        src="/videos/hero-obra-poster.jpg"
+        src="/videos/hero-poster.jpg"
         alt=""
         fill
         priority
@@ -136,7 +136,7 @@ export default function Hero() {
           className="absolute inset-0 w-full h-full object-cover"
         >
           <source
-            src="/videos/hero-obra.mp4"
+            src="/videos/hero.mp4"
             type="video/mp4"
             onError={() => setVideoOk(false)}
           />

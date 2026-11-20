@@ -1,6 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  experimental: {
+    // Lembra de upgrades de segurança do Next (política "security").
+    agentUpgrade: "security",
+  },
   images: {
     // Next 16 só serve as qualidades listadas aqui. 85 é a do hero do blog (4K).
     qualities: [75, 85],
