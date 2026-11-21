@@ -60,7 +60,6 @@ export default function BlogPage() {
             alt=""
             fill
             priority
-            quality={85}
             sizes="100vw"
             className="object-cover object-[85%_30%] md:object-[70%_14%]"
           />
